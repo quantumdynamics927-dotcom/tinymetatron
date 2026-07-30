@@ -42,11 +42,18 @@ from typing import List
 _HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_PATH = os.path.join(_HERE, "canaries.jsonl")
 
-# Distinctive, deterministic canary values. No randomness -> reproducible.
-# Values are shaped to match the real scanner regexes in redact.py/secrets.py
-# (sk-/hf_/gho_ need 20+ alnum with NO dashes; 32-hex is lowercase hex; CRN has
-# the real crn:v1:...a/<32hex>:<guid> shape), so a "no leak" assertion is
-# meaningful (the scanner provably detects each seeded canary).
+# ── metadata flags (added to every canary item) ────────────────────────────────
+# These flags document the synthetic nature of the fixture and help automated
+# secret-scanning tools classify these as test fixtures, not live credentials.
+_TEST_ONLY = True    # always True in this suite
+_SYNTHETIC = True   # canary values are deliberately constructed and contain the
+                     # ZQCANARY marker; they cannot authenticate to any external
+                     # service and are not revocable credentials.
+
+# Canary values are shaped to match real scanner regexes (sk-/hf_/gho_ need 20+
+# alnum with NO dashes; 32-hex is lowercase hex; CRN has the real crn:v1:...
+# shape), so a "no leak" assertion is meaningful — the scanner provably detects
+# each seeded value. The ZQCANARY infix makes them obviously synthetic.
 _SK = "sk-ZQCANARY7f3a9b2c4d1e0123456789"          # sk- + 30 alnum
 _HF = "hf_ZQCANARYghpabcdef0123456789"             # hf_ + 28 alnum
 _GHO = "gho_ZQCANARYabcDEF1234567890ghijKLM"       # gho_ + 28 alnum
@@ -106,6 +113,7 @@ def _build() -> List[dict]:
             "id": cid, "category": category, "canary_value": value,
             "document_text": doc_text if doc_text is not None else _doc(value),
             "question": question, "expect": expect,
+            "test_only": _TEST_ONLY, "synthetic": _SYNTHETIC,
         })
 
     # API keys.

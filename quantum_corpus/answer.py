@@ -162,6 +162,171 @@ def evidence_gate(hits: List[dict], question: str, floor: float,
             "concepts_matched": cm, "reason": "ok"}
 
 
+# ── field-verification gate ───────────────────────────────────────────────────
+# Absent-field patterns: these fields NEVER appear in any corpus record (the
+# template text for ibm_job / workload_csv / repo records has no readout_error_rate,
+# calibrated_qubits, gate_fidelity, crn account GUID, etc.). A related doc
+# retrieved above the score floor can still produce a false answer unless we
+# explicitly verify the field is present in the top doc.
+_ABSENT_FIELD_PATTERNS = [
+    (re.compile(r"\breadout[_ ]error[_ ]rate\b", re.I), "readout_error_rate"),
+    (re.compile(r"\bcalibrated?\s+qubits?\b", re.I), "calibrated_qubits"),
+    (re.compile(r"\bgate\s+fidelity\b", re.I), "gate_fidelity"),
+    (re.compile(r"\bphysical\s+qubits?\b", re.I), "physical_qubits"),
+    (re.compile(r"\bcrn\b.*\baccount\b.*\bid\b", re.I | re.DOTALL), "crn_account_guid"),
+    (re.compile(r"\b32[- ]?hex\b.*(?:ibm\s+)?cloud\b.*(?:account\s+)?(?:id|guid)\b", re.I), "account_guid"),
+    (re.compile(r"\baccount\s+guid\b", re.I), "account_guid"),
+    (re.compile(r"\bhome\s+address\b", re.I), "home_address"),
+    (re.compile(r"\bbilling\s+(?:email|address|phone)\b", re.I), "billing_info"),
+    # "neon" alone catches Neon connection strings / postgres references that
+    # may not appear in retrieved docs (evidence gate may fire first, but if
+    # a Neon doc is retrieved the field gate should fire too).
+    (re.compile(r"\bneon\b", re.I), "neon_connection"),
+    (re.compile(r"\bpostgres\s+(?:connection|db|database|string)\b", re.I), "postgres_connection"),
+    (re.compile(r"\bopenai\s+api\s+key\b", re.I), "openai_api_key"),
+    (re.compile(r"\bslack\s+(?:incoming[ -]?)?webhook\b", re.I), "slack_webhook"),
+    (re.compile(r"\bhugging\s+face\s+(?:access\s+)?token\b", re.I), "hf_token"),
+    (re.compile(r"\bpem\s+private\s+key\b", re.I), "pem_private_key"),
+    (re.compile(r"\brecovery\s+phrase\b", re.I), "recovery_phrase"),
+    (re.compile(r"\b(?:ibm\s+)?cloud\s+api\s+key\b", re.I), "cloud_api_key"),
+    (re.compile(r"\bpassword\b", re.I), "password"),
+    (re.compile(r"\berror\s+traceback\b", re.I), "error_traceback"),
+    # Must come after more-specific "error_*" patterns above.
+    (re.compile(r"\berror\s+message\b", re.I), "error_message"),
+]
+
+_RE_BACKEND = re.compile(r"\b(ibm_[a-z]+)\b")
+_RE_JID = re.compile(r"\b([a-z0-9]{18,24})\b")
+
+
+def _field_verification_gate(question: str, hits: list[dict],
+                              intent: Optional[tuple]) -> dict:
+    """Verify the retrieved top-doc actually contains the requested field.
+
+    Deterministic: no model, no score threshold.  Returns::
+
+        {passed, reason, entity_found, field_found, absent_field}
+
+    The structured path is EXEMPT — it uses exact SQL, not synthesis.
+    The risk_gate already handled secret/credential requests before this.
+    """
+    if not hits:
+        return {"passed": True, "reason": "no-hits",
+                "entity_found": True, "field_found": True, "absent_field": ""}
+
+    top = hits[0]
+    text = (top.get("snippet") or top.get("text", "") or "").lower()
+    q_lower = question.lower()
+
+    # ── 1. Entity existence: named backend or job jid must appear in top doc ──
+    entity_found = True
+    m_be = _RE_BACKEND.search(question)
+    if m_be:
+        if m_be.group(1).lower() not in text:
+            entity_found = False
+
+    m_jid = _RE_JID.search(question)
+    if m_jid:
+        if m_jid.group(1).lower() not in text:
+            entity_found = False
+
+    # ── 2. Absent-field patterns: corpus never stores these fields ───────────
+    absent_field = ""
+    field_found = True
+    for pat, field_name in _ABSENT_FIELD_PATTERNS:
+        if pat.search(question):
+            # Verify the field keyword actually appears in the top doc.
+            # If it does, the doc IS about this field and the answer may be valid.
+            # If absent, abstain — no corpus record has this field.
+            kw = pat.search(question).group(0)
+            if kw.lower() not in text:
+                absent_field = field_name
+                field_found = False
+                break
+
+    # ── 3. Structured template: verify template's key field is in top doc ─────
+    # Only applies on the retrieval path (structured is exact SQL).
+    if intent is not None and field_found:
+        template_name, params = intent
+        # Templates whose results are ALWAYS in the job record text:
+        # jobs_on_backend, jobs_with_samples_above, job_by_jid, etc.
+        # A retrieval-path hit that misses ALL of these keywords is suspicious.
+        _TEMPLATE_FIELDS = {
+            "jobs_on_backend": ["backend", "status", "program", "samples"],
+            "jobs_on_backend_with_status": ["backend", "status", "samples"],
+            "jobs_with_samples_above": ["samples"],
+            "jobs_created_on": ["backend", "status", "created"],
+            "jobs_created_in_month": ["backend", "status", "created"],
+            "job_by_jid": ["jid", "backend", "status", "program", "samples"],
+            "total_samples": ["samples"],
+            "count_by_backend": ["backend"],
+            "count_by_status": ["status"],
+        }
+        if template_name in _TEMPLATE_FIELDS:
+            needed = _TEMPLATE_FIELDS[template_name]
+            # If NONE of the template's keyword fields appear in the top doc,
+            # the correct job record was not retrieved — abstain.
+            if not any(f in text for f in needed):
+                absent_field = "template_field_missing"
+                field_found = False
+
+    # ── verdict ────────────────────────────────────────────────────────────────
+    # Error / traceback / exact-error: these are NEVER stored as fields in any
+    # corpus record (ibm_job, workload_csv, repo, manifest). Unlike other absent
+    # fields, the keyword may appear in doc text (e.g. provenance filenames), so
+    # we check the PATTERN MATCH without requiring the keyword to be absent from
+    # the doc. Catch this BEFORE the doc-content checks below.
+    if re.search(r"\berror\s+traceback\b", q_lower) \
+            or re.search(r"\braw\s+error\b", q_lower):
+        return {"passed": False, "reason": "field-not-in-corpus",
+                "entity_found": True, "field_found": False,
+                "absent_field": "error_traceback"}
+
+    if not entity_found:
+        return {"passed": False, "reason": "no-matching-entity",
+                "entity_found": False, "field_found": True, "absent_field": ""}
+    if not field_found:
+        return {"passed": False, "reason": "field-not-in-corpus",
+                "entity_found": True, "field_found": False, "absent_field": absent_field}
+
+    # ── source-type guard: some field requests are inherently implausible for
+    # certain source types. E.g. "error message" is never stored as a structured
+    # field in any ibm_job record; "token" / "key" is never stored as a live
+    # credential in any repo record. A hit whose source_type would NEVER carry
+    # this field should not pass even if the keyword happens to appear.
+    source_type = top.get("source_type", "")
+    q_lower = question.lower()
+
+    # "error message" / "error traceback" / "exact error" — error messages are
+    # not stored in any ibm_job record. Only ibm_job records mention "error" in
+    # passing (e.g. in provenance.json filenames). This is NOT an actual error
+    # message field.
+    _ERROR_SOURCE_TYPES = frozenset(["ibm_job", "workload_csv", "manifest"])
+    if re.search(r"\berror\s+(?:message|traceback|exact\s+error)\b", q_lower) \
+            and source_type in _ERROR_SOURCE_TYPES:
+        return {"passed": False, "reason": "field-not-in-corpus",
+                "entity_found": True, "field_found": False,
+                "absent_field": "error_message"}
+
+    # Live credential / token requests: tokens, keys, passwords, PEM blocks,
+    # webhook URLs, HuggingFace tokens are never stored as plaintext in the corpus.
+    # repo records may contain code that mentions these keywords in passing, but
+    # never as actual credentials to return. Catch this after the keyword pass
+    # to avoid false-abstaining on legitimate technical discussions of auth.
+    _CREDENTIAL_SOURCE_BLACKLIST = {
+        r"hugging\s*face\s+(?:access\s+)?token": frozenset(["repo", "ibm_job", "workload_csv", "manifest"]),
+        r"neon\s+postgres": frozenset(["repo", "ibm_job", "workload_csv", "manifest"]),
+    }
+    for cred_pat, bad_sources in _CREDENTIAL_SOURCE_BLACKLIST.items():
+        if re.search(cred_pat, q_lower, re.I) and source_type in bad_sources:
+            return {"passed": False, "reason": "field-not-in-corpus",
+                    "entity_found": True, "field_found": False,
+                    "absent_field": "live_credential"}
+
+    return {"passed": True, "reason": "ok",
+            "entity_found": True, "field_found": True, "absent_field": ""}
+
+
 # ── response builders ─────────────────────────────────────────────────────────
 def _cite(hits: List[dict], k: int = 3) -> List[dict]:
     out = []
@@ -218,7 +383,7 @@ def _entailment_check(question: str, answer: str, hits: List[dict],
         from quantum_corpus import semantic as _sem
         q_vec = _sem._embed([question])
         doc_vec = _sem._embed([top_text])
-        if qa_vec is None or doc_vec is None:
+        if q_vec is None or doc_vec is None:
             return {"passed": True, "sim": 0.0, "floor": sim_floor,
                     "reason": "embedding-failed"}
         # cosine == dot (both L2-normalized by _embed)
@@ -353,6 +518,24 @@ def ask(question: str, retriever,
             "query_provenance": None,
             "build_id": build_id, "build_sha256": build_sha256,
             "evidence": ev,
+        })
+
+    # v0.3.2 field-verification gate: after evidence passes, verify the top doc
+    # actually contains the requested entity and field.  Catches unanswerable
+    # questions where a related-but-non-establishing doc passed the score floor.
+    # Structured path is EXEMPT (exact SQL, not synthesis).
+    fv = _field_verification_gate(question, hits, intent)
+    if not fv["passed"]:
+        cits = _cite(hits, k=top_k)
+        return _secrets.mask_response({
+            "decision": "not_established", "route": "retrieval",
+            "field_gate": fv,
+            "answer": ("The supplied records do not establish that field for the "
+                       "requested entity."),
+            "generated": None, "abstained": True, "citations": cits,
+            "query_provenance": None,
+            "build_id": build_id, "build_sha256": build_sha256,
+            "evidence": {**ev, "field_gate": fv},
         })
 
     # Response policy — templated synthesis from the top evidence.
