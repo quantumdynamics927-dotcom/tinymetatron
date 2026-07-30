@@ -1,0 +1,43 @@
+{
+  "build_id": "quantum-corpus-build-2",
+  "build_timestamp": "2026-07-29T00:00:00Z",
+  "db_path": "E:/Temp/qcorpus/quantum_corpus.db",
+  "db_sha256": "31657d18da60b477f687a07e69a6b49ce0571b8886305e2314d4733a4cfff5af",
+  "total_records": 46579,
+  "total_tokens": 8699900,
+  "splits": {
+    "train": {"records": 36156, "tokens": 6622018},
+    "val":   {"records": 2019,  "tokens": 756906},
+    "test":  {"records": 8404,  "tokens": 1320976}
+  },
+  "test_by_source_type": {"repo": 6121, "ibm_job": 2281, "workload_csv": 2},
+  "test_by_project": {
+    "GRE": 4666, "ibm-quantum": 2283, "QAP": 1163, "QPyth": 169,
+    "TMT_Quantum_Vault": 123
+  },
+  "split_method": "split-by-document; sha256(doc_id)[:8] % 100; train<80, val<90, test<100; deterministic, all chunks sharing a doc_id land in the same split (no chunk leakage across splits)",
+  "redaction": {
+    "rules_version": "v1",
+    "module": "quantum_corpus.redact.redact_text",
+    "strips": ["IBMid-* identifiers", "IBM Cloud CRN 32-hex account/instance GUIDs", "bare 32-hex account ids", "gh[opsur]_/hf_/sk-/xox-/AKIA tokens", "PEM private-key blocks", "JSON token/apikey/secret/password/access_token fields"],
+    "preserves": ["backends (ibm_fez, ibm_torino)", "QASM circuits", "measurement counts", "names/emails", "prose/architecture"],
+    "file_level_skip": "apikey*.json, account-0x*.csv, *.mp4/*.pt/*.bin, build noise dirs"
+  },
+  "deduplication": "content_hash = sha256(redacted_text); duplicate content_hash not re-inserted",
+  "retrieval": {
+    "type": "BM25",
+    "module": "quantum_corpus.rag.RAGIndex",
+    "tokenizer": "re.findall(r'\\w+'), lowercased, English stopword removal (NOT the 291-token project tokenizer)",
+    "k1": 1.5,
+    "b": 0.75,
+    "idf": "log(1 + (n - df + 0.5) / (df + 0.5))"
+  },
+  "tokenizer_count": "quantum_corpus.tokenize_count.count_tokens (exact prefix-pruned greedy match over the 291-token vocab)",
+  "code_version": "quantum_corpus/ build 2 (schema/redact/extract/split/tokenize_count/rag/build self-tests green)",
+  "notes": [
+    "All manifest records (wormhole_experiment_manifest.json) landed in train/val; NONE in test. Therefore the test-only QA set draws gold_record_ids from ibm_job + repo + workload_csv test records only; no OTOC/manifest circuit questions are valid test-split gold questions.",
+    "QAP loose job records (extract_ibm_jobs_dir) carry a messy 'backend <bound method RuntimeJobV2.backend...>' field; clean zip-format job records (text LIKE '%backend ibm_%' AND NOT LIKE '%<bound%') are used for any backend-naming QA items.",
+    "This DB lives outside the repo (E:/Temp) so it is never uploaded to the public HF Space. The quantum corpus is private/local only."
+  ],
+  "frozen": true
+}

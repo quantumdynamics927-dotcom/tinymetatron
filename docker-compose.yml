@@ -1,0 +1,21 @@
+# docker-compose.yml for TinyMetatron SLM
+# Brings up the CPU-only FastAPI service on port 8010 with persistent
+# data, checkpoint, and SQLite database volumes.
+version: "3.8"
+
+services:
+  slm:
+    image: metatron-slm-slm:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./data:/app/data
+      - ./ckpt:/app/ckpt
+      - ./metatron.db:/app/metatron.db
+    ports:
+      - "8010:8010"
+    environment:
+      - PYTHONPATH=/app
+      - MODEL_PATH=/app/ckpt
+    restart: unless-stopped

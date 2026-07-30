@@ -1,0 +1,787 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d0" for="graph" attr.name="name" attr.type="string"/>
+<graph edgedefault="undirected"><data key="d0">Platonic Icosahedral Graph</data>
+<node id="G0"/>
+<node id="G1"/>
+<node id="G2"/>
+<node id="G3"/>
+<node id="G4"/>
+<node id="G5"/>
+<node id="G6"/>
+<node id="G7"/>
+<node id="G8"/>
+<node id="G9"/>
+<node id="G10"/>
+<node id="G11"/>
+<node id="G12"/>
+<node id="M0_0"/>
+<node id="M0_1"/>
+<node id="M0_2"/>
+<node id="M0_3"/>
+<node id="M0_4"/>
+<node id="M0_5"/>
+<node id="M0_6"/>
+<node id="M0_7"/>
+<node id="M0_8"/>
+<node id="M0_9"/>
+<node id="M0_10"/>
+<node id="M0_11"/>
+<node id="M0_12"/>
+<node id="M0_13"/>
+<node id="M0_14"/>
+<node id="M0_15"/>
+<node id="M0_16"/>
+<node id="M0_17"/>
+<node id="M0_18"/>
+<node id="M0_19"/>
+<node id="M1_0"/>
+<node id="M1_1"/>
+<node id="M1_2"/>
+<node id="M1_3"/>
+<node id="M1_4"/>
+<node id="M1_5"/>
+<node id="M1_6"/>
+<node id="M1_7"/>
+<node id="M1_8"/>
+<node id="M1_9"/>
+<node id="M1_10"/>
+<node id="M1_11"/>
+<node id="M1_12"/>
+<node id="M1_13"/>
+<node id="M1_14"/>
+<node id="M1_15"/>
+<node id="M1_16"/>
+<node id="M1_17"/>
+<node id="M1_18"/>
+<node id="M1_19"/>
+<node id="M2_0"/>
+<node id="M2_1"/>
+<node id="M2_2"/>
+<node id="M2_3"/>
+<node id="M2_4"/>
+<node id="M2_5"/>
+<node id="M2_6"/>
+<node id="M2_7"/>
+<node id="M2_8"/>
+<node id="M2_9"/>
+<node id="M2_10"/>
+<node id="M2_11"/>
+<node id="M2_12"/>
+<node id="M2_13"/>
+<node id="M2_14"/>
+<node id="M2_15"/>
+<node id="M2_16"/>
+<node id="M2_17"/>
+<node id="M2_18"/>
+<node id="M2_19"/>
+<node id="M3_0"/>
+<node id="M3_1"/>
+<node id="M3_2"/>
+<node id="M3_3"/>
+<node id="M3_4"/>
+<node id="M3_5"/>
+<node id="M3_6"/>
+<node id="M3_7"/>
+<node id="M3_8"/>
+<node id="M3_9"/>
+<node id="M3_10"/>
+<node id="M3_11"/>
+<node id="M3_12"/>
+<node id="M3_13"/>
+<node id="M3_14"/>
+<node id="M3_15"/>
+<node id="M3_16"/>
+<node id="M3_17"/>
+<node id="M3_18"/>
+<node id="M3_19"/>
+<node id="M4_0"/>
+<node id="M4_1"/>
+<node id="M4_2"/>
+<node id="M4_3"/>
+<node id="M4_4"/>
+<node id="M4_5"/>
+<node id="M4_6"/>
+<node id="M4_7"/>
+<node id="M4_8"/>
+<node id="M4_9"/>
+<node id="M4_10"/>
+<node id="M4_11"/>
+<node id="M4_12"/>
+<node id="M4_13"/>
+<node id="M4_14"/>
+<node id="M4_15"/>
+<node id="M4_16"/>
+<node id="M4_17"/>
+<node id="M4_18"/>
+<node id="M4_19"/>
+<node id="M5_0"/>
+<node id="M5_1"/>
+<node id="M5_2"/>
+<node id="M5_3"/>
+<node id="M5_4"/>
+<node id="M5_5"/>
+<node id="M5_6"/>
+<node id="M5_7"/>
+<node id="M5_8"/>
+<node id="M5_9"/>
+<node id="M5_10"/>
+<node id="M5_11"/>
+<node id="M5_12"/>
+<node id="M5_13"/>
+<node id="M5_14"/>
+<node id="M5_15"/>
+<node id="M5_16"/>
+<node id="M5_17"/>
+<node id="M5_18"/>
+<node id="M5_19"/>
+<node id="M6_0"/>
+<node id="M6_1"/>
+<node id="M6_2"/>
+<node id="M6_3"/>
+<node id="M6_4"/>
+<node id="M6_5"/>
+<node id="M6_6"/>
+<node id="M6_7"/>
+<node id="M6_8"/>
+<node id="M6_9"/>
+<node id="M6_10"/>
+<node id="M6_11"/>
+<node id="M6_12"/>
+<node id="M6_13"/>
+<node id="M6_14"/>
+<node id="M6_15"/>
+<node id="M6_16"/>
+<node id="M6_17"/>
+<node id="M6_18"/>
+<node id="M6_19"/>
+<node id="M7_0"/>
+<node id="M7_1"/>
+<node id="M7_2"/>
+<node id="M7_3"/>
+<node id="M7_4"/>
+<node id="M7_5"/>
+<node id="M7_7"/>
+<node id="M7_8"/>
+<node id="M7_9"/>
+<node id="M7_10"/>
+<node id="M7_11"/>
+<node id="M7_6"/>
+<node id="M8_0"/>
+<node id="M8_1"/>
+<node id="M8_2"/>
+<node id="M8_3"/>
+<node id="M8_4"/>
+<node id="M8_5"/>
+<node id="M8_7"/>
+<node id="M8_8"/>
+<node id="M8_9"/>
+<node id="M8_10"/>
+<node id="M8_11"/>
+<node id="M8_6"/>
+<node id="M9_0"/>
+<node id="M9_1"/>
+<node id="M9_2"/>
+<node id="M9_3"/>
+<node id="M9_4"/>
+<node id="M9_5"/>
+<node id="M9_7"/>
+<node id="M9_8"/>
+<node id="M9_9"/>
+<node id="M9_10"/>
+<node id="M9_11"/>
+<node id="M9_6"/>
+<node id="M10_0"/>
+<node id="M10_1"/>
+<node id="M10_2"/>
+<node id="M10_3"/>
+<node id="M10_4"/>
+<node id="M10_5"/>
+<node id="M10_7"/>
+<node id="M10_8"/>
+<node id="M10_9"/>
+<node id="M10_10"/>
+<node id="M10_11"/>
+<node id="M10_6"/>
+<node id="M11_0"/>
+<node id="M11_1"/>
+<node id="M11_2"/>
+<node id="M11_3"/>
+<node id="M11_4"/>
+<node id="M11_5"/>
+<node id="M11_7"/>
+<node id="M11_8"/>
+<node id="M11_9"/>
+<node id="M11_10"/>
+<node id="M11_11"/>
+<node id="M11_6"/>
+<node id="M12_0"/>
+<node id="M12_1"/>
+<node id="M12_2"/>
+<node id="M12_3"/>
+<node id="M12_4"/>
+<node id="M12_5"/>
+<node id="M12_7"/>
+<node id="M12_8"/>
+<node id="M12_9"/>
+<node id="M12_10"/>
+<node id="M12_11"/>
+<node id="M12_6"/>
+<edge source="G0" target="G1"/>
+<edge source="G0" target="G2"/>
+<edge source="G0" target="G3"/>
+<edge source="G0" target="G4"/>
+<edge source="G0" target="G5"/>
+<edge source="G0" target="G6"/>
+<edge source="G0" target="G7"/>
+<edge source="G0" target="G8"/>
+<edge source="G0" target="G9"/>
+<edge source="G0" target="G10"/>
+<edge source="G0" target="G11"/>
+<edge source="G0" target="G12"/>
+<edge source="G0" target="M0_0"/>
+<edge source="G0" target="M0_7"/>
+<edge source="G1" target="G2"/>
+<edge source="G1" target="G3"/>
+<edge source="G1" target="G5"/>
+<edge source="G1" target="G6"/>
+<edge source="G1" target="G4"/>
+<edge source="G1" target="G7"/>
+<edge source="G1" target="M1_0"/>
+<edge source="G1" target="M1_7"/>
+<edge source="G2" target="G3"/>
+<edge source="G2" target="G4"/>
+<edge source="G2" target="G6"/>
+<edge source="G2" target="G5"/>
+<edge source="G2" target="G8"/>
+<edge source="G2" target="M2_0"/>
+<edge source="G2" target="M2_7"/>
+<edge source="G3" target="G4"/>
+<edge source="G3" target="G5"/>
+<edge source="G3" target="G6"/>
+<edge source="G3" target="G9"/>
+<edge source="G3" target="M3_0"/>
+<edge source="G3" target="M3_7"/>
+<edge source="G4" target="G5"/>
+<edge source="G4" target="G6"/>
+<edge source="G4" target="G10"/>
+<edge source="G4" target="M4_0"/>
+<edge source="G4" target="M4_7"/>
+<edge source="G5" target="G6"/>
+<edge source="G5" target="G11"/>
+<edge source="G5" target="M5_0"/>
+<edge source="G5" target="M5_7"/>
+<edge source="G6" target="G12"/>
+<edge source="G6" target="M6_0"/>
+<edge source="G6" target="M6_7"/>
+<edge source="G7" target="G8"/>
+<edge source="G7" target="G9"/>
+<edge source="G7" target="G11"/>
+<edge source="G7" target="G12"/>
+<edge source="G7" target="G10"/>
+<edge source="G7" target="M7_0"/>
+<edge source="G7" target="M7_3"/>
+<edge source="G8" target="G9"/>
+<edge source="G8" target="G10"/>
+<edge source="G8" target="G12"/>
+<edge source="G8" target="G11"/>
+<edge source="G8" target="M8_0"/>
+<edge source="G8" target="M8_3"/>
+<edge source="G9" target="G10"/>
+<edge source="G9" target="G11"/>
+<edge source="G9" target="G12"/>
+<edge source="G9" target="M9_0"/>
+<edge source="G9" target="M9_3"/>
+<edge source="G10" target="G11"/>
+<edge source="G10" target="G12"/>
+<edge source="G10" target="M10_0"/>
+<edge source="G10" target="M10_3"/>
+<edge source="G11" target="G12"/>
+<edge source="G11" target="M11_0"/>
+<edge source="G11" target="M11_3"/>
+<edge source="G12" target="M12_0"/>
+<edge source="G12" target="M12_3"/>
+<edge source="M0_0" target="M0_1"/>
+<edge source="M0_0" target="M0_19"/>
+<edge source="M0_0" target="M0_10"/>
+<edge source="M0_0" target="M0_5"/>
+<edge source="M0_1" target="M0_2"/>
+<edge source="M0_1" target="M0_8"/>
+<edge source="M0_1" target="M0_16"/>
+<edge source="M0_2" target="M0_3"/>
+<edge source="M0_2" target="M0_6"/>
+<edge source="M0_2" target="M0_13"/>
+<edge source="M0_3" target="M0_4"/>
+<edge source="M0_3" target="M0_19"/>
+<edge source="M0_3" target="M0_12"/>
+<edge source="M0_4" target="M0_5"/>
+<edge source="M0_4" target="M0_17"/>
+<edge source="M0_4" target="M0_9"/>
+<edge source="M0_5" target="M0_6"/>
+<edge source="M0_5" target="M0_15"/>
+<edge source="M0_6" target="M0_7"/>
+<edge source="M0_6" target="M0_11"/>
+<edge source="M0_7" target="M0_8"/>
+<edge source="M0_7" target="M0_14"/>
+<edge source="M0_7" target="M0_17"/>
+<edge source="M0_8" target="M0_9"/>
+<edge source="M0_8" target="M0_18"/>
+<edge source="M0_9" target="M0_10"/>
+<edge source="M0_9" target="M0_13"/>
+<edge source="M0_10" target="M0_11"/>
+<edge source="M0_10" target="M0_15"/>
+<edge source="M0_11" target="M0_12"/>
+<edge source="M0_11" target="M0_18"/>
+<edge source="M0_12" target="M0_13"/>
+<edge source="M0_12" target="M0_16"/>
+<edge source="M0_13" target="M0_14"/>
+<edge source="M0_14" target="M0_15"/>
+<edge source="M0_14" target="M0_19"/>
+<edge source="M0_15" target="M0_16"/>
+<edge source="M0_16" target="M0_17"/>
+<edge source="M0_17" target="M0_18"/>
+<edge source="M0_18" target="M0_19"/>
+<edge source="M1_0" target="M1_1"/>
+<edge source="M1_0" target="M1_19"/>
+<edge source="M1_0" target="M1_10"/>
+<edge source="M1_0" target="M1_5"/>
+<edge source="M1_1" target="M1_2"/>
+<edge source="M1_1" target="M1_8"/>
+<edge source="M1_1" target="M1_16"/>
+<edge source="M1_2" target="M1_3"/>
+<edge source="M1_2" target="M1_6"/>
+<edge source="M1_2" target="M1_13"/>
+<edge source="M1_3" target="M1_4"/>
+<edge source="M1_3" target="M1_19"/>
+<edge source="M1_3" target="M1_12"/>
+<edge source="M1_4" target="M1_5"/>
+<edge source="M1_4" target="M1_17"/>
+<edge source="M1_4" target="M1_9"/>
+<edge source="M1_5" target="M1_6"/>
+<edge source="M1_5" target="M1_15"/>
+<edge source="M1_6" target="M1_7"/>
+<edge source="M1_6" target="M1_11"/>
+<edge source="M1_7" target="M1_8"/>
+<edge source="M1_7" target="M1_14"/>
+<edge source="M1_7" target="M1_17"/>
+<edge source="M1_8" target="M1_9"/>
+<edge source="M1_8" target="M1_18"/>
+<edge source="M1_9" target="M1_10"/>
+<edge source="M1_9" target="M1_13"/>
+<edge source="M1_10" target="M1_11"/>
+<edge source="M1_10" target="M1_15"/>
+<edge source="M1_11" target="M1_12"/>
+<edge source="M1_11" target="M1_18"/>
+<edge source="M1_12" target="M1_13"/>
+<edge source="M1_12" target="M1_16"/>
+<edge source="M1_13" target="M1_14"/>
+<edge source="M1_14" target="M1_15"/>
+<edge source="M1_14" target="M1_19"/>
+<edge source="M1_15" target="M1_16"/>
+<edge source="M1_16" target="M1_17"/>
+<edge source="M1_17" target="M1_18"/>
+<edge source="M1_18" target="M1_19"/>
+<edge source="M2_0" target="M2_1"/>
+<edge source="M2_0" target="M2_19"/>
+<edge source="M2_0" target="M2_10"/>
+<edge source="M2_0" target="M2_5"/>
+<edge source="M2_1" target="M2_2"/>
+<edge source="M2_1" target="M2_8"/>
+<edge source="M2_1" target="M2_16"/>
+<edge source="M2_2" target="M2_3"/>
+<edge source="M2_2" target="M2_6"/>
+<edge source="M2_2" target="M2_13"/>
+<edge source="M2_3" target="M2_4"/>
+<edge source="M2_3" target="M2_19"/>
+<edge source="M2_3" target="M2_12"/>
+<edge source="M2_4" target="M2_5"/>
+<edge source="M2_4" target="M2_17"/>
+<edge source="M2_4" target="M2_9"/>
+<edge source="M2_5" target="M2_6"/>
+<edge source="M2_5" target="M2_15"/>
+<edge source="M2_6" target="M2_7"/>
+<edge source="M2_6" target="M2_11"/>
+<edge source="M2_7" target="M2_8"/>
+<edge source="M2_7" target="M2_14"/>
+<edge source="M2_7" target="M2_17"/>
+<edge source="M2_8" target="M2_9"/>
+<edge source="M2_8" target="M2_18"/>
+<edge source="M2_9" target="M2_10"/>
+<edge source="M2_9" target="M2_13"/>
+<edge source="M2_10" target="M2_11"/>
+<edge source="M2_10" target="M2_15"/>
+<edge source="M2_11" target="M2_12"/>
+<edge source="M2_11" target="M2_18"/>
+<edge source="M2_12" target="M2_13"/>
+<edge source="M2_12" target="M2_16"/>
+<edge source="M2_13" target="M2_14"/>
+<edge source="M2_14" target="M2_15"/>
+<edge source="M2_14" target="M2_19"/>
+<edge source="M2_15" target="M2_16"/>
+<edge source="M2_16" target="M2_17"/>
+<edge source="M2_17" target="M2_18"/>
+<edge source="M2_18" target="M2_19"/>
+<edge source="M3_0" target="M3_1"/>
+<edge source="M3_0" target="M3_19"/>
+<edge source="M3_0" target="M3_10"/>
+<edge source="M3_0" target="M3_5"/>
+<edge source="M3_1" target="M3_2"/>
+<edge source="M3_1" target="M3_8"/>
+<edge source="M3_1" target="M3_16"/>
+<edge source="M3_2" target="M3_3"/>
+<edge source="M3_2" target="M3_6"/>
+<edge source="M3_2" target="M3_13"/>
+<edge source="M3_3" target="M3_4"/>
+<edge source="M3_3" target="M3_19"/>
+<edge source="M3_3" target="M3_12"/>
+<edge source="M3_4" target="M3_5"/>
+<edge source="M3_4" target="M3_17"/>
+<edge source="M3_4" target="M3_9"/>
+<edge source="M3_5" target="M3_6"/>
+<edge source="M3_5" target="M3_15"/>
+<edge source="M3_6" target="M3_7"/>
+<edge source="M3_6" target="M3_11"/>
+<edge source="M3_7" target="M3_8"/>
+<edge source="M3_7" target="M3_14"/>
+<edge source="M3_7" target="M3_17"/>
+<edge source="M3_8" target="M3_9"/>
+<edge source="M3_8" target="M3_18"/>
+<edge source="M3_9" target="M3_10"/>
+<edge source="M3_9" target="M3_13"/>
+<edge source="M3_10" target="M3_11"/>
+<edge source="M3_10" target="M3_15"/>
+<edge source="M3_11" target="M3_12"/>
+<edge source="M3_11" target="M3_18"/>
+<edge source="M3_12" target="M3_13"/>
+<edge source="M3_12" target="M3_16"/>
+<edge source="M3_13" target="M3_14"/>
+<edge source="M3_14" target="M3_15"/>
+<edge source="M3_14" target="M3_19"/>
+<edge source="M3_15" target="M3_16"/>
+<edge source="M3_16" target="M3_17"/>
+<edge source="M3_17" target="M3_18"/>
+<edge source="M3_18" target="M3_19"/>
+<edge source="M4_0" target="M4_1"/>
+<edge source="M4_0" target="M4_19"/>
+<edge source="M4_0" target="M4_10"/>
+<edge source="M4_0" target="M4_5"/>
+<edge source="M4_1" target="M4_2"/>
+<edge source="M4_1" target="M4_8"/>
+<edge source="M4_1" target="M4_16"/>
+<edge source="M4_2" target="M4_3"/>
+<edge source="M4_2" target="M4_6"/>
+<edge source="M4_2" target="M4_13"/>
+<edge source="M4_3" target="M4_4"/>
+<edge source="M4_3" target="M4_19"/>
+<edge source="M4_3" target="M4_12"/>
+<edge source="M4_4" target="M4_5"/>
+<edge source="M4_4" target="M4_17"/>
+<edge source="M4_4" target="M4_9"/>
+<edge source="M4_5" target="M4_6"/>
+<edge source="M4_5" target="M4_15"/>
+<edge source="M4_6" target="M4_7"/>
+<edge source="M4_6" target="M4_11"/>
+<edge source="M4_7" target="M4_8"/>
+<edge source="M4_7" target="M4_14"/>
+<edge source="M4_7" target="M4_17"/>
+<edge source="M4_8" target="M4_9"/>
+<edge source="M4_8" target="M4_18"/>
+<edge source="M4_9" target="M4_10"/>
+<edge source="M4_9" target="M4_13"/>
+<edge source="M4_10" target="M4_11"/>
+<edge source="M4_10" target="M4_15"/>
+<edge source="M4_11" target="M4_12"/>
+<edge source="M4_11" target="M4_18"/>
+<edge source="M4_12" target="M4_13"/>
+<edge source="M4_12" target="M4_16"/>
+<edge source="M4_13" target="M4_14"/>
+<edge source="M4_14" target="M4_15"/>
+<edge source="M4_14" target="M4_19"/>
+<edge source="M4_15" target="M4_16"/>
+<edge source="M4_16" target="M4_17"/>
+<edge source="M4_17" target="M4_18"/>
+<edge source="M4_18" target="M4_19"/>
+<edge source="M5_0" target="M5_1"/>
+<edge source="M5_0" target="M5_19"/>
+<edge source="M5_0" target="M5_10"/>
+<edge source="M5_0" target="M5_5"/>
+<edge source="M5_1" target="M5_2"/>
+<edge source="M5_1" target="M5_8"/>
+<edge source="M5_1" target="M5_16"/>
+<edge source="M5_2" target="M5_3"/>
+<edge source="M5_2" target="M5_6"/>
+<edge source="M5_2" target="M5_13"/>
+<edge source="M5_3" target="M5_4"/>
+<edge source="M5_3" target="M5_19"/>
+<edge source="M5_3" target="M5_12"/>
+<edge source="M5_4" target="M5_5"/>
+<edge source="M5_4" target="M5_17"/>
+<edge source="M5_4" target="M5_9"/>
+<edge source="M5_5" target="M5_6"/>
+<edge source="M5_5" target="M5_15"/>
+<edge source="M5_6" target="M5_7"/>
+<edge source="M5_6" target="M5_11"/>
+<edge source="M5_7" target="M5_8"/>
+<edge source="M5_7" target="M5_14"/>
+<edge source="M5_7" target="M5_17"/>
+<edge source="M5_8" target="M5_9"/>
+<edge source="M5_8" target="M5_18"/>
+<edge source="M5_9" target="M5_10"/>
+<edge source="M5_9" target="M5_13"/>
+<edge source="M5_10" target="M5_11"/>
+<edge source="M5_10" target="M5_15"/>
+<edge source="M5_11" target="M5_12"/>
+<edge source="M5_11" target="M5_18"/>
+<edge source="M5_12" target="M5_13"/>
+<edge source="M5_12" target="M5_16"/>
+<edge source="M5_13" target="M5_14"/>
+<edge source="M5_14" target="M5_15"/>
+<edge source="M5_14" target="M5_19"/>
+<edge source="M5_15" target="M5_16"/>
+<edge source="M5_16" target="M5_17"/>
+<edge source="M5_17" target="M5_18"/>
+<edge source="M5_18" target="M5_19"/>
+<edge source="M6_0" target="M6_1"/>
+<edge source="M6_0" target="M6_19"/>
+<edge source="M6_0" target="M6_10"/>
+<edge source="M6_0" target="M6_5"/>
+<edge source="M6_1" target="M6_2"/>
+<edge source="M6_1" target="M6_8"/>
+<edge source="M6_1" target="M6_16"/>
+<edge source="M6_2" target="M6_3"/>
+<edge source="M6_2" target="M6_6"/>
+<edge source="M6_2" target="M6_13"/>
+<edge source="M6_3" target="M6_4"/>
+<edge source="M6_3" target="M6_19"/>
+<edge source="M6_3" target="M6_12"/>
+<edge source="M6_4" target="M6_5"/>
+<edge source="M6_4" target="M6_17"/>
+<edge source="M6_4" target="M6_9"/>
+<edge source="M6_5" target="M6_6"/>
+<edge source="M6_5" target="M6_15"/>
+<edge source="M6_6" target="M6_7"/>
+<edge source="M6_6" target="M6_11"/>
+<edge source="M6_7" target="M6_8"/>
+<edge source="M6_7" target="M6_14"/>
+<edge source="M6_7" target="M6_17"/>
+<edge source="M6_8" target="M6_9"/>
+<edge source="M6_8" target="M6_18"/>
+<edge source="M6_9" target="M6_10"/>
+<edge source="M6_9" target="M6_13"/>
+<edge source="M6_10" target="M6_11"/>
+<edge source="M6_10" target="M6_15"/>
+<edge source="M6_11" target="M6_12"/>
+<edge source="M6_11" target="M6_18"/>
+<edge source="M6_12" target="M6_13"/>
+<edge source="M6_12" target="M6_16"/>
+<edge source="M6_13" target="M6_14"/>
+<edge source="M6_14" target="M6_15"/>
+<edge source="M6_14" target="M6_19"/>
+<edge source="M6_15" target="M6_16"/>
+<edge source="M6_16" target="M6_17"/>
+<edge source="M6_17" target="M6_18"/>
+<edge source="M6_18" target="M6_19"/>
+<edge source="M7_0" target="M7_1"/>
+<edge source="M7_0" target="M7_5"/>
+<edge source="M7_0" target="M7_7"/>
+<edge source="M7_0" target="M7_8"/>
+<edge source="M7_0" target="M7_11"/>
+<edge source="M7_0" target="M7_2"/>
+<edge source="M7_1" target="M7_2"/>
+<edge source="M7_1" target="M7_5"/>
+<edge source="M7_1" target="M7_6"/>
+<edge source="M7_1" target="M7_8"/>
+<edge source="M7_1" target="M7_4"/>
+<edge source="M7_2" target="M7_3"/>
+<edge source="M7_2" target="M7_6"/>
+<edge source="M7_2" target="M7_8"/>
+<edge source="M7_2" target="M7_9"/>
+<edge source="M7_3" target="M7_4"/>
+<edge source="M7_3" target="M7_6"/>
+<edge source="M7_3" target="M7_9"/>
+<edge source="M7_3" target="M7_10"/>
+<edge source="M7_4" target="M7_5"/>
+<edge source="M7_4" target="M7_6"/>
+<edge source="M7_4" target="M7_10"/>
+<edge source="M7_4" target="M7_11"/>
+<edge source="M7_5" target="M7_6"/>
+<edge source="M7_5" target="M7_11"/>
+<edge source="M7_5" target="M7_9"/>
+<edge source="M7_7" target="M7_8"/>
+<edge source="M7_7" target="M7_9"/>
+<edge source="M7_7" target="M7_10"/>
+<edge source="M7_7" target="M7_11"/>
+<edge source="M7_7" target="M7_6"/>
+<edge source="M7_8" target="M7_9"/>
+<edge source="M7_9" target="M7_10"/>
+<edge source="M7_10" target="M7_11"/>
+<edge source="M8_0" target="M8_1"/>
+<edge source="M8_0" target="M8_5"/>
+<edge source="M8_0" target="M8_7"/>
+<edge source="M8_0" target="M8_8"/>
+<edge source="M8_0" target="M8_11"/>
+<edge source="M8_0" target="M8_2"/>
+<edge source="M8_1" target="M8_2"/>
+<edge source="M8_1" target="M8_5"/>
+<edge source="M8_1" target="M8_6"/>
+<edge source="M8_1" target="M8_8"/>
+<edge source="M8_1" target="M8_4"/>
+<edge source="M8_2" target="M8_3"/>
+<edge source="M8_2" target="M8_6"/>
+<edge source="M8_2" target="M8_8"/>
+<edge source="M8_2" target="M8_9"/>
+<edge source="M8_3" target="M8_4"/>
+<edge source="M8_3" target="M8_6"/>
+<edge source="M8_3" target="M8_9"/>
+<edge source="M8_3" target="M8_10"/>
+<edge source="M8_4" target="M8_5"/>
+<edge source="M8_4" target="M8_6"/>
+<edge source="M8_4" target="M8_10"/>
+<edge source="M8_4" target="M8_11"/>
+<edge source="M8_5" target="M8_6"/>
+<edge source="M8_5" target="M8_11"/>
+<edge source="M8_5" target="M8_9"/>
+<edge source="M8_7" target="M8_8"/>
+<edge source="M8_7" target="M8_9"/>
+<edge source="M8_7" target="M8_10"/>
+<edge source="M8_7" target="M8_11"/>
+<edge source="M8_7" target="M8_6"/>
+<edge source="M8_8" target="M8_9"/>
+<edge source="M8_9" target="M8_10"/>
+<edge source="M8_10" target="M8_11"/>
+<edge source="M9_0" target="M9_1"/>
+<edge source="M9_0" target="M9_5"/>
+<edge source="M9_0" target="M9_7"/>
+<edge source="M9_0" target="M9_8"/>
+<edge source="M9_0" target="M9_11"/>
+<edge source="M9_0" target="M9_2"/>
+<edge source="M9_1" target="M9_2"/>
+<edge source="M9_1" target="M9_5"/>
+<edge source="M9_1" target="M9_6"/>
+<edge source="M9_1" target="M9_8"/>
+<edge source="M9_1" target="M9_4"/>
+<edge source="M9_2" target="M9_3"/>
+<edge source="M9_2" target="M9_6"/>
+<edge source="M9_2" target="M9_8"/>
+<edge source="M9_2" target="M9_9"/>
+<edge source="M9_3" target="M9_4"/>
+<edge source="M9_3" target="M9_6"/>
+<edge source="M9_3" target="M9_9"/>
+<edge source="M9_3" target="M9_10"/>
+<edge source="M9_4" target="M9_5"/>
+<edge source="M9_4" target="M9_6"/>
+<edge source="M9_4" target="M9_10"/>
+<edge source="M9_4" target="M9_11"/>
+<edge source="M9_5" target="M9_6"/>
+<edge source="M9_5" target="M9_11"/>
+<edge source="M9_5" target="M9_9"/>
+<edge source="M9_7" target="M9_8"/>
+<edge source="M9_7" target="M9_9"/>
+<edge source="M9_7" target="M9_10"/>
+<edge source="M9_7" target="M9_11"/>
+<edge source="M9_7" target="M9_6"/>
+<edge source="M9_8" target="M9_9"/>
+<edge source="M9_9" target="M9_10"/>
+<edge source="M9_10" target="M9_11"/>
+<edge source="M10_0" target="M10_1"/>
+<edge source="M10_0" target="M10_5"/>
+<edge source="M10_0" target="M10_7"/>
+<edge source="M10_0" target="M10_8"/>
+<edge source="M10_0" target="M10_11"/>
+<edge source="M10_0" target="M10_2"/>
+<edge source="M10_1" target="M10_2"/>
+<edge source="M10_1" target="M10_5"/>
+<edge source="M10_1" target="M10_6"/>
+<edge source="M10_1" target="M10_8"/>
+<edge source="M10_1" target="M10_4"/>
+<edge source="M10_2" target="M10_3"/>
+<edge source="M10_2" target="M10_6"/>
+<edge source="M10_2" target="M10_8"/>
+<edge source="M10_2" target="M10_9"/>
+<edge source="M10_3" target="M10_4"/>
+<edge source="M10_3" target="M10_6"/>
+<edge source="M10_3" target="M10_9"/>
+<edge source="M10_3" target="M10_10"/>
+<edge source="M10_4" target="M10_5"/>
+<edge source="M10_4" target="M10_6"/>
+<edge source="M10_4" target="M10_10"/>
+<edge source="M10_4" target="M10_11"/>
+<edge source="M10_5" target="M10_6"/>
+<edge source="M10_5" target="M10_11"/>
+<edge source="M10_5" target="M10_9"/>
+<edge source="M10_7" target="M10_8"/>
+<edge source="M10_7" target="M10_9"/>
+<edge source="M10_7" target="M10_10"/>
+<edge source="M10_7" target="M10_11"/>
+<edge source="M10_7" target="M10_6"/>
+<edge source="M10_8" target="M10_9"/>
+<edge source="M10_9" target="M10_10"/>
+<edge source="M10_10" target="M10_11"/>
+<edge source="M11_0" target="M11_1"/>
+<edge source="M11_0" target="M11_5"/>
+<edge source="M11_0" target="M11_7"/>
+<edge source="M11_0" target="M11_8"/>
+<edge source="M11_0" target="M11_11"/>
+<edge source="M11_0" target="M11_2"/>
+<edge source="M11_1" target="M11_2"/>
+<edge source="M11_1" target="M11_5"/>
+<edge source="M11_1" target="M11_6"/>
+<edge source="M11_1" target="M11_8"/>
+<edge source="M11_1" target="M11_4"/>
+<edge source="M11_2" target="M11_3"/>
+<edge source="M11_2" target="M11_6"/>
+<edge source="M11_2" target="M11_8"/>
+<edge source="M11_2" target="M11_9"/>
+<edge source="M11_3" target="M11_4"/>
+<edge source="M11_3" target="M11_6"/>
+<edge source="M11_3" target="M11_9"/>
+<edge source="M11_3" target="M11_10"/>
+<edge source="M11_4" target="M11_5"/>
+<edge source="M11_4" target="M11_6"/>
+<edge source="M11_4" target="M11_10"/>
+<edge source="M11_4" target="M11_11"/>
+<edge source="M11_5" target="M11_6"/>
+<edge source="M11_5" target="M11_11"/>
+<edge source="M11_5" target="M11_9"/>
+<edge source="M11_7" target="M11_8"/>
+<edge source="M11_7" target="M11_9"/>
+<edge source="M11_7" target="M11_10"/>
+<edge source="M11_7" target="M11_11"/>
+<edge source="M11_7" target="M11_6"/>
+<edge source="M11_8" target="M11_9"/>
+<edge source="M11_9" target="M11_10"/>
+<edge source="M11_10" target="M11_11"/>
+<edge source="M12_0" target="M12_1"/>
+<edge source="M12_0" target="M12_5"/>
+<edge source="M12_0" target="M12_7"/>
+<edge source="M12_0" target="M12_8"/>
+<edge source="M12_0" target="M12_11"/>
+<edge source="M12_0" target="M12_2"/>
+<edge source="M12_1" target="M12_2"/>
+<edge source="M12_1" target="M12_5"/>
+<edge source="M12_1" target="M12_6"/>
+<edge source="M12_1" target="M12_8"/>
+<edge source="M12_1" target="M12_4"/>
+<edge source="M12_2" target="M12_3"/>
+<edge source="M12_2" target="M12_6"/>
+<edge source="M12_2" target="M12_8"/>
+<edge source="M12_2" target="M12_9"/>
+<edge source="M12_3" target="M12_4"/>
+<edge source="M12_3" target="M12_6"/>
+<edge source="M12_3" target="M12_9"/>
+<edge source="M12_3" target="M12_10"/>
+<edge source="M12_4" target="M12_5"/>
+<edge source="M12_4" target="M12_6"/>
+<edge source="M12_4" target="M12_10"/>
+<edge source="M12_4" target="M12_11"/>
+<edge source="M12_5" target="M12_6"/>
+<edge source="M12_5" target="M12_11"/>
+<edge source="M12_5" target="M12_9"/>
+<edge source="M12_7" target="M12_8"/>
+<edge source="M12_7" target="M12_9"/>
+<edge source="M12_7" target="M12_10"/>
+<edge source="M12_7" target="M12_11"/>
+<edge source="M12_7" target="M12_6"/>
+<edge source="M12_8" target="M12_9"/>
+<edge source="M12_9" target="M12_10"/>
+<edge source="M12_10" target="M12_11"/>
+</graph></graphml>

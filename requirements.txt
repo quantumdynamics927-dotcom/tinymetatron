@@ -1,0 +1,14 @@
+# TinyMetatron SLM — Python dependencies
+# Target: Python 3.13, CPU-only inference/training.
+#
+# NOTE on torch: the CPU-only wheel is installed from the PyTorch CPU index:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+# The version below is pinned for a default PyPI install. For a guaranteed
+# CPU-only build (smaller image, no CUDA runtime), prefer the explicit
+# index-url command shown above in CI/Docker rather than relying on the
+# default PyPI wheel.
+torch==2.13.0
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pytest==9.0.0

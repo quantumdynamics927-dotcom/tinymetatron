@@ -1,0 +1,59 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+
+# Databases and private corpus data (never push)
+*.db
+*.sqlite
+*.sqlite3
+E:/Temp/qcorpus/
+E:/Temp/eval/
+embeddings/
+cache/
+reports/private/
+quantum_corpus/eval/private/
+**/_val_hits.json
+
+# Model artifacts and local data
+ckpt/
+data/
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+
+# Python/tooling
+__pycache__/
+*.py[cod]
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# OS/editor
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Confidential documents (patent/work product — keep locally only)
+TMT_Patent_*.pdf
+TMT_Patent_*.zip
+TMT_Enablement_Declaration*.pdf
+TMT_Claims_EP_US*.pdf
+
+# HuggingFace / model tokens
+hf_token*
