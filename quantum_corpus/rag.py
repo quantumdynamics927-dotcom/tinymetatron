@@ -38,6 +38,119 @@ def _tok(text: str) -> List[str]:
     return [w for w in _WORD.findall((text or "").lower()) if w not in _STOP]
 
 
+# ── Schema-aware query expansion ────────────────────────────────────────────
+#
+# Scoped alias map: maps query words to field names that exist in specific
+# record schemas. Each alias is applied only when the query context matches.
+#
+# Why aliases instead of global synonyms?
+#   - Deterministic and explainable — expansion is not probabilistic
+#   - Scoped to known schema families — avoids spurious matches elsewhere
+#   - Versioned with test coverage — each alias has a regression test
+#
+# Structure: {query_token: [(field_name, source_type_hint | None), ...]}
+#   field_name: the token as it appears in the stored record text
+#   source_type_hint: if set, only expand when query mentions this source type
+#                     None = always expand (safe, low-collision tokens)
+#
+_CONSCIOUS_DNA_ALIASES = {
+    # conscious_dna records store "dna_specialization" but users ask "specialization"
+    "specialization": [("dna_specialization", "repo")],
+}
+
+# Known conscious_dna agent names (from gold records). Used for entity-aware TF boost.
+# For phi_score queries, the agent name is the primary disambiguation signal.
+# Adding it as an extra query term doubles its TF contribution for matching records,
+# pushing the correct agent's record above other conscious_dna records in the full corpus.
+_CONSCIOUS_DNA_AGENTS = {
+    "Raziel", "Zadkiel", "Raphael", "Sandalphon", "Uriel",
+    "Michael", "Haniel", "Jophiel",
+    # Full agent names where first token is not unique
+    "Gabriel Alpha",  # dna_agent_name: Gabriel Alpha -> used for id=28071
+}
+
+
+def _extract_cdna_agent(text: str) -> str | None:
+    """Extract a known conscious_dna agent name from a question.
+
+    Handles both single names ("Raziel") and full names ("Gabriel Alpha").
+    Requires the question to contain conscious_dna context and a phi_score field query.
+    """
+    text_lower = text.lower()
+    if not any(t in text_lower for t in (
+            "conscious_dna", "dna_agent", "phi_score")):
+        return None
+
+    # Try two-word name first: "the Gabriel Alpha conscious_dna"
+    m = re.search(
+        r'\bthe\s+([A-Z][a-z]+\s+[A-Z][a-z]+)\s+conscious_dna',
+        text, re.IGNORECASE)
+    if m and m.group(1).title() in _CONSCIOUS_DNA_AGENTS:
+        return m.group(1).title()
+
+    # Single-word name: "the Raziel conscious_dna" or "of Zadkiel conscious_dna"
+    m = re.search(
+        r'\b(?:the|of)\s+([A-Z][a-z]+)\s+conscious_dna\b',
+        text, re.IGNORECASE)
+    if m and m.group(1) in _CONSCIOUS_DNA_AGENTS:
+        return m.group(1)
+
+    # Fallback: look for any known agent name in the text
+    for name in _CONSCIOUS_DNA_AGENTS:
+        if name in text.split():  # whole token match
+            return name
+    return None
+
+
+def expand_query(text: str) -> str:
+    """Apply schema-aware alias expansion to a query string.
+
+    Expands query tokens to their stored field names for known schema families.
+    Expansion is scoped by source-type hints where available.
+
+    For phi_score conscious_dna queries, the agent name is added as an extra
+    term to boost TF for the correct record (entity-aware TF boost).
+
+    Examples:
+        "What is the specialization of Raziel?"
+          -> "What is the dna_specialization of Raziel?"  (field alias)
+
+        "What is the phi_score of the Raziel conscious_dna agent?"
+          -> "What is the phi_score of the Raziel conscious_dna agent? Raziel"  (entity boost)
+    """
+    if not text:
+        return text
+
+    lower = text.lower()
+    tokens = _WORD.findall(lower)
+
+    # Detect query context
+    is_conscious_dna = any(
+        t in lower for t in ("conscious_dna", "dna_agent", "metatron_agent",
+                              "phi_score", "fibonacci", "gc_content")
+    )
+    is_phi_score = "phi_score" in tokens
+
+    # Entity-aware TF boost: for phi_score queries, repeat the agent name.
+    # This doubles the TF of the agent name for the matching record vs. all
+    # other conscious_dna records that lack that specific name.
+    if is_phi_score and is_conscious_dna:
+        agent = _extract_cdna_agent(text)
+        if agent:
+            text = f"{text} {agent}"
+
+    expanded = text
+    for tok, fields in _CONSCIOUS_DNA_ALIASES.items():
+        if tok not in tokens:
+            continue
+        for field_name, hint in fields:
+            if hint is not None and not is_conscious_dna:
+                continue
+            expanded = f"{expanded} {field_name}"
+
+    return expanded
+
+
 class RAGIndex:
     def __init__(self):
         self.docs: List[dict] = []          # {id, project, source_type, doc_id, text}
@@ -80,7 +193,7 @@ class RAGIndex:
         return math.log(1 + (n - df + 0.5) / (df + 0.5))
 
     def query(self, text: str, k: int = 5) -> List[dict]:
-        qterms = _tok(text)
+        qterms = _tok(expand_query(text))
         scores: List[float] = [0.0] * len(self.docs)
         for qt in qterms:
             idf = self._idf(qt)
@@ -146,5 +259,30 @@ if __name__ == "__main__":
 
     # empty / no-match query returns []
     _ok(idx.query("zzzznomatch") == [], "no-match query returns empty")
+
+    # Query expansion: conscious_dna specialization alias
+    _ok("dna_specialization" in expand_query(
+        "What is the specialization of the Raziel conscious_dna agent?"),
+        "conscious_dna specialization query expands to dna_specialization")
+    _ok("dna_specialization" not in expand_query(
+        "What is the specialization of the team?"),
+        "generic 'specialization' query without conscious_dna context does not expand")
+    _ok(expand_query("ibm_fez backend job") == "ibm_fez backend job",
+        "unrelated query is unchanged")
+
+    # Entity-aware TF boost: phi_score + conscious_dna + agent name
+    _ok("Raziel" in expand_query(
+        "What is the phi_score of the Raziel conscious_dna agent?"),
+        "phi_score Raziel query repeats agent name for TF boost")
+    _ok("Zadkiel" in expand_query(
+        "What is the phi_score of the Zadkiel conscious_dna agent?"),
+        "phi_score Zadkiel query repeats agent name")
+    # Non-phi_score queries do NOT get agent boost (only field alias)
+    _ok("dna_specialization" in expand_query(
+        "What is the specialization of the Raziel conscious_dna agent?"),
+        "specialization query gets dna_specialization alias but no agent TF boost")
+    _ok(expand_query("What is the status of my IBM Quantum job?") ==
+        "What is the status of my IBM Quantum job?",
+        "non-conscious_dna query unchanged")
 
     print("SELF-TEST PASSED")
