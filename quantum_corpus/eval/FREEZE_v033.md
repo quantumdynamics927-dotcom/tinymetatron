@@ -119,19 +119,42 @@ Canary leakage:            0.0
 
 Failure cards: `quantum_corpus/eval/retrieval_failure_cards.jsonl`
 
+## v0.3.4-dev baseline (train+val index, BM25-only hybrid)
+
+Development set uses **train+val indexed records** only — gold source_identities
+come from records the retriever can actually retrieve. This is the correct
+baseline for measuring retrieval improvements before any retriever changes.
+
+| Set | Items | si_recall@5 | si_mrr | Retrieval hit/miss | False abstentions |
+|---|---|---|---|---|---|
+| `qa_dev_retrieval.jsonl` | 70 | 0.8571 | 0.6133 | 60 hit / 10 miss | 0/70 (0.0%) |
+| `qa_val_retrieval.jsonl` | 40 | 0.8250 | 0.6687 | 33 hit / 7 miss | 0/40 (0.0%) |
+| `qa_val_structured.jsonl` | 4 | — | — | (SQL route, correct) | 0/4 (0.0%) |
+| **Combined** | **110** | **0.8455** | **0.6335** | 93 hit / 17 miss | **0/110 (0.0%)** |
+
+**Improvement targets** (from the 17 combined misses):
+```
+Next run must beat:
+  si_recall@5 > 0.8455
+  si_mrr      > 0.6335
+  false_abst  < 0.0%  (preserve zero)
+  fa_unans    = 0.0   (preserve zero on unanswerable)
+  leakage     = 0.0   (preserve zero)
+```
+
+Structured items (qa_val_structured.jsonl) are reported separately and excluded
+from retrieval metrics; they measure SQL-path correctness, not document retrieval.
+
 ## Next development targets (v0.3.4-dev)
 
 ```
-- Reduce false abstentions below 5% (from 8.24%)
+- Reduce the 17 retrieval misses through query expansion, field boosting, or chunking
+- Preserve zero false abstentions
 - Preserve zero false answers on unanswerables
 - Preserve zero canary leakage
-- Improve retrieval-applicable Recall@5 above 0.475
-- Improve retrieval-applicable MRR above 0.370
 ```
 
-Development sets to build:
-- `qa_dev_retrieval.jsonl` — from failure card analysis
-- `qa_val_retrieval.jsonl` — held-out from dev, used for tuning
+Development sets to build from train+val record pools (never test records).
 
 ## Reproducibility record
 
