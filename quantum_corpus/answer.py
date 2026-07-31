@@ -217,6 +217,43 @@ def _field_verification_gate(question: str, hits: list[dict],
     top = hits[0]
     text = (top.get("snippet") or top.get("text", "") or "").lower()
     q_lower = question.lower()
+    source_type = top.get("source_type", "")
+
+    # ── 0. Source-type guards: these fire UNCONDITIONALLY on matching patterns.
+    # They must fire BEFORE the absent-field loop — a keyword may appear in doc
+    # text (e.g. "token" in a filename) without the actual credential field
+    # being stored in the corpus. This ensures consistent abstain for these.
+    # "error traceback" / "raw error" — never stored in any corpus record.
+    if re.search(r"\berror\s+traceback\b", q_lower) \
+            or re.search(r"\braw\s+error\b", q_lower):
+        return {"passed": False, "reason": "field-not-in-corpus",
+                "entity_found": True, "field_found": False,
+                "absent_field": "error_traceback"}
+
+    # "error message" / "exact error" — not stored as structured fields in any
+    # ibm_job record. Source-type guard catches repo/ibm_job/workload_csv/manifest
+    # hits regardless of whether "error" appears in the doc text.
+    if re.search(r"\berror\s+(?:message|exact\s+error)\b", q_lower) \
+            and source_type in frozenset(["ibm_job", "workload_csv", "manifest"]):
+        return {"passed": False, "reason": "field-not-in-corpus",
+                "entity_found": True, "field_found": False,
+                "absent_field": "error_message"}
+
+    # Live credential / token requests: HuggingFace tokens, Neon postgres,
+    # passwords, API keys are never stored as plaintext credentials in any
+    # repo/ibm_job/workload_csv/manifest record. Catch by pattern + source-type.
+    for cred_pat in [
+        r"hugging\s*face\s+(?:access\s+)?token",
+        r"neon\s+postgres",
+        r"openai\s+api\s+key",
+        r"slack\s+webhook",
+        r"cloud\s+api\s+key",
+    ]:
+        if re.search(cred_pat, q_lower, re.I) \
+                and source_type in frozenset(["repo", "ibm_job", "workload_csv", "manifest"]):
+            return {"passed": False, "reason": "field-not-in-corpus",
+                    "entity_found": True, "field_found": False,
+                    "absent_field": "live_credential"}
 
     # ── 1. Entity existence: named backend or job jid must appear in top doc ──
     entity_found = True
@@ -271,57 +308,12 @@ def _field_verification_gate(question: str, hits: list[dict],
                 field_found = False
 
     # ── verdict ────────────────────────────────────────────────────────────────
-    # Error / traceback / exact-error: these are NEVER stored as fields in any
-    # corpus record (ibm_job, workload_csv, repo, manifest). Unlike other absent
-    # fields, the keyword may appear in doc text (e.g. provenance filenames), so
-    # we check the PATTERN MATCH without requiring the keyword to be absent from
-    # the doc. Catch this BEFORE the doc-content checks below.
-    if re.search(r"\berror\s+traceback\b", q_lower) \
-            or re.search(r"\braw\s+error\b", q_lower):
-        return {"passed": False, "reason": "field-not-in-corpus",
-                "entity_found": True, "field_found": False,
-                "absent_field": "error_traceback"}
-
     if not entity_found:
         return {"passed": False, "reason": "no-matching-entity",
                 "entity_found": False, "field_found": True, "absent_field": ""}
     if not field_found:
         return {"passed": False, "reason": "field-not-in-corpus",
                 "entity_found": True, "field_found": False, "absent_field": absent_field}
-
-    # ── source-type guard: some field requests are inherently implausible for
-    # certain source types. E.g. "error message" is never stored as a structured
-    # field in any ibm_job record; "token" / "key" is never stored as a live
-    # credential in any repo record. A hit whose source_type would NEVER carry
-    # this field should not pass even if the keyword happens to appear.
-    source_type = top.get("source_type", "")
-    q_lower = question.lower()
-
-    # "error message" / "error traceback" / "exact error" — error messages are
-    # not stored in any ibm_job record. Only ibm_job records mention "error" in
-    # passing (e.g. in provenance.json filenames). This is NOT an actual error
-    # message field.
-    _ERROR_SOURCE_TYPES = frozenset(["ibm_job", "workload_csv", "manifest"])
-    if re.search(r"\berror\s+(?:message|traceback|exact\s+error)\b", q_lower) \
-            and source_type in _ERROR_SOURCE_TYPES:
-        return {"passed": False, "reason": "field-not-in-corpus",
-                "entity_found": True, "field_found": False,
-                "absent_field": "error_message"}
-
-    # Live credential / token requests: tokens, keys, passwords, PEM blocks,
-    # webhook URLs, HuggingFace tokens are never stored as plaintext in the corpus.
-    # repo records may contain code that mentions these keywords in passing, but
-    # never as actual credentials to return. Catch this after the keyword pass
-    # to avoid false-abstaining on legitimate technical discussions of auth.
-    _CREDENTIAL_SOURCE_BLACKLIST = {
-        r"hugging\s*face\s+(?:access\s+)?token": frozenset(["repo", "ibm_job", "workload_csv", "manifest"]),
-        r"neon\s+postgres": frozenset(["repo", "ibm_job", "workload_csv", "manifest"]),
-    }
-    for cred_pat, bad_sources in _CREDENTIAL_SOURCE_BLACKLIST.items():
-        if re.search(cred_pat, q_lower, re.I) and source_type in bad_sources:
-            return {"passed": False, "reason": "field-not-in-corpus",
-                    "entity_found": True, "field_found": False,
-                    "absent_field": "live_credential"}
 
     return {"passed": True, "reason": "ok",
             "entity_found": True, "field_found": True, "absent_field": ""}
@@ -475,6 +467,28 @@ def ask(question: str, retriever,
     # structured path BEFORE the evidence gate, because structured queries do
     # not rely on BM25/RRF scores (they are exact SQL filters). This is what
     # lifts the filter-style questions that BM25 fails (finding #3).
+    # EXCEPTION: if the question asks for an absent field (e.g. "calibrated qubits",
+    # "readout error rate"), the structured query would return a false answer
+    # (count of jobs) even though that field is never stored. Check this first.
+    q_lower = question.lower()
+    for pat, absent_field in _ABSENT_FIELD_PATTERNS:
+        if pat.search(q_lower):
+            # Absent field detected. The field gate will abstain on the retrieval
+            # path; for consistency, the structured path also abstains for these.
+            cits = _cite(hits, k=top_k) if hits else []
+            return _secrets.mask_response({
+                "decision": "not_established", "route": "retrieval",
+                "field_gate": {"passed": False, "reason": "field-not-in-corpus",
+                               "entity_found": True, "field_found": False,
+                               "absent_field": absent_field},
+                "answer": ("The supplied records do not establish that field for "
+                           "the requested entity."),
+                "generated": None, "abstained": True, "citations": cits,
+                "query_provenance": None,
+                "build_id": build_id, "build_sha256": build_sha256,
+                "evidence": None,
+            })
+
     intent = _structured.classify_intent(question) if use_structured else None
     if intent is not None and structured_query is not None:
         name, params = intent

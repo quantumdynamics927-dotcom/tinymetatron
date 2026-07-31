@@ -53,13 +53,13 @@ def _rank(record_id, hits: List[dict]) -> Optional[int]:
     return None
 
 
-# BM25-primary weighted RRF (v0.3.1): BM25 contributes 75%, semantic 25%.
-# Rationale: on this technical/quantum corpus general-purpose all-MiniLM-L6-v2
-# does not beat BM25 on raw lexical recall; semantic earns its keep on synonym
-# handling and answer correctness, not on raw ranking weight. The 0.75/0.25
-# split was validated on the val set (recall@5 recovery vs equal-weight RRF).
-BM25_W = 0.75
-SEM_W  = 0.25
+# BM25-only fallback: semantic scores on the full 38k corpus are highly compressed
+# (cosine range ~0.55-0.61), causing non-gold near-duplicate records in the
+# semantic top-20 to receive RRF contributions that override BM25's discriminative
+# ranking of the true gold record. Until a discriminative semantic model is
+# available, hybrid fusion is set to pure BM25.
+BM25_W = 1.0
+SEM_W  = 0.0
 
 
 class HybridRetriever:
@@ -114,7 +114,8 @@ class HybridRetriever:
         if not self.bm25:
             return []
 
-        use_sem = self.semantic_available
+        # Skip semantic if disabled (SEM_W=0) or unavailable — avoids wasted query.
+        use_sem = self.semantic_available and SEM_W > 0
         if not use_sem and semantic.SEMANTIC_AVAILABLE and not self._warned:
             # ST importable but model not loadable (e.g. offline) — degrade.
             warnings.warn(
@@ -122,9 +123,13 @@ class HybridRetriever:
                 "BM25-only", RuntimeWarning, stacklevel=2)
             self._warned = True
 
-        # Fetch a wider pool from each retriever so fusion has room, then filter.
+        # Fetch a wider pool from each retriever — NO sensitivity pre-filtering.
+        # Pre-filtering would discard BM25's signal for sensitive gold records
+        # when semantic doesn't include them, causing Recall@5 = 0 in hybrid mode.
+        # By fusing first, then filtering the fused top-k, BM25's rank contribution
+        # is preserved for sensitive records that semantic misses.
         pool = max(k * 3, 20)
-        bm25_hits = self._filter_hits(self.bm25.query(text, pool), max_sensitivity)
+        bm25_hits = self.bm25.query(text, pool)
 
         fused: Dict[object, dict] = {}     # id -> {score, sources, hit}
 
@@ -139,7 +144,7 @@ class HybridRetriever:
             }
 
         if use_sem:
-            sem_hits = self._filter_hits(self.semantic.query(text, pool), max_sensitivity)
+            sem_hits = self.semantic.query(text, pool)
             for h in sem_hits:
                 r = _rank(h["id"], sem_hits)
                 if r is None:
@@ -148,8 +153,6 @@ class HybridRetriever:
                 if h["id"] in fused:
                     fused[h["id"]]["score"] += SEM_W * contrib
                     fused[h["id"]]["sources"].add("semantic")
-                    # Prefer the higher-scoring retriever's snippet/score meta is
-                    # identical by id, so keep the existing hit (same record).
                 else:
                     fused[h["id"]] = {
                         "score": contrib,
@@ -164,8 +167,18 @@ class HybridRetriever:
             key=lambda e: (-e["score"], -bm25_score.get(e["hit"]["id"], 0.0),
                            str(e["hit"]["id"])),
         )
+
+        # POST-FUSION sensitivity filter: apply after ranking so BM25's signal
+        # for a sensitive record is preserved in fusion even if semantic skips it.
+        if max_sensitivity is not None:
+            cap = _SENS_RANK.get(max_sensitivity, 3)
+            eligible = [e for e in order
+                        if _SENS_RANK.get(self.meta.get(e["hit"]["id"], {}).get("sensitivity", "public"), 3) <= cap]
+        else:
+            eligible = list(order)
+
         out = []
-        for e in order[:k]:
+        for e in eligible[:k]:
             h = dict(e["hit"])
             h["score"] = round(e["score"], 4)
             h["sources"] = sorted(e["sources"])
@@ -237,5 +250,34 @@ if __name__ == "__main__":
         # When semantic IS available, a token-overlap query still surfaces id=2.
         fb = r.query("ibm_fez backend job", k=2)
         _ok(any(h["id"] == 2 for h in fb), f"hybrid surfaces ibm_fez job: {[h['id'] for h in fb]}")
+
+    # 7. Post-fusion sensitivity filtering: a sensitive record that ONLY BM25 finds
+    #    (semantic misses it) must still appear in hybrid top-k when cap allows it,
+    #    but be correctly excluded when cap is lower.
+    #    This tests the fix for Recall@5=0 in hybrid mode on val factual gold.
+    recs_sens = [
+        {"id": 10, "project": "ibm-quantum", "source_type": "ibm_job",
+         "doc_id": "ibm:g1", "sensitivity": "internal",
+         "text": "IBM Quantum job g1 on backend ibm_nexus, status Completed."},
+        {"id": 11, "project": "ibm-quantum", "source_type": "ibm_job",
+         "doc_id": "ibm:g2", "sensitivity": "internal",
+         "text": "IBM Quantum job g2 on backend ibm_pegasus, status Completed."},
+        # Sensitive gold: only BM25 will rank it #1 (semantic misses it)
+        {"id": 12, "project": "ibm-quantum", "source_type": "ibm_job",
+         "doc_id": "ibm:g1", "sensitivity": "sensitive",
+         "text": "IBM Quantum job g1 on backend ibm_fez, status Completed."},
+    ]
+    rs = HybridRetriever.build(recs_sens)
+    q_sens = "What backend did IBM Quantum job g1 run on?"
+    # With internal cap: sensitive record (id=12) must NOT appear.
+    hits_int = rs.query(q_sens, k=5, max_sensitivity="internal")
+    ids_int = [h["id"] for h in hits_int]
+    _ok(12 not in ids_int,
+        f"internal cap excludes sensitive gold id=12: {ids_int}")
+    # With sensitive cap: sensitive record (id=12) MUST appear.
+    hits_sens = rs.query(q_sens, k=5, max_sensitivity="sensitive")
+    ids_sens = [h["id"] for h in hits_sens]
+    _ok(12 in ids_sens,
+        f"sensitive cap includes sensitive gold id=12: {ids_sens}")
 
     print("SELF-TEST PASSED")

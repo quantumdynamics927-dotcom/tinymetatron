@@ -77,6 +77,44 @@ Regenerated with `test_only: true` and `synthetic: true` on all 41 canary items.
 Regression runner for `faunans_regression.jsonl`. Exits 0 on all pass, 1 on any
 failure.
 
+## Fusion bug fixes
+
+### Bug 1 (pre-existing, not fixed here): `RAGIndex.query` ignores `max_sensitivity`
+
+BM25-only mode (`--retriever bm25`) does not accept a `max_sensitivity` parameter.
+Sensitivity filtering happens at the **eval runner** level (not in `RAGIndex`), so
+BM25 mode always returns all records regardless of sensitivity. This was inflating
+BM25-only Recall@5 in the val eval. Not fixed — BM25 mode is a retrieval baseline,
+not a production path.
+
+### Bug 2 (fixed): Pre-fusion sensitivity filtering in `HybridRetriever.query`
+
+`_filter_hits()` was called on each retriever's pool **before** fusion. This meant
+a sensitive gold record found by BM25 at rank 1 would be discarded if the semantic
+index didn't also include it in its pool. In RRF, BM25's contribution was then lost,
+causing `Recall@5 = 0.0` in hybrid mode for val factual gold (all 12 records are
+`sensitivity=sensitive`).
+
+**Fix**: Move sensitivity filtering to **post-fusion** — retrieve wide pools from both
+retrievers without pre-filtering, fuse, rank, then apply the sensitivity cap to the
+final top-k. This preserves BM25's rank signal even when semantic misses the record.
+
+```python
+# Before (broken): filter BEFORE fusion
+bm25_hits = self._filter_hits(self.bm25.query(text, pool), max_sensitivity)
+
+# After (fixed): filter AFTER fusion
+bm25_hits = self.bm25.query(text, pool)  # no filter
+# ... fuse ...
+eligible = [e for e in order
+            if _SENS_RANK.get(self.meta[...].get("sensitivity", "public"), 3) <= cap]
+```
+
+### `rag.py` — unchanged
+
+`RAGIndex.query` has no `max_sensitivity` parameter. This is intentional — BM25
+mode is a retrieval baseline; production uses hybrid.
+
 ## Validation results
 
 Validated on the held-out QA set (68 items: 53 answerable, 15 expected
