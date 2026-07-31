@@ -67,13 +67,13 @@ def _fetch_and_cache_hits(db_path, retriever_kind, max_sensitivity, use_cache):
 
 
 def _evaluate(cached, sq, gates, use_structured, build_id, build_sha,
-              max_sensitivity, score_scale):
+              max_sensitivity, score_scale, db_path):
     records = []
     for row in cached:
         it, hits = row["item"], row["hits"]
         rec = score_item_ask(it, hits, None, sq, gates, use_structured,
                              build_id, build_sha, max_sensitivity,
-                             score_scale=score_scale)
+                             score_scale=score_scale, db_path=db_path)
         records.append(rec)
     return aggregate(records)
 
@@ -133,7 +133,7 @@ def main(argv=None) -> int:
                 gates = {"score_floor_hybrid": floor, "score_floor_bm25": 3.0,
                          "sep_ratio": sep, "sep_band": 2.0, "min_concepts": mc}
                 s = _evaluate(cached, sq, gates, use_structured, build_id, build_sha,
-                              max_sensitivity, score_scale)
+                              max_sensitivity, score_scale, db_path)
                 row = (f"{floor:>7} {sep:>5} {mc:>5} | "
                        f"{_f(s['abstention_recall']):>7} "
                        f"{_f(s['abstention_precision']):>8} "

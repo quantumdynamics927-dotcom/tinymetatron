@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS corpus_records (
     risk_tier        INTEGER NOT NULL DEFAULT 0,  -- 0..3
     content_hash     TEXT    NOT NULL,   -- sha256 of final (redacted) text -> dedup
     cleaning_version TEXT    NOT NULL,
+    source_identity  TEXT    NOT NULL,   -- sha256(project + doc_id + cleaning_version + content_hash + chunk_index)
     created_at       TEXT    NOT NULL
 );
 
@@ -49,6 +50,7 @@ CREATE INDEX IF NOT EXISTS idx_corpus_split ON corpus_records(split);
 CREATE INDEX IF NOT EXISTS idx_corpus_project ON corpus_records(project);
 CREATE INDEX IF NOT EXISTS idx_corpus_source ON corpus_records(source_type);
 CREATE INDEX IF NOT EXISTS idx_corpus_hash ON corpus_records(content_hash);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_corpus_source_identity ON corpus_records(source_identity);
 """
 
 
@@ -109,6 +111,48 @@ def content_hash(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8", "replace")).hexdigest()
 
 
+def source_identity(project: str, doc_id: str, cleaning_version: str,
+                    content_hash_val: str, chunk_index: int = 0) -> str:
+    """Stable content-based identity: sha256(project + doc_id + cleaning_version + content_hash + chunk_index).
+
+    This is NOT derived from the SQLite row id — it survives DB rebuilds,
+    deduplication, insertion order changes, and split reassignments.
+    chunk_index=0 for unchunked records.
+    """
+    # Normalize path separators for cross-platform consistency
+    normalized_doc = doc_id.replace("\\", "/")
+    raw = (str(project) + "\n" + normalized_doc + "\n" +
+           str(cleaning_version) + "\n" + str(content_hash_val) + "\n" +
+           str(chunk_index))
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def backfill_source_identities(path: str) -> int:
+    """Compute and store source_identity for records that lack it (pre-migration).
+
+    Safe to run multiple times — records that already have a non-null value are skipped.
+    chunk_index is assumed 0 for all pre-migration records (no chunking metadata
+    was stored separately). Returns count of records updated."""
+    conn = _connect(path)
+    count = 0
+    try:
+        rows = conn.execute(
+            "SELECT id, project, doc_id, cleaning_version, content_hash "
+            "FROM corpus_records WHERE source_identity IS NULL OR source_identity = ''"
+        ).fetchall()
+        for row in rows:
+            si = source_identity(row["project"], row["doc_id"],
+                               row["cleaning_version"], row["content_hash"], 0)
+            conn.execute(
+                "UPDATE corpus_records SET source_identity=? WHERE id=?",
+                (si, row["id"]))
+            count += 1
+        conn.commit()
+    finally:
+        conn.close()
+    return count
+
+
 # ── Write / read ─────────────────────────────────────────────────────────────
 
 CLEANING_VERSION = "v1"
@@ -128,16 +172,18 @@ def write_records(path: str, records: Iterable[Record]) -> tuple[int, int]:
             if exists:
                 duplicates += 1
                 continue
+            si = source_identity(r.project, r.doc_id,
+                                r.cleaning_version or CLEANING_VERSION, ch, 0)
             conn.execute(
                 "INSERT INTO corpus_records "
                 "(source_type, project, subdomain, doc_id, text, split, "
                 " token_count, source_license, provenance_url, sensitivity, "
-                " risk_tier, content_hash, cleaning_version, created_at) "
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                " risk_tier, content_hash, cleaning_version, source_identity, created_at) "
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (r.source_type, r.project, r.subdomain, r.doc_id, r.text, r.split,
                  int(r.token_count), r.source_license, r.provenance_url,
-                 r.sensitivity, int(r.risk_tier), ch, r.cleaning_version or CLEANING_VERSION,
-                 _now()),
+                 r.sensitivity, int(r.risk_tier), ch,
+                 r.cleaning_version or CLEANING_VERSION, si, _now()),
             )
             inserted += 1
         conn.commit()
@@ -169,7 +215,8 @@ def fetch_all(path: str) -> list[dict]:
     try:
         cur = conn.execute(
             "SELECT id, source_type, project, subdomain, doc_id, text, split, "
-            "token_count, source_license, provenance_url, sensitivity, risk_tier "
+            "token_count, source_license, provenance_url, sensitivity, risk_tier, "
+            "content_hash, source_identity "
             "FROM corpus_records ORDER BY id"
         )
         return [dict(r) for r in cur.fetchall()]

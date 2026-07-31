@@ -104,7 +104,8 @@ def build_dev_qa(db_path: str, n_jobs: int = 20) -> list[dict]:
     set exists to tune retrieval, not to be a balanced benchmark."""
     conn = sqlite3.connect(db_path); conn.row_factory = sqlite3.Row
     rows = conn.execute(
-        "SELECT id,doc_id,text,split FROM corpus_records WHERE split IN ('train','val') "
+        "SELECT id,doc_id,text,split,source_identity FROM corpus_records "
+        "WHERE split IN ('train','val') "
         "AND source_type='ibm_job' AND text LIKE '%backend ibm_%' AND text NOT LIKE '%<bound%' "
         "ORDER BY id").fetchall()
     conn.close()
@@ -113,33 +114,34 @@ def build_dev_qa(db_path: str, n_jobs: int = 20) -> list[dict]:
         j = _parse_job(r["text"])
         if "jid" not in j: continue
         rid = r["id"]
+        si = r.get("source_identity", "")
         for field, label in (("backend", "backend"), ("status", "status"), ("program", "program")):
             if field in j:
                 n += 1
                 items.append(dict(id=f"d{n:03d}", category="factual",
                     question=f"What {label} did IBM Quantum job {j['jid']} run as / have?",
-                    gold_record_ids=[rid],
+                    gold_record_ids=[rid], gold_source_identities=[si],
                     answer_requirements=f"Cite record {rid} and state {label} is {j[field]}.",
                     expected_abstention=False, notes=f"gold {field}={j[field]}"))
         if j.get("samples", 0) > 0:
             n += 1
             items.append(dict(id=f"d{n:03d}", category="numeric",
                 question=f"How many measurement samples did IBM Quantum job {j['jid']} have?",
-                gold_record_ids=[rid],
+                gold_record_ids=[rid], gold_source_identities=[si],
                 answer_requirements=f"Cite record {rid} and state the sample count is {j['samples']}.",
                 expected_abstention=False, notes=f"gold samples={j['samples']}"))
     return items
 
 
 # ── retrieval metrics ───────────────────────────────────────────────────────
-def _recall_at_k(gold: set[int], retrieved: list[int], k: int) -> float:
+def _recall_at_k(gold: set, retrieved: list, k: int) -> float:
     if not gold:  # unanswerable/security: retrieval metric undefined
         return float("nan")
     top = retrieved[:k]
     return len(gold & set(top)) / len(gold)
 
 
-def _mrr(gold: set[int], retrieved: list[int]) -> float:
+def _mrr(gold: set, retrieved: list) -> float:
     if not gold:
         return float("nan")
     for i, rid in enumerate(retrieved, 1):
@@ -148,11 +150,29 @@ def _mrr(gold: set[int], retrieved: list[int]) -> float:
     return 0.0
 
 
-def _citation_precision(gold: set[int], retrieved: list[int], k: int) -> float:
+def _citation_precision(gold: set, retrieved: list, k: int) -> float:
     if not gold:
         return float("nan")
     top = retrieved[:k]
     return len(gold & set(top)) / len(top) if top else 0.0
+
+
+def _gold_source_identities(item: dict, db_path: str) -> list[str]:
+    """Return gold_source_identities from the item, computing from gold_record_ids
+    via DB lookup if not already present."""
+    if item.get("gold_source_identities"):
+        return item["gold_source_identities"]
+    # fallback: look up source_identity for each gold_record_id
+    if not item.get("gold_record_ids") or not db_path:
+        return []
+    conn = sqlite3.connect(db_path); conn.row_factory = sqlite3.Row
+    sis = []
+    for gid in item["gold_record_ids"]:
+        r = conn.execute("SELECT source_identity FROM corpus_records WHERE id=?", (gid,)).fetchone()
+        if r and r["source_identity"]:
+            sis.append(r["source_identity"])
+    conn.close()
+    return sis
 
 
 # ── extractive answer (templated synthesis, no LM) ─────────────────────────
@@ -204,7 +224,8 @@ def _query(retriever, question: str, k: int, max_sensitivity: str) -> list[dict]
 
 def score_item_ask(item: dict, hits: list[dict], retriever, sq, gates,
                    use_structured: bool, build_id, build_sha256,
-                   max_sensitivity: str, score_scale: str = None) -> dict:
+                   max_sensitivity: str, score_scale: str = None,
+                   db_path: str = None) -> dict:
     """Score one item through the shared answer engine (gates + structured +
     masking). Reuses ``hits`` for retrieval metrics so they stay comparable
     across modes. ``score_scale`` is forwarded to ``answer.ask`` so the tune
@@ -212,17 +233,27 @@ def score_item_ask(item: dict, hits: list[dict], retriever, sq, gates,
     score floor for the retriever kind that produced the hits."""
     gold = set(item["gold_record_ids"])
     retrieved = [h["id"] for h in hits]
+    # source_identity-based gold and retrieved
+    gold_sis = item.get("gold_source_identities", [])
+    retrieved_sis = [h.get("source_identity", "") for h in hits]
+    gold_si_set = set(gold_sis)
     rec = {
         "id": item["id"], "category": item["category"],
         "question": item["question"],
         "gold_record_ids": sorted(gold),
+        "gold_source_identities": gold_sis,
         "retrieved_top5": retrieved[:5],
+        "retrieved_source_identities_top5": retrieved_sis[:5],
         "scores_top5": [round(h["score"], 3) for h in hits[:5]],
         "recall@1": _recall_at_k(gold, retrieved, 1),
         "recall@3": _recall_at_k(gold, retrieved, 3),
         "recall@5": _recall_at_k(gold, retrieved, 5),
         "mrr": _mrr(gold, retrieved),
         "citation_precision@5": _citation_precision(gold, retrieved, 5),
+        # source_identity-based retrieval metrics
+        "si_recall@1": _recall_at_k(gold_si_set, retrieved_sis, 1),
+        "si_recall@5": _recall_at_k(gold_si_set, retrieved_sis, 5),
+        "si_mrr": _mrr(gold_si_set, retrieved_sis),
         "expected_abstention": item["expected_abstention"],
     }
     res = _answer.ask(
@@ -312,14 +343,18 @@ def _leaked(answer: str) -> bool:
 
 
 # ── per-item scoring ────────────────────────────────────────────────────────
-def score_item(item: dict, hits: list[dict], mode: str) -> dict:
+def score_item(item: dict, hits: list[dict], mode: str, db_path: str = None) -> dict:
     gold = set(item["gold_record_ids"])
+    gold_sis = item.get("gold_source_identities", [])
     retrieved = [h["id"] for h in hits]
+    retrieved_sis = [h.get("source_identity", "") for h in hits]
     rec = {
         "id": item["id"], "category": item["category"],
         "question": item["question"],
         "gold_record_ids": sorted(gold),
+        "gold_source_identities": gold_sis,
         "retrieved_top5": retrieved[:5],
+        "retrieved_source_identities_top5": retrieved_sis[:5],
         "scores_top5": [round(h["score"], 3) for h in hits[:5]],
         "recall@1": _recall_at_k(gold, retrieved, 1),
         "recall@3": _recall_at_k(gold, retrieved, 3),
@@ -382,6 +417,10 @@ def aggregate(records: list[dict]) -> dict:
     out["recall@5"] = round(_mean([r["recall@5"] for r in ans]), 4)
     out["mrr"] = round(_mean([r["mrr"] for r in ans]), 4)
     out["citation_precision@5"] = round(_mean([r["citation_precision@5"] for r in ans]), 4)
+    # source_identity-based retrieval metrics
+    out["si_recall@1"] = round(_mean([r["si_recall@1"] for r in ans]), 4)
+    out["si_recall@5"] = round(_mean([r["si_recall@5"] for r in ans]), 4)
+    out["si_mrr"] = round(_mean([r["si_mrr"] for r in ans]), 4)
     # by category retrieval (recall@5)
     out["recall@5_by_category"] = {}
     for cat in ("factual", "conceptual", "cross_record", "numeric"):
@@ -598,9 +637,10 @@ def run(which: str, mode: str, db_path: str, report_path: Optional[str],
         hits = _query(idx, it["question"], 5, max_sensitivity)
         if mode == "ask":
             rec = score_item_ask(it, hits, idx, sq, gates, use_structured,
-                                 build_id, build_sha, max_sensitivity)
+                                 build_id, build_sha, max_sensitivity,
+                                 score_scale=retriever, db_path=db_path)
         else:
-            rec = score_item(it, hits, mode)
+            rec = score_item(it, hits, mode, db_path=db_path)
         rec["latency_ms"] = round((time.time() - t1) * 1000, 2)
         records.append(rec)
 

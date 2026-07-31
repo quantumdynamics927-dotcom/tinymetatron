@@ -104,6 +104,7 @@ class SemanticIndex:
                 "id": r.get("id"), "project": r.get("project", ""),
                 "source_type": r.get("source_type", ""),
                 "doc_id": r.get("doc_id", ""), "text": text,
+                "source_identity": r.get("source_identity", ""),
             })
             texts.append(text)
         if texts:
@@ -140,6 +141,7 @@ class SemanticIndex:
                 "id": d["id"], "score": round(s, 4),
                 "project": d["project"], "source_type": d["source_type"],
                 "doc_id": d["doc_id"],
+                "source_identity": d.get("source_identity", ""),
                 "snippet": d["text"][:200].replace("\n", " "),
             })
         return out

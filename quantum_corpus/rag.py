@@ -59,6 +59,7 @@ class RAGIndex:
                 "id": r.get("id"), "project": r.get("project", ""),
                 "source_type": r.get("source_type", ""), "doc_id": r.get("doc_id", ""),
                 "text": r.get("text", ""),
+                "source_identity": r.get("source_identity", ""),
             })
             tf = Counter(terms)
             idx.term_freqs.append(dict(tf))
@@ -102,6 +103,7 @@ class RAGIndex:
                 "id": d["id"], "score": round(scores[i], 4),
                 "project": d["project"], "source_type": d["source_type"],
                 "doc_id": d["doc_id"],
+                "source_identity": d.get("source_identity", ""),
                 "snippet": d["text"][:200].replace("\n", " "),
             })
             if len(out) >= k:
