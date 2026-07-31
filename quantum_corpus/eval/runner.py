@@ -114,7 +114,7 @@ def build_dev_qa(db_path: str, n_jobs: int = 20) -> list[dict]:
         j = _parse_job(r["text"])
         if "jid" not in j: continue
         rid = r["id"]
-        si = r.get("source_identity", "")
+        si = r["source_identity"]
         for field, label in (("backend", "backend"), ("status", "status"), ("program", "program")):
             if field in j:
                 n += 1
@@ -346,6 +346,7 @@ def _leaked(answer: str) -> bool:
 def score_item(item: dict, hits: list[dict], mode: str, db_path: str = None) -> dict:
     gold = set(item["gold_record_ids"])
     gold_sis = item.get("gold_source_identities", [])
+    gold_si_set = set(gold_sis)
     retrieved = [h["id"] for h in hits]
     retrieved_sis = [h.get("source_identity", "") for h in hits]
     rec = {
@@ -361,6 +362,10 @@ def score_item(item: dict, hits: list[dict], mode: str, db_path: str = None) -> 
         "recall@5": _recall_at_k(gold, retrieved, 5),
         "mrr": _mrr(gold, retrieved),
         "citation_precision@5": _citation_precision(gold, retrieved, 5),
+        # Source-identity metrics (available for both ask and bm25 paths)
+        "si_recall@1": _recall_at_k(gold_si_set, retrieved_sis, 1),
+        "si_recall@5": _recall_at_k(gold_si_set, retrieved_sis, 5),
+        "si_mrr": _mrr(gold_si_set, retrieved_sis),
         "expected_abstention": item["expected_abstention"],
     }
 
