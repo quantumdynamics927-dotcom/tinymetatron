@@ -422,10 +422,11 @@ def aggregate(records: list[dict]) -> dict:
     out["recall@5"] = round(_mean([r["recall@5"] for r in ans]), 4)
     out["mrr"] = round(_mean([r["mrr"] for r in ans]), 4)
     out["citation_precision@5"] = round(_mean([r["citation_precision@5"] for r in ans]), 4)
-    # source_identity-based retrieval metrics
-    out["si_recall@1"] = round(_mean([r["si_recall@1"] for r in ans]), 4)
-    out["si_recall@5"] = round(_mean([r["si_recall@5"] for r in ans]), 4)
-    out["si_mrr"] = round(_mean([r["si_mrr"] for r in ans]), 4)
+    # source_identity-based retrieval metrics (only over items that have gold SIs)
+    ans_si = [r for r in ans if r.get("gold_source_identities")]
+    out["si_recall@1"] = round(_mean([r["si_recall@1"] for r in ans_si]), 4) if ans_si else None
+    out["si_recall@5"] = round(_mean([r["si_recall@5"] for r in ans_si]), 4) if ans_si else None
+    out["si_mrr"] = round(_mean([r["si_mrr"] for r in ans_si]), 4) if ans_si else None
     # by category retrieval (recall@5)
     out["recall@5_by_category"] = {}
     for cat in ("factual", "conceptual", "cross_record", "numeric"):
