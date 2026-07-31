@@ -17,6 +17,7 @@ This survives DB rebuilds, deduplication, insertion-order changes, and split rea
 
 - **Path**: `E:\Temp\qcorpus\quantum_corpus.db`
 - **DB SHA256**: `8493932d171b007c1b6e1ffe10128a760cd92fe411bbff1359da02ac6439d564`
+- **Corpus build ID**: `quantum-corpus-build-2`
 - **Migration applied**: `ALTER TABLE corpus_records ADD COLUMN source_identity TEXT NOT NULL DEFAULT ''` then backfill of 46,579 records
 
 ## QA Manifests
@@ -51,42 +52,117 @@ This survives DB rebuilds, deduplication, insertion-order changes, and split rea
 | `sep_band` | 2.0 |
 | `min_concepts` | 1 |
 
-## Retrieval metrics (final eval, test-only index, hybrid+structured)
+## Official final results — v0.3.3 hold-out (100 items, test-only index)
 
-| Metric | ID-based | source_identity-based |
+**All metrics use source-identity-based computation as the meaningful values; id-based values are legacy diagnostics only.**
+
+### Retrieval (retrieval-applicable questions)
+
+| Metric | Computation | Value |
 |---|---|---|
-| Recall@1 | 0.1471 | 0.3125 |
-| Recall@5 | 0.2235 | **0.4750** |
-| MRR | 0.1739 | **0.3696** |
+| Source-identity Recall@5 | Gold SI in top-5 / retrieval-applicable items | **0.4750** |
+| Source-identity MRR | 1/rank of first gold SI / retrieval-applicable items | **0.3696** |
+| ID-based Recall@5 | Legacy diagnostic (mutable row IDs) | 0.2235 |
+| ID-based MRR | Legacy diagnostic (mutable row IDs) | 0.1739 |
 
-The discrepancy between id-based and si-based reflects DB rebuilds between when gold IDs were assigned and the current index. `source_identity` metrics reflect true retrieval quality.
+**Denominator note**: Metrics computed over items with non-empty `gold_source_identities` that used the retrieval route (not structured SQL). Items answered via structured SQL are excluded from retrieval metrics and reported separately.
 
-## Answer quality
+### Structured-query correctness
 
 | Metric | Value |
 |---|---|
-| Rubric correctness (ask) | 0.7882 |
-| Abstention recall | 1.0 |
-| False answer rate on unanswerable | 0.0 |
-| False abstention rate on answerable | 0.0824 |
-| Seeded canary leakage rate | 0.0 |
+| Structured-route items | 4 (q074, q075, q077, q085) |
+| Structured correct | 4 / 4 |
 
-## Stability tests (all 3/3 PASS)
+Structured-route items are excluded from retrieval Recall@5/MRR and reported separately because the SQL path answers correctly without document retrieval.
+
+### Answer correctness
+
+| Metric | Denominator | Value |
+|---|---|---|
+| Rubric correctness | All 85 answerable items | 0.7882 (67/85) |
+
+### Abstention safety
+
+| Metric | Denominator | Value |
+|---|---|---|
+| Abstention recall | 15 expected-abstention items | **1.0** (15/15) |
+| Abstention precision | 15 abstention-expected + 7 false abstentions | 0.6818 |
+| False answers on unanswerables | 15 expected-abstention items | **0.0** (0/15) |
+| False abstentions on answerables | 85 answerable items | 0.0824 (7/85) |
+
+### Groundedness
+
+| Metric | Value |
+|---|---|
+| Seeded canary leakage rate | **0.0** |
+
+### Summary box
 
 ```
-REBUILD STABILITY: PASS
-ROW-ID INDEPENDENCE: PASS
-CHANGE DETECTION: PASS
+Source-identity Recall@5: 0.4750 (over retrieval-applicable items)
+Source-identity MRR:       0.3696 (over retrieval-applicable items)
+Rubric correctness:         0.7882 (85 answerable items)
+Abstention recall:         1.0    (15 expected-abstention items)
+False answers:             0.0    (15 expected-abstention items)
+False abstentions:         0.0824 (85 answerable items)
+Canary leakage:            0.0
 ```
 
-## Files in commit `50874a9`
+## 21 failure cards (retrieval failure analysis)
 
-- `quantum_corpus/schema.py` — source_identity column, function, write_records, fetch_all, backfill
-- `quantum_corpus/rag.py` — source_identity in RAGIndex hit metadata
-- `quantum_corpus/semantic.py` — source_identity in SemanticIndex hit metadata
-- `quantum_corpus/eval/build_qa.py` — gold_source_identities in QA items
-- `quantum_corpus/eval/runner.py` — si-based retrieval metrics in aggregate + per-item
-- `quantum_corpus/eval/tune.py` — updated score_item_ask signature
-- `quantum_corpus/eval/test_stable_identity.py` — NEW: 3 stability tests
-- `quantum_corpus/eval/qa_val.jsonl` — rebuilt with gold_source_identities
-- `quantum_corpus/eval/qa_test.jsonl` — rebuilt with gold_source_identities
+| Class | Count | Items |
+|---|---|---|
+| `empty-retrieval-score-floor` | 4 | q058, q059, q076, q079 |
+| `lexical-mismatch-wrong-doc-ranked` | 13 | q049, q060, q061, q064, q069, q070, q071, q072, q073, q078, q082, q083, q084 |
+| `structured-answer-correct-no-doc-retrieval` | 4 | q074, q075, q077, q085 |
+
+Failure cards: `quantum_corpus/eval/retrieval_failure_cards.jsonl`
+
+## Next development targets (v0.3.4-dev)
+
+```
+- Reduce false abstentions below 5% (from 8.24%)
+- Preserve zero false answers on unanswerables
+- Preserve zero canary leakage
+- Improve retrieval-applicable Recall@5 above 0.475
+- Improve retrieval-applicable MRR above 0.370
+```
+
+Development sets to build:
+- `qa_dev_retrieval.jsonl` — from failure card analysis
+- `qa_val_retrieval.jsonl` — held-out from dev, used for tuning
+
+## Reproducibility record
+
+```
+Corpus build ID: quantum-corpus-build-2
+Corpus DB SHA-256: 8493932d171b007c1b6e1ffe10128a760cd92fe411bbff1359da02ac6439d564
+QA validation manifest SHA-256: 93b5226368de10852a80de6d54413339db8fb9b8e067b7832e05172b82f3efde
+QA test manifest SHA-256: 4fb3289a761631eca3a03800270bdf61a9c09961b45c6cc9a7299816cfb41725
+
+Relevant commits:
+  470aa37  Quantum RAG v0.3.2: field-verification gate + canary metadata
+  e1caa8b  Fix RAG sensitivity fusion and runner parity
+  50874a9  Add stable source_identity throughout the pipeline
+  477c257  Add freeze manifest and migration utility for v0.3.3
+  f5ac6a4  Add retrieval failure cards for v0.3.3 hold-out eval
+
+Detailed private report:
+  E:\Temp\qcorpus\reports\final_eval_source_identity.json
+```
+
+## Files in commits 470aa37 through f5ac6a4
+
+| File | Commit | Change |
+|---|---|---|
+| `quantum_corpus/schema.py` | 50874a9 | source_identity column, function, write_records, fetch_all, backfill |
+| `quantum_corpus/rag.py` | 50874a9 | source_identity in RAGIndex hit metadata |
+| `quantum_corpus/semantic.py` | 50874a9 | source_identity in SemanticIndex hit metadata |
+| `quantum_corpus/eval/build_qa.py` | 50874a9 | gold_source_identities in QA items |
+| `quantum_corpus/eval/runner.py` | 50874a9 | si-based retrieval metrics in aggregate + per-item |
+| `quantum_corpus/eval/tune.py` | 50874a9 | updated score_item_ask signature |
+| `quantum_corpus/eval/test_stable_identity.py` | 50874a9 | NEW: 3 stability tests (all pass) |
+| `migrate_source_identity.py` | 477c257 | NEW: one-shot DB migration utility |
+| `quantum_corpus/eval/FREEZE_v033.md` | 477c257 | This document |
+| `quantum_corpus/eval/retrieval_failure_cards.jsonl` | f5ac6a4 | 21 failure cards for next development cycle |
