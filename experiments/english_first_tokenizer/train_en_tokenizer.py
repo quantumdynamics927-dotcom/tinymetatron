@@ -56,7 +56,7 @@ SPECIAL_TOKENS = ["<|pad|>", "<|bos|>", "<|eos|>", "<|en|>"]
 # ── Evaluation test suite ─────────────────────────────────────────────────────
 TEST_CASES: Dict[str, str] = {
     # Language tag
-    "en_tag_atomic":      "<|en|>The quantum processor runs at 10 MHz.",
+    "en_tag_atomic":      "<|en|> The quantum processor runs at 10 MHz.",
 
     # General prose
     "en_general":          "<|en|> The quantum processing unit requires strict error correction protocols.",

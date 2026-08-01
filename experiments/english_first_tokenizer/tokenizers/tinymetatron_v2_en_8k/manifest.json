@@ -13,8 +13,8 @@
   ],
   "add_prefix_space": false,
   "training_sources": {
-    "01_general_english.txt": "b0fca482f939c2908f3dad7fb6e534caa119274391fe7541028b716842fad32b",
+    "01_general_english.txt": "4f79ec7ad3342d6eea38f0db12b2864adc424db3339275c641a449d09a7f5ba1",
     "02_quantum_domain.txt": "c81fb6cbe798d82104149c0e9d6eb9208fdcaa9f8a978a882e920fd611f03ab1"
   },
-  "tokenizer_json_sha256": "3a919f2cef7b9a6dd2a6a84c56f25cd38a91f523aa524a9eac220beda2322c2d"
+  "tokenizer_json_sha256": "0092d135f243b1ad06f94acd75711d3a6fbde4a37840f8c7d937fd57190c1cec"
 }

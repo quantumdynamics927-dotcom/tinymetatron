@@ -1,0 +1,70 @@
+{
+  "exp_id": "exp-001",
+  "state": "AWAITING_APPROVAL",
+  "created_at": "2026-08-01T20:53:10.539222+00:00",
+  "hypothesis": "Current corpus (114KB, 85.7% quantum domain) yields prose_median=2.8. Adding diverse general English prose will lower median toward 2.5 without introducing unknown tokens.",
+  "proposed_action": "No change yet — document baseline. Next step: add 1-2 general English Wikipedia articles (~50KB) to training data.",
+  "code_commit_before": "6f14cbc73cd9",
+  "validation_results": {},
+  "gate_results": {
+    "train_tokenizer": {
+      "passed": true,
+      "returncode": 0,
+      "duration_s": 2.1,
+      "stdout": "[en_general]\n  tokens/word: 1.100  tokens/char: 0.1410\n  unk_count : 0  tag_atomic: True\n\n[en_compound]\n  tokens/word: 3.333  tokens/char: 0.3509\n  unk_count : 0  tag_atomic: True\n\n[en_quantum_ids]\n  tokens/word: 3.700  tokens/char: 0.5781\n  unk_count : 0  tag_atomic: True\n\n[en_technical]\n  tokens/word: 3.400  tokens/char: 0.5000\n  unk_count : 0  tag_atomic: True\n\n[en_numbers]\n  tokens/word: 2.300  tokens/char: 0.3710\n  unk_count : 0  tag_atomic: True\n\n[en_url]\n  tokens/word: 7.000  tokens/char: 0.5250\n  unk_count : 0  tag_atomic: True\n\n[en_code]\n  tokens/word: 2.333  tokens/char: 0.4565\n  unk_count : 0  tag_atomic: True\n\n[en_qasm]\n  tokens/word: 4.571  tokens/char: 0.6038\n  unk_count : 0  tag_atomic: True\n\n[en_quantum_math]\n  tokens/word: 2.833  tokens/char: 0.4595\n  unk_count : 0  tag_atomic: True\n\n[en_empty]\n  tokens/word: 1.000  tokens/char: 0.1667\n  unk_count : 0  tag_atomic: True\n\n============================================================\nSUMMARY\n============================================================\n  English prose median tokens/word : 2.3000  (prose-only, excludes URL/QASM outliers)\n  English all-test avg           : 2.9951\n  English all-test p95          : 7.0000  (includes URL, QASM, compound)\n  Unknown tokens                : 0  (must be 0)\n  <|en|> atomic                : PASS\n  Thresholds: prose_median<=2.5, unk=0, all_atomic=True\n  DECISION                       : PASS\n\n  NOTE: en_url (7.0 t/w) and en_qasm\n        (4.5714 t/w) have high fragmentation\n        due to byte-level BPE on non-word byte sequences. This is expected.\n\n  manifest -> experiments\\english_first_tokenizer\\tokenizers\\tinymetatron_v2_en_8k\\manifest.json\n\n============================================================\nTOKENIZER TRAINING COMPLETE\n============================================================\n{\n  \"prose_median_tokens_per_word\": 2.3,\n  \"all_avg_tokens_per_word\": 2.9951,\n  \"all_p95_tokens_per_word\": 7.0,\n  \"all_unk\": 0,\n  \"all_tags_atomic\": true,\n  \"decision\": \"PASS\"\n}\n",
+      "stderr": ""
+    },
+    "en_tag_atomic": {
+      "passed": true,
+      "returncode": 0,
+      "duration_s": 0.3,
+      "stdout": "",
+      "stderr": ""
+    },
+    "unk_count_zero": {
+      "passed": true,
+      "returncode": 0,
+      "duration_s": 0.1,
+      "stdout": "\n============================================================\nENGLISH TOKENIZATION EVALUATION\n============================================================\n\n[en_tag_atomic]\n  tokens/word: 1.375  tokens/char: 0.2500\n  unk_count : 0  tag_atomic: True\n\n[en_general]\n  tokens/word: 1.100  tokens/char: 0.1410\n  unk_count : 0  tag_atomic: True\n\n[en_compound]\n  tokens/word: 3.333  tokens/char: 0.3509\n  unk_count : 0  tag_atomic: True\n\n[en_quantum_ids]\n  tokens/word: 3.700  tokens/char: 0.5781\n  unk_count : 0  tag_atomic: True\n\n[en_technical]\n  tokens/word: 3.400  tokens/char: 0.5000\n  unk_count : 0  tag_atomic: True\n\n[en_numbers]\n  tokens/word: 2.300  tokens/char: 0.3710\n  unk_count : 0  tag_atomic: True\n\n[en_url]\n  tokens/word: 7.000  tokens/char: 0.5250\n  unk_count : 0  tag_atomic: True\n\n[en_code]\n  tokens/word: 2.333  tokens/char: 0.4565\n  unk_count : 0  tag_atomic: True\n\n[en_qasm]\n  tokens/word: 4.571  tokens/char: 0.6038\n  unk_count : 0  tag_atomic: True\n\n[en_quantum_math]\n  tokens/word: 2.833  tokens/char: 0.4595\n  unk_count : 0  tag_atomic: True\n\n[en_empty]\n  tokens/word: 1.000  tokens/char: 0.1667\n  unk_count : 0  tag_atomic: True\n\n============================================================\nSUMMARY\n============================================================\n  English prose median tokens/word : 2.3000  (prose-only, excludes URL/QASM outliers)\n  English all-test avg           : 2.9951\n  English all-test p95          : 7.0000  (includes URL, QASM, compound)\n  Unknown tokens                : 0  (must be 0)\n  <|en|> atomic                : PASS\n  Thresholds: prose_median<=2.5, unk=0, all_atomic=True\n  DECISION                       : PASS\n\n  NOTE: en_url (7.0 t/w) and en_qasm\n        (4.5714 t/w) have high fragmentation\n        due to byte-level BPE on non-word byte sequences. This is expected.\n",
+      "stderr": ""
+    },
+    "round_trip": {
+      "passed": true,
+      "returncode": 0,
+      "duration_s": 0.2,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "human_approval": null,
+  "approval_note": "",
+  "code_commit_after": null,
+  "metrics_delta": {},
+  "loop_id": "41d1bfd7-baa2-4fa0-9ed1-fc5874e7aadf",
+  "project": "tinymetatron-tokenizer",
+  "frozen_tokenizer_sha": "3a919f2cef7b9a6dd2a6a84c56f25cd38a91f523aa524a9eac220beda2322c2d",
+  "frozen_vocab_sha": "f06775387cb07c8cf4516cbc530df6ea2069f1edfdfc17b44f273e67714a6b0d",
+  "frozen_merges_sha": "95902622c0ba5348d9db3e316db734a42ac1f0949f195851be170b3ded7e011e",
+  "frozen_manifest": {
+    "name": "tinymetatron-v2-en-8k",
+    "algorithm": "byte_level_bpe",
+    "vocab_size": 8192,
+    "special_tokens": [
+      "<|pad|>",
+      "<|bos|>",
+      "<|eos|>",
+      "<|en|>"
+    ],
+    "languages": [
+      "en"
+    ],
+    "add_prefix_space": false,
+    "training_sources": {
+      "01_general_english.txt": "b0fca482f939c2908f3dad7fb6e534caa119274391fe7541028b716842fad32b",
+      "02_quantum_domain.txt": "c81fb6cbe798d82104149c0e9d6eb9208fdcaa9f8a978a882e920fd611f03ab1"
+    },
+    "tokenizer_json_sha256": "3a919f2cef7b9a6dd2a6a84c56f25cd38a91f523aa524a9eac220beda2322c2d"
+  },
+  "corpus_manifest": {},
+  "soft_prose_note": "prose_median=0.0, unk=0, tags_atomic=False [OK]"
+}

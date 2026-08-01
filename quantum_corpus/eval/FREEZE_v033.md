@@ -1,5 +1,23 @@
 # Build Freeze Manifest — v0.3.3
 
+## v0.3.4 Freeze Summary
+
+**Test command**: `TMT_QUANTUM_CORPUS_DB="E:\Temp\qcorpus\quantum_corpus.db" python -m quantum_corpus.eval.runner final --mode ask --retriever hybrid --report quantum_corpus/eval/report_test_v034.json`
+
+**Report**: `quantum_corpus/eval/report_test_v034.json`
+**SHA-256**: `d0e7ebcf62d21a3c676468853f2c0662cf79c5a125c92486fcfc4467abddc2df`
+**QA manifest SHA-256**: `4fb3289a761631eca3a03800270bdf61a9c09961b45c6cc9a7299816cfb41725`
+
+**Metrics**:
+| Metric | Value |
+|---|---|
+| si_recall@5 | 0.4750 |
+| si_mrr | 0.3696 |
+| false_abstentions | 0.0 |
+| canary leakage | 0.0 |
+
+**Rule**: No tuning against this test set after this freeze point. All future retrieval experiments belong to v0.3.5-dev.
+
 **Date**: 2026-07-31
 **Commit**: `50874a9` (Add stable source_identity throughout the pipeline)
 

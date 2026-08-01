@@ -1,3 +1,5 @@
+**Note**: v0.3.4 is frozen. All future retrieval experiments belong under v0.3.5-dev in FREEZE_v033.md.
+
 # Retrieval-Improvement Loop
 
 ## Purpose

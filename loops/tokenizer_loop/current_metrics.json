@@ -1,24 +1,24 @@
 {
   "prose_median_tokens_per_word": 2.8,
-  "all_avg_tokens_per_word": 3.1706,
-  "all_p95_tokens_per_word": 7.3333,
+  "all_avg_tokens_per_word": 3.1897,
+  "all_p95_tokens_per_word": 7.5,
   "all_unk": 0,
   "all_tags_atomic": true,
   "decision": "REVIEW",
-  "measured_at": "2026-08-01T20:29:55.168922+00:00",
-  "tokenizer_json_sha256": "3a919f2cef7b9a6dd2a6a84c56f25cd38a91f523aa524a9eac220beda2322c2d",
-  "vocab_sha256": "f06775387cb07c8cf4516cbc530df6ea2069f1edfdfc17b44f273e67714a6b0d",
-  "merges_sha256": "95902622c0ba5348d9db3e316db734a42ac1f0949f195851be170b3ded7e011e",
+  "measured_at": "2026-08-01T20:54:20.521037+00:00",
+  "tokenizer_json_sha256": "bd6a4eb29015954d9c7c912a8c23401262301d91a0203580abf56c3f59c83a03",
+  "vocab_sha256": "8882c9be65c76bba3f77d0c3e09e5a071e6e6b783de30cdd0a3175c508d1d100",
+  "merges_sha256": "5a266c9cfc0e2b57b70fe9be1ce89a277b15170393182843502ed938ef70da2c",
   "per_case_results": {
     "en_tag_atomic": {
-      "token_count": 13,
-      "ratio_words": 1.8571,
+      "token_count": 14,
+      "ratio_words": 2.0,
       "unk_count": 0,
       "tag_atomic": true
     },
     "en_general": {
-      "token_count": 12,
-      "ratio_words": 1.2,
+      "token_count": 11,
+      "ratio_words": 1.1,
       "unk_count": 0,
       "tag_atomic": true
     },
@@ -47,8 +47,8 @@
       "tag_atomic": true
     },
     "en_url": {
-      "token_count": 44,
-      "ratio_words": 7.3333,
+      "token_count": 45,
+      "ratio_words": 7.5,
       "unk_count": 0,
       "tag_atomic": true
     },
