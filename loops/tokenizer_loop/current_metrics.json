@@ -1,0 +1,80 @@
+{
+  "prose_median_tokens_per_word": 2.8,
+  "all_avg_tokens_per_word": 3.1706,
+  "all_p95_tokens_per_word": 7.3333,
+  "all_unk": 0,
+  "all_tags_atomic": true,
+  "decision": "REVIEW",
+  "measured_at": "2026-08-01T20:29:55.168922+00:00",
+  "tokenizer_json_sha256": "3a919f2cef7b9a6dd2a6a84c56f25cd38a91f523aa524a9eac220beda2322c2d",
+  "vocab_sha256": "f06775387cb07c8cf4516cbc530df6ea2069f1edfdfc17b44f273e67714a6b0d",
+  "merges_sha256": "95902622c0ba5348d9db3e316db734a42ac1f0949f195851be170b3ded7e011e",
+  "per_case_results": {
+    "en_tag_atomic": {
+      "token_count": 13,
+      "ratio_words": 1.8571,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_general": {
+      "token_count": 12,
+      "ratio_words": 1.2,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_compound": {
+      "token_count": 19,
+      "ratio_words": 3.1667,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_quantum_ids": {
+      "token_count": 37,
+      "ratio_words": 3.7,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_technical": {
+      "token_count": 33,
+      "ratio_words": 3.3,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_numbers": {
+      "token_count": 28,
+      "ratio_words": 2.8,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_url": {
+      "token_count": 44,
+      "ratio_words": 7.3333,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_code": {
+      "token_count": 26,
+      "ratio_words": 2.8889,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_qasm": {
+      "token_count": 33,
+      "ratio_words": 4.7143,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_quantum_math": {
+      "token_count": 35,
+      "ratio_words": 2.9167,
+      "unk_count": 0,
+      "tag_atomic": true
+    },
+    "en_empty": {
+      "token_count": 1,
+      "ratio_words": 1.0,
+      "unk_count": 0,
+      "tag_atomic": true
+    }
+  }
+}
