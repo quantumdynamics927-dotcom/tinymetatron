@@ -13,11 +13,14 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-tags: true
 
       - name: Build sdist and wheel
         run: |
           python -m pip install build --quiet
-          python -m build --outdir dist
+          python -m build dist/quantum_corpus-0.3.4 --outdir dist
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
