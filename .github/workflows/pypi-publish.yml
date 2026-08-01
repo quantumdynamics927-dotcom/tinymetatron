@@ -1,0 +1,54 @@
+name: Build and Publish to PyPI
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      uv_build_args:
+        description: "Arguments to pass to uv build (e.g. path to package root)"
+        required: false
+        default: "dist/quantum_corpus-0.3.4"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Build sdist and wheel
+        run: uv build ${{ inputs.uv_build_args }}
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: |
+            ${{ inputs.uv_build_args }}/dist/*.tar.gz
+            ${{ inputs.uv_build_args }}/dist/*.whl
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/quantum-corpus/
+    permissions:
+      id-token: write  # required for trusted publishing via OIDC
+    steps:
+      - name: Download dist artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          trusted-publishing: always
