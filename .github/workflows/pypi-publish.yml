@@ -15,7 +15,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-          fetch-tags: true
 
       - name: Build sdist and wheel
         run: |
