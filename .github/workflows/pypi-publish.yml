@@ -14,6 +14,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -28,8 +30,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/*.tar.gz
-          path: dist/*.whl
+          path: dist
 
   publish:
     needs: build
@@ -38,7 +39,7 @@ jobs:
       name: pypi
       url: https://pypi.org/project/quantum-corpus/
     permissions:
-      id-token: write  # required for trusted publishing via OIDC
+      id-token: write
     steps:
       - name: Download dist artifacts
         uses: actions/download-artifact@v4
