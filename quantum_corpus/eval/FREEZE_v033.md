@@ -252,3 +252,64 @@ Detailed private report:
 | `migrate_source_identity.py` | 477c257 | NEW: one-shot DB migration utility |
 | `quantum_corpus/eval/FREEZE_v033.md` | 477c257 | This document |
 | `quantum_corpus/eval/retrieval_failure_cards.jsonl` | f5ac6a4 | 21 failure cards for next development cycle |
+
+---
+
+## Official final results — v0.3.4 hold-out (100 items, test-only index)
+
+**Run once. Never tune against this after freezing.**
+
+| Metric | Value |
+|---|---|
+| Source-identity Recall@5 | 0.4750 |
+| Source-identity MRR | 0.3696 |
+| ID-based Recall@5 | 0.2235 |
+| ID-based MRR | 0.1739 |
+| Rubric correctness | 0.2118 (18/85 answerable) |
+| Abstention recall | 1.0 (15/15) |
+| False answers on unanswerables | 0.0 (0/15) |
+| Canary leakage | 0.0 |
+
+**Test report**: `quantum_corpus/eval/report_test_v034.json`
+**Test report SHA-256**: `d0e7ebcf62d21a3c676468853f2c0662cf79c5a125c92486fcfc4467abddc2df`
+**QA test manifest SHA-256**: `4fb3289a761631eca3a03800270bdf61a9c09961b45c6cc9a7299816cfb41725`
+
+**Post-freeze commits** (must not touch test hold-out for tuning):
+- `f56a09e` — v0.3.4 schema alias + entity TF boost + English tokenizer fix
+- `e3445a0` — sqlite3.Row fix + SI metrics on BM25 path
+- `f20699a` — aggregate() SI filter
+- `eb23ecc` — val manifest fix (v028-v031 → structured)
+- `33a54e8` — retrieval loop infrastructure
+
+---
+
+## v0.3.5-dev
+
+**Goal**: Improve retrieval on train+val index (dev+val), measure on test hold-out only when frozen.
+
+### Active experiment queue
+
+| ID | Hypothesis | State |
+|---|---|---|
+| — | No open failures; all 106 dev/val retrieval items addressed | OBSERVED |
+
+### Next targets (TBD after corpus analysis)
+
+```
+- Remaining conceptual misses: analyze if field-name or entity patterns remain
+- Structured-SQL route coverage: ensure all job-by-jid queries are in structured manifest
+- BM25 term-frequency normalization: check if corpus size affects IDF quality
+```
+
+### Dev index rules
+
+- Build from `train` + `val` splits only
+- Never include `test` split records in dev index
+- Gold source_identities must come from train/val records
+- Test hold-out is evaluated ONCE at freeze time
+
+### Corpus DB for v0.3.5-dev
+
+- **Path**: `E:\Temp\qcorpus\quantum_corpus.db`
+- **DB SHA-256**: `8493932d171b007c1b6e1ffe10128a760cd92fe411bbff1359da02ac6439d564`
+- **Build ID**: `quantum-corpus-build-2`
