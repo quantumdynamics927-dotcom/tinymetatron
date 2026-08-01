@@ -7,20 +7,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish:
+  upload:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
-    environment:
-      name: pypi
-      url: https://pypi.org/project/quantum-corpus/
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
 
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/quantum_corpus-0.3.4/dist
+
+  publish:
+    needs: upload
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    environment:
+      name: pypi
+      url: https://pypi.org/project/quantum-corpus/
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages-dir: dist/quantum_corpus-0.3.4/dist
+          packages-dir: dist
