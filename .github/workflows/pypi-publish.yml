@@ -5,11 +5,6 @@ on:
     tags:
       - "v*"
   workflow_dispatch:
-    inputs:
-      src_dir:
-        description: "Path to package source directory"
-        required: false
-        default: "dist/quantum_corpus-0.3.4"
 
 jobs:
   build:
@@ -23,8 +18,7 @@ jobs:
         uses: astral-sh/setup-uv@v4
 
       - name: Build sdist and wheel
-        run: |
-          uv build "${{ inputs.src_dir }}" --out-dir dist
+        run: uv build dist/quantum_corpus-0.3.4 --out-dir dist
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
