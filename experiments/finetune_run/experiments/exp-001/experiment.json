@@ -31,7 +31,20 @@
   },
   "data_format": "instruction-tuning (system + user + assistant turns)",
   "baseline_eval_required": true,
-  "baseline_score": null,
+  "baseline_score": {
+    "accuracy": 0.0882,
+    "correct": 6,
+    "incorrect": 62,
+    "total": 68,
+    "model": "qwen2.5:3b-instruct",
+    "quantization": "q4_K_M (Ollama default)",
+    "per_category": {
+      "unanswerable": {"total": 10, "correct": 5, "accuracy": 0.5},
+      "security": {"total": 5, "correct": 1, "accuracy": 0.2},
+      "numeric": {"total": 17, "correct": 0, "accuracy": 0.0},
+      "factual": {"total": 36, "correct": 0, "accuracy": 0.0}
+    }
+  },
   "gates": {
     "zero_shot_baseline": "MANDATORY before training",
     "train_tokenizes_ok": "GPU required",
