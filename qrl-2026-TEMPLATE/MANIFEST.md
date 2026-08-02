@@ -46,6 +46,33 @@ qrl-2026-XXX-experiment-name/
 3. Validate: run simulation, compute statistic, compare to bounds
 4. Report: fill results section, commit
 
+## Shot-Count Sensitivity Rule (MANDATORY for experiments testing theoretical bounds)
+
+Any experiment that compares a measured statistic against a known theoretical bound
+(e.g. Bell inequality tests, quantum key distribution QKD bit error rates,
+quantum process tomography fidelity bounds) MUST include a shot-count sensitivity
+check:
+
+- Run the experiment at **two shot counts**: a modest count (e.g. 1,000–2,000)
+  and a high count (100,000+). Record both results.
+- If the modest-shot result falls **outside the theoretically allowed range**
+  (e.g. S > 2√2 for a CHSH test), this is an automatic FAIL flag — do not
+  treat it as a valid result. Re-run at high shot count to determine whether
+  the discrepancy is shot noise or a circuit/implementation bug.
+- The high-shot-count result is the authoritative one. The modest-shot result
+  is diagnostic only.
+
+**Why**: Statistical fluctuations on low shot counts can produce results that
+appear to exceed hard theoretical bounds. Catching this systematically — rather
+than relying on someone noticing by eye — is what separates experimental
+validation from curve-fitting.
+
+## Reference Experiments
+
+| exp_id | Description | Purpose |
+|--------|-------------|---------|
+| `qrl-2026-002-chsh-bell-test` | CHSH Bell inequality on |Phi+> Bell state | Full loop: propose → implement → validate → error-correction. Demonstrates shot-noise sensitivity check catching a real statistical anomaly (S=2.830 at 1k shots → S=2.828 at 100k shots). Use as a physics experiment template. |
+
 ## Safety
 - Hardware submissions require explicit approval
 - Simulator-only experiments are always allowed
