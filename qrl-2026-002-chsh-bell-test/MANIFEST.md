@@ -56,10 +56,13 @@ This configuration is the standard optimal CHSH strategy for the |Φ+⟩ state.
 
 ## Results
 
-- **date_run**: 2026-08-02T19:08:48.546833+00:00
-- **result_value**: 2.830078
+- **date_run**: 2026-08-02T20:09:10.859441+00:00
+- **result_value**: 2.828120 (corrected — 100k shots; 1024-shot result 2.830078 was shot noise)
 - **violated_bound**: classical
 - **circuit_hash**: 158766364b2d2c9f3ed75a346e3b2c6d47e285c2bc6edaea8df8641d96e5512b
 - **code_commit**: edefbb9
 - **passes_minimum_bar**: true (S > 2 = any quantum advantage)
 - **passes_target**: true (S >= 2.7 = near quantum maximum)
+- **shot_noise_verified**: true (S converged to 2.828120 at 100k shots, within 0.0003 of theoretical 2.828427)
+- **note**: Original 1024-shot result (S=2.830078) exceeded Tsirelson bound due to shot noise. Re-run at 100k shots confirmed S=2.828120.
+
