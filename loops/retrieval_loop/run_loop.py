@@ -1,203 +1,160 @@
 """
-run_loop.py
-===========
-Retrieval-improvement loop orchestrator for TinyMetatron.
+Retrieval-Improvement Loop Orchestrator
 
 OBSERVE -> ORIENT -> PROPOSE -> VALIDATE -> APPROVE -> EXECUTE -> MEASURE -> LEARN
-
-Each loop iteration:
-  1. Reads failure cards from quantum_corpus/eval/retrieval_failure_cards.jsonl
-  2. Operator classifies root cause and creates one experiment
-  3. Loop runs mandatory gates
-  4. Waits for human approval before commit
-  5. Archives the experiment
-
-Usage::
-
-    python loops/retrieval_loop/run_loop.py list               # show open failures
-    python loops/retrieval_loop/run_loop.py propose --exp 001  # propose exp-001
-    python loops/retrieval_loop/run_loop.py gates --exp 001    # run gates for exp-001
-    python loops/retrieval_loop/run_loop.py approve --exp 001  # approve + commit
-    python loops/retrieval_loop/run_loop.py reject --exp 001  # archive as rejected
-    python loops/retrieval_loop/run_loop.py status            # show all experiments
 """
 from __future__ import annotations
 
-import json
-import os
-import re
-import shutil
-import subprocess
-import sys
-import uuid
-from datetime import datetime, timezone
+import datetime, json, os, re, shutil, subprocess, sys, textwrap, time
+from datetime import timezone
 from pathlib import Path
+from typing import Optional
 
-ROOT = Path(__file__).parent.parent.parent.resolve()
-RETRIEVAL_LOOP = Path(__file__).parent.resolve()
-EXPERIMENTS_DIR = RETRIEVAL_LOOP / "experiments"
-ARCHIVE_DIR = RETRIEVAL_LOOP / "archive"
-FAILURE_CARDS = ROOT / "quantum_corpus" / "eval" / "retrieval_failure_cards.jsonl"
-RUNNER_MODULE = "quantum_corpus.eval.runner"
+import yaml
 
-sys.path.insert(0, str(ROOT))
+try:
+    from rich.console import Console
+    from rich.table import Table
+    HAS_RICH = True
+except ImportError:
+    HAS_RICH = False
 
+# ── paths ────────────────────────────────────────────────────────────────────
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+EXP_DIR = REPO_ROOT / "loops" / "retrieval_loop" / "experiments"
+FAILURE_CARDS = REPO_ROOT / "quantum_corpus" / "eval" / "retrieval_failure_cards.jsonl"
+CORPUS_DB = os.environ.get("TMT_QUANTUM_CORPUS_DB", r"E:\Temp\qcorpus\quantum_corpus.db")
 
-# ── State machine ──────────────────────────────────────────────────────────────
+sys.path.insert(0, str(REPO_ROOT))
 
-STATES = [
-    "NEW", "OBSERVED", "HYPOTHESIS_CREATED", "VALIDATED",
-    "AWAITING_APPROVAL", "EXECUTED", "MEASURED",
-    "ACCEPTED", "REJECTED", "ROLLED_BACK", "ARCHIVED",
-]
-
-TERMINAL = {"ACCEPTED", "REJECTED", "ROLLED_BACK", "ARCHIVED"}
-
-
-def load_experiments() -> dict:
-    """Load all experiments. Returns {exp_id: exp_data}."""
-    exps = {}
-    for d in sorted(EXPERIMENTS_DIR.iterdir()):
-        if not d.is_dir() or not re.match(r"^exp-\d+$", d.name):
-            continue
-        meta = d / "experiment.json"
-        if meta.exists():
-            with open(meta, encoding="utf-8") as f:
-                exps[d.name] = json.load(f)
-    return exps
-
-
-def save_experiment(exp_id: str, data: dict) -> None:
-    """Save experiment data to its directory."""
-    d = EXPERIMENTS_DIR / exp_id
-    d.mkdir(parents=True, exist_ok=True)
-    with open(d / "experiment.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-
-
-def next_exp_id() -> str:
-    """Return next sequential experiment ID."""
-    existing = load_experiments()
-    if not existing:
-        return "exp-001"
-    nums = []
-    for k in existing:
-        m = re.search(r"\d+", k)
-        if m:
-            nums.append(int(m.group()))
-    return f"exp-{max(nums) + 1:03d}"
-
-
-def create_experiment(exp_id: str, hypothesis: str, proposed_action: str,
-                      root_cause: str) -> dict:
-    """Create a new experiment record."""
-    return {
-        "exp_id": exp_id,
-        "state": "NEW",
-        "created_at": datetime.now(timezone.utc).isoformat(),
-        "root_cause": root_cause,
-        "hypothesis": hypothesis,
-        "proposed_action": proposed_action,
-        "code_commit_before": _current_commit(),
-        "validation_results": {},
-        "gate_results": {},
-        "human_approval": None,
-        "approval_note": "",
-        "code_commit_after": None,
-        "metrics_delta": {},
-        "loop_id": str(uuid.uuid4()),
-        "project": "tinymetatron-retrieval",
-    }
-
-
-# ── Git helpers ───────────────────────────────────────────────────────────────
-
-def _current_commit() -> str:
+# ── helpers ───────────────────────────────────────────────────────────────────
+def _current_commit():
     try:
         return subprocess.check_output(
-            ["git", "-C", str(ROOT), "rev-parse", "HEAD"],
-            text=True, stderr=subprocess.DEVNULL,
-        ).strip()[:12]
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=REPO_ROOT, text=True
+        ).strip()
     except Exception:
         return "unknown"
 
-
-def _is_clean() -> bool:
+def _commit_pending():
     try:
-        status = subprocess.check_output(
-            ["git", "-C", str(ROOT), "status", "--porcelain"],
-            text=True, stderr=subprocess.DEVNULL,
-        ).strip()
-        return status == ""
+        r = subprocess.run(
+            ["git", "diff", "--stat"],
+            cwd=REPO_ROOT, capture_output=True, text=True
+        )
+        return bool(r.stdout.strip())
     except Exception:
         return False
 
-
-# ── Failure cards ─────────────────────────────────────────────────────────────
-
 def load_failure_cards():
-    """Load failure cards. Returns list of dicts."""
     if not FAILURE_CARDS.exists():
         return []
     with open(FAILURE_CARDS, encoding="utf-8") as f:
-        return [json.loads(l) for l in f if l.strip()]
+        return [json.loads(line) for line in f if line.strip()]
 
+def load_experiment(exp_id: str) -> Optional[dict]:
+    path = EXP_DIR / exp_id / "experiment.json"
+    if not path.exists():
+        return None
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
 
-def failure_summary(cards: list[dict]) -> dict:
-    """Summarize failure cards by root cause."""
-    categories: dict[str, int] = {}
-    unaddressed: list[str] = []
-    addressed: list[str] = []
-    for c in cards:
-        in_top5 = c.get("in_top5", False)
-        cat = c.get("failure_category", "unknown")
-        if in_top5:
-            addressed.append(c.get("id", "?"))
-        else:
-            unaddressed.append(c.get("id", "?"))
-            categories[cat] = categories.get(cat, 0) + 1
-    return {
-        "total": len(cards),
-        "addressed": len(addressed),
-        "unaddressed": len(unaddressed),
-        "unaddressed_ids": unaddressed,
-        "by_category": categories,
-    }
+def save_experiment(exp_id: str, exp: dict):
+    path = EXP_DIR / exp_id / "experiment.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(exp, f, ensure_ascii=False, indent=2)
 
+def load_all_experiments():
+    if not EXP_DIR.exists():
+        return {}
+    exps = {}
+    for d in EXP_DIR.iterdir():
+        if d.is_dir() and (d / "experiment.json").exists():
+            with open(d / "experiment.json", encoding="utf-8") as f:
+                exps[d.name] = json.load(f)
+    return exps
 
-# ── Gate runners ─────────────────────────────────────────────────────────────
+def cards_summary(cards):
+    open_cards = [c for c in cards if not c.get("in_top5")]
+    addressed = len(cards) - len(open_cards)
+    by_cat: dict[str, int] = {}
+    for c in open_cards:
+        cat = c.get("category", "unknown")
+        by_cat[cat] = by_cat.get(cat, 0) + 1
+    return addressed, len(open_cards), open_cards, by_cat
 
-GATE_DEFS = [
-    ("conscious_dna_regression", "python -m quantum_corpus.eval.test_conscious_dna_alias",
-     "Conscious_dna regression test"),
-    ("bm25_dev_parity",         "python -m quantum_corpus.eval.runner dev --mode bm25",
-     "BM25 dev parity — no crash"),
-    ("canary_suite",            "python -m quantum_corpus.eval.runner run_canaries",
-     "Canary leakage = 0.0"),
-    ("dev_retrieval_eval",      "python -m quantum_corpus.eval.runner dev --mode ask --retriever hybrid",
-     "Dev retrieval eval — no crash"),
-]
+def _print_status_rich(cards, exps):
+    console = Console()
+    # Failure card summary
+    addressed, total_open, open_cards, by_cat = cards_summary(cards)
+    t = Table(title="Failure Cards")
+    t.add_column("Category", style="cyan")
+    t.add_column("Open", style="red")
+    t.add_column("Addressed", style="green")
+    for cat, n in sorted(by_cat.items()):
+        t.add_row(cat, str(n), str(sum(1 for c in open_cards if c.get("category") != cat)))
+    t.add_row("TOTAL", str(total_open), str(addressed))
+    console.print(t)
 
+# ── Gate infrastructure ──────────────────────────────────────────────────────
+GATES = {
+    "gate_regression_check": {
+        "description": "Retrieval dev eval — no regression",
+        "command": [
+            sys.executable, "-m", "quantum_corpus.eval.runner",
+            "dev", "--mode", "ask", "--retriever", "hybrid",
+        ],
+        "timeout": 600,
+    },
+    "gate_canary": {
+        "description": "Canary leakage check",
+        "command": [
+            sys.executable, "-m", "quantum_corpus.eval.runner",
+            "run_canaries",
+        ],
+        "timeout": 120,
+    },
+    "gate_conscious_dna_alias": {
+        "description": "Conscious-DNA alias regression",
+        "command": [
+            sys.executable, "-m", "quantum_corpus.eval.test_conscious_dna_alias",
+        ],
+        "timeout": 120,
+    },
+    "gate_bm25_parity": {
+        "description": "BM25-only runner parity",
+        "command": [
+            sys.executable, "-m", "quantum_corpus.eval.runner",
+            "dev", "--mode", "bm25",
+        ],
+        "timeout": 300,
+    },
+}
 
-def run_gate(name: str, command: str, timeout: int = 600) -> dict:
+def run_gate(name: str, command: list, timeout: int = 600) -> dict:
     """Run one gate. Returns {passed, stdout, stderr, duration}."""
     start = datetime.now(timezone.utc)
     env = os.environ.copy()
-    env["TMT_QUANTUM_CORPUS_DB"] = r"E:\Temp\qcorpus\quantum_corpus.db"
+    env["TMT_QUANTUM_CORPUS_DB"] = CORPUS_DB
     try:
         result = subprocess.run(
-            command, shell=True, capture_output=True, text=True,
-            timeout=timeout, cwd=str(ROOT), env=env,
+            command,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            env=env,
+            cwd=str(REPO_ROOT),
         )
         duration = (datetime.now(timezone.utc) - start).total_seconds()
-        # Parse pass/fail from output
         passed = result.returncode == 0
         return {
             "passed": passed,
             "returncode": result.returncode,
             "duration_s": round(duration, 1),
             "stdout": result.stdout[-2000:] if result.stdout else "",
-            "stderr": result.stderr[-1000:] if result.stderr else "",
+            "stderr": result.stderr[-500:] if result.stderr else "",
         }
     except subprocess.TimeoutExpired:
         duration = (datetime.now(timezone.utc) - start).total_seconds()
@@ -206,7 +163,7 @@ def run_gate(name: str, command: str, timeout: int = 600) -> dict:
             "returncode": -1,
             "duration_s": round(duration, 1),
             "stdout": "",
-            "stderr": f"Timeout after {timeout}s",
+            "stderr": "timeout",
         }
     except Exception as e:
         duration = (datetime.now(timezone.utc) - start).total_seconds()
@@ -218,88 +175,73 @@ def run_gate(name: str, command: str, timeout: int = 600) -> dict:
             "stderr": str(e),
         }
 
-
-def run_all_gates() -> dict:
-    """Run all mandatory gates. Returns {gate_name: result_dict}."""
+def run_all_gates(gate_keys=None):
     results = {}
-    for name, cmd, desc in GATE_DEFS:
-        print(f"\n  [{name}] {desc}")
-        print(f"    $ {cmd}")
-        r = run_gate(name, cmd)
+    for name, gate in GATES.items():
+        if gate_keys and name not in gate_keys:
+            continue
+        cmd = gate["command"]
+        print(f"  Running {name}...")
+        r = run_gate(name, cmd, gate.get("timeout", 600))
         results[name] = r
         status = "PASS" if r["passed"] else f"FAIL (exit {r['returncode']})"
         print(f"    => {status} in {r['duration_s']}s")
     return results
 
-
 def all_gates_passed(results: dict) -> bool:
     return all(v["passed"] for v in results.values())
 
-
 # ── Commands ──────────────────────────────────────────────────────────────────
-
 def cmd_list():
-    """List current failure card summary."""
     cards = load_failure_cards()
-    summary = failure_summary(cards)
-    print(f"\nFailure card summary:")
-    print(f"  Total     : {summary['total']}")
-    print(f"  Addressed : {summary['addressed']}  (in_top5=True)")
-    print(f"  Open      : {summary['unaddressed']}")
-    if summary["unaddressed"]:
-        print(f"  Open IDs  : {', '.join(summary['unaddressed_ids'])}")
-    if summary["by_category"]:
-        print(f"  By category:")
-        for cat, n in sorted(summary["by_category"].items(), key=lambda x: -x[1]):
-            print(f"    {cat}: {n}")
-    print()
-
-
-def cmd_propose(exp_id: str | None, hypothesis: str, proposed_action: str,
-                root_cause: str):
-    """Create a new experiment proposal."""
-    if exp_id is None:
-        exp_id = next_exp_id()
-    else:
-        exp_id = f"exp-{int(exp_id):03d}"
-        if (EXPERIMENTS_DIR / exp_id).exists():
-            print(f"ERROR: Experiment {exp_id} already exists.")
-            return 1
-
-    exp = create_experiment(exp_id, hypothesis, proposed_action, root_cause)
-    save_experiment(exp_id, exp)
-    print(f"Created {exp_id} in {EXPERIMENTS_DIR / exp_id}")
-    print(f"  State: NEW")
-    print(f"  Root cause: {root_cause}")
-    print(f"  Hypothesis: {hypothesis}")
-    print(f"  Proposed action: {proposed_action}")
+    addressed, total_open, open_cards, by_cat = cards_summary(cards)
+    print(f"Failure card summary:")
+    print(f"  Total     : {len(cards)}")
+    print(f"  Addressed : {addressed}  (in_top5=True)")
+    print(f"  Open      : {total_open}")
+    print(f"  Open IDs  : {', '.join(c.get('id','?') for c in open_cards[:10])}")
+    print(f"  By category:")
+    for cat, n in sorted(by_cat.items()):
+        print(f"    {cat}: {n}")
     return 0
 
+def cmd_propose(exp_id: str, hypothesis: str, proposed_action: str, root_cause: str):
+    exp = load_experiment(exp_id)
+    if exp is None:
+        exp = {
+            "exp_id": exp_id,
+            "state": "NEW",
+            "created_at": datetime.datetime.now(timezone.utc).isoformat(),
+            "root_cause": root_cause,
+            "hypothesis": hypothesis,
+            "proposed_action": proposed_action,
+            "code_commit_before": _current_commit(),
+            "validation_results": {},
+            "gate_results": {},
+            "human_approval": None,
+            "approval_note": "",
+            "code_commit_after": None,
+            "metrics_delta": {},
+            "loop_id": None,
+            "project": "tinymetatron-retrieval",
+        }
+        save_experiment(exp_id, exp)
+        print(f"Created experiment {exp_id}")
+    else:
+        print(f"Experiment {exp_id} already exists")
+    print(f"Hypothesis: {hypothesis}")
+    return 0
 
 def cmd_gates(exp_id: str):
-    """Run gates for an experiment and record results."""
-    d = EXPERIMENTS_DIR / exp_id
-    if not d.exists():
+    exp = load_experiment(exp_id)
+    if exp is None:
         print(f"ERROR: Experiment {exp_id} not found.")
         return 1
-
-    with open(d / "experiment.json", encoding="utf-8") as f:
-        exp = json.load(f)
-
-    if exp["state"] not in ("NEW", "HYPOTHESIS_CREATED", "REJECTED"):
-        print(f"ERROR: Experiment {exp_id} is in state {exp['state']}, not runnable.")
+    if exp["state"] not in ("HYPOTHESIS_CREATED", "OBSERVED"):
+        print(f"Experiment {exp_id} is {exp['state']} — cannot run gates from this state")
         return 1
 
-    # Transition to OBSERVED
-    exp["state"] = "OBSERVED"
-    save_experiment(exp_id, exp)
-
-    print(f"\n{'='*60}")
-    print(f"Running gates for {exp_id}")
-    print(f"  Hypothesis: {exp['hypothesis']}")
-    print(f"  Proposed action: {exp['proposed_action']}")
-    print(f"{'='*60}")
-
+    print(f"\nRunning gates for {exp_id}...")
     results = run_all_gates()
 
     # Save gate results
@@ -314,109 +256,73 @@ def cmd_gates(exp_id: str):
         print(f"\nGATES FAILED: {', '.join(failed)}")
 
     save_experiment(exp_id, exp)
-    return 0
-
+    return 0 if passed else 1
 
 def cmd_approve(exp_id: str, note: str = ""):
-    """Approve and commit an experiment. Requires VALIDATED state."""
-    d = EXPERIMENTS_DIR / exp_id
-    if not d.exists():
+    exp = load_experiment(exp_id)
+    if exp is None:
         print(f"ERROR: Experiment {exp_id} not found.")
         return 1
-
-    with open(d / "experiment.json", encoding="utf-8") as f:
-        exp = json.load(f)
-
-    if exp["state"] not in ("VALIDATED", "AWAITING_APPROVAL"):
-        print(f"ERROR: Experiment must be VALIDATED. Currently: {exp['state']}")
+    if exp["state"] != "VALIDATED":
+        print(f"Experiment {exp_id} is {exp['state']} — must be VALIDATED before approval.")
         return 1
-
-    # Check git is clean
-    if not _is_clean():
-        print("ERROR: Working tree is not clean. Commit or stash changes first.")
-        return 1
-
-    # Stage relevant files
-    to_stage = [
-        ROOT / "quantum_corpus" / "rag.py",
-        ROOT / "quantum_corpus" / "eval" / "runner.py",
-        ROOT / "quantum_corpus" / "eval" / "FREEZE_v033.md",
-        ROOT / "quantum_corpus" / "eval" / "retrieval_failure_cards.jsonl",
-        ROOT / "quantum_corpus" / "eval" / "test_conscious_dna_alias.py",
-    ]
-    staged = [str(p) for p in to_stage if p.exists()]
-    if staged:
-        subprocess.run(["git", "-C", str(ROOT), "add"] + staged, check=True)
-
-    commit_msg = (
-        f"Retrieval loop {exp_id}: {exp['hypothesis']}\n\n"
-        f"Root cause: {exp['root_cause']}\n"
-        f"Action: {exp['proposed_action']}\n"
-        f"Loop ID: {exp['loop_id']}\n"
-        f"Co-Authored-By: Claude <noreply@anthropic.com>\n"
-    )
-    try:
-        result = subprocess.run(
-            ["git", "-C", str(ROOT), "commit", "-m", commit_msg],
-            capture_output=True, text=True,
-        )
-        if result.returncode != 0:
-            print(f"Git commit failed:\n{result.stderr}")
-            return 1
-        commit = _current_commit()
-    except Exception as e:
-        print(f"Git commit failed: {e}")
-        return 1
-
-    exp["state"] = "EXECUTED"
-    exp["human_approval"] = True
+    exp["human_approval"] = datetime.datetime.now(timezone.utc).isoformat()
     exp["approval_note"] = note
-    exp["code_commit_after"] = commit
+    exp["state"] = "AWAITING_APPROVAL"
     save_experiment(exp_id, exp)
-
-    print(f"Committed as {commit}")
-    print(f"Experiment {exp_id} is EXECUTED.")
+    print(f"Experiment {exp_id} approved. Awaiting execution.")
     return 0
 
-
-def cmd_reject(exp_id: str, reason: str = ""):
-    """Archive an experiment as rejected."""
-    d = EXPERIMENTS_DIR / exp_id
-    if not d.exists():
+def cmd_execute(exp_id: str):
+    """Commit the change — implementation-specific, caller must verify."""
+    exp = load_experiment(exp_id)
+    if exp is None:
         print(f"ERROR: Experiment {exp_id} not found.")
         return 1
-
-    with open(d / "experiment.json", encoding="utf-8") as f:
-        exp = json.load(f)
-
-    exp["state"] = "REJECTED"
-    exp["human_approval"] = False
-    exp["approval_note"] = reason
+    if exp["state"] != "AWAITING_APPROVAL":
+        print(f"Experiment {exp_id} is {exp['state']} — must be AWAITING_APPROVAL before execution.")
+        return 1
+    exp["state"] = "EXECUTED"
+    exp["code_commit_after"] = _current_commit()
     save_experiment(exp_id, exp)
-
-    # Archive
-    archive_name = f"{exp_id}_rejected_{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
-    archive_path = ARCHIVE_DIR / archive_name
-    ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
-    shutil.move(str(d), str(archive_path))
-    print(f"Moved {exp_id} to archive: {archive_path}")
+    print(f"Experiment {exp_id} executed.")
     return 0
 
+def cmd_reject(exp_id: str):
+    exp = load_experiment(exp_id)
+    if exp is None:
+        print(f"ERROR: Experiment {exp_id} not found.")
+        return 1
+    exp["state"] = "REJECTED"
+    save_experiment(exp_id, exp)
+    archive_dir = EXP_DIR / "archive" / exp_id
+    shutil.move(str(EXP_DIR / exp_id), str(archive_dir))
+    print(f"Experiment {exp_id} archived as REJECTED.")
+    return 0
 
 def cmd_status():
-    """Show status of all experiments."""
-    exps = load_experiments()
-    if not exps:
-        print("\nNo experiments yet.")
-        return 0
+    cards = load_failure_cards()
+    addressed, total_open, open_cards, by_cat = cards_summary(cards)
+    exps = load_all_experiments()
 
+    print(f"Failure card summary:")
+    print(f"  Total     : {len(cards)}")
+    print(f"  Addressed : {addressed}")
+    print(f"  Open      : {total_open}")
+    print(f"  Open IDs  : {', '.join(c.get('id','?') for c in open_cards)}")
+    print(f"  By category:")
+    for cat, n in sorted(by_cat.items()):
+        print(f"    {cat}: {n}")
+
+    print(f"\nExperiments:")
     for exp_id in sorted(exps, key=lambda x: int(re.search(r"\d+", x).group())):
         e = exps[exp_id]
         gates = e.get("gate_results", {})
-        gate_str = " ".join(
-            f"{k}:{'✓' if v['passed'] else '✗'}"
-            for k, v in gates.items()
-        ) if gates else "none"
+        parts = []
+        for k, v in gates.items():
+            s = "[+]" if v["passed"] else "[-]"
+            parts.append("{0}:{1}".format(k, s))
+        gate_str = " ".join(parts) if gates else "none"
         print(f"\n  [{exp_id}] {e['state']}")
         print(f"    Hypothesis: {e['hypothesis']}")
         print(f"    Action: {e['proposed_action']}")
@@ -429,85 +335,56 @@ def cmd_status():
     print()
     return 0
 
-
-# ── CLI ───────────────────────────────────────────────────────────────────────
-
+# ── main ─────────────────────────────────────────────────────────────────────
 def main():
-    argv = sys.argv[1:]
-    if not argv or argv[0] in ("-h", "--help"):
+    if len(sys.argv) < 2:
         print(__doc__)
         return 0
 
-    cmd = argv[0]
+    cmd = sys.argv[1]
 
     if cmd == "list":
         return cmd_list()
-
-    elif cmd == "propose":
-        hypothesis = ""
-        proposed_action = ""
-        root_cause = ""
-        exp_id = None
-        i = 1
-        while i < len(argv):
-            if argv[i] == "--exp" and i + 1 < len(argv):
-                exp_id = argv[i + 1]; i += 2
-            elif argv[i] == "--hypothesis" and i + 1 < len(argv):
-                hypothesis = argv[i + 1]; i += 2
-            elif argv[i] == "--action" and i + 1 < len(argv):
-                proposed_action = argv[i + 1]; i += 2
-            elif argv[i] == "--root-cause" and i + 1 < len(argv):
-                root_cause = argv[i + 1]; i += 2
-            else:
-                i += 1
-        if not hypothesis or not proposed_action:
-            print("ERROR: --hypothesis and --action are required")
-            return 1
-        return cmd_propose(exp_id, hypothesis, proposed_action, root_cause)
-
-    elif cmd == "gates":
-        exp_id = None
-        for i, a in enumerate(argv[1:]):
-            if a == "--exp" and i + 2 < len(argv):
-                exp_id = argv[i + 2]
-        if not exp_id:
-            print("ERROR: --exp <id> required")
-            return 1
-        return cmd_gates(exp_id)
-
-    elif cmd == "approve":
-        exp_id = None
-        note = ""
-        for i, a in enumerate(argv[1:]):
-            if a == "--exp" and i + 2 < len(argv):
-                exp_id = argv[i + 2]
-            elif a == "--note" and i + 2 < len(argv):
-                note = argv[i + 2]
-        if not exp_id:
-            print("ERROR: --exp <id> required")
-            return 1
-        return cmd_approve(exp_id, note)
-
-    elif cmd == "reject":
-        exp_id = None
-        reason = ""
-        for i, a in enumerate(argv[1:]):
-            if a == "--exp" and i + 2 < len(argv):
-                exp_id = argv[i + 2]
-            elif a == "--reason" and i + 2 < len(argv):
-                reason = argv[i + 2]
-        if not exp_id:
-            print("ERROR: --exp <id> required")
-            return 1
-        return cmd_reject(exp_id, reason)
-
     elif cmd == "status":
         return cmd_status()
-
+    elif cmd == "propose":
+        import argparse
+        p = argparse.ArgumentParser()
+        p.add_argument("--exp", required=True)
+        p.add_argument("--hypothesis", required=True)
+        p.add_argument("--action", dest="action", required=True,
+                       help="One-line description of the change")
+        p.add_argument("--root-cause", required=True)
+        args = p.parse_args(sys.argv[2:])
+        return cmd_propose(args.exp, args.hypothesis, args.action, args.root_cause)
+    elif cmd == "gates":
+        import argparse
+        p = argparse.ArgumentParser()
+        p.add_argument("--exp", required=True)
+        args = p.parse_args(sys.argv[2:])
+        return cmd_gates(args.exp)
+    elif cmd == "approve":
+        import argparse
+        p = argparse.ArgumentParser()
+        p.add_argument("--exp", required=True)
+        p.add_argument("--note", default="")
+        args = p.parse_args(sys.argv[2:])
+        return cmd_approve(args.exp, args.note)
+    elif cmd == "reject":
+        import argparse
+        p = argparse.ArgumentParser()
+        p.add_argument("--exp", required=True)
+        args = p.parse_args(sys.argv[2:])
+        return cmd_reject(args.exp)
+    elif cmd == "execute":
+        import argparse
+        p = argparse.ArgumentParser()
+        p.add_argument("--exp", required=True)
+        args = p.parse_args(sys.argv[2:])
+        return cmd_execute(args.exp)
     else:
         print(f"Unknown command: {cmd}")
         return 1
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

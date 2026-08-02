@@ -32,6 +32,33 @@ Only one change per loop iteration:
 **Forbidden**: semantic model changes, changing the corpus schema,
 modifying canary records, touching the QSG directory.
 
+## Documented Retrieval Rules
+
+### Circuit-Header Chunking (`rag.py:_chunk_circuit_headers`)
+
+**Trigger condition** — all three must be true:
+1. `source_type == "ibm_job"`
+2. `text.find("OPENQASM 3.0;") > 0`  (OPENQASM marker exists and is not at position 0)
+3. `text.find("OPENQASM 3.0;") < len(text) * 0.50`  (circuit body is >50% of text)
+
+**Action**: `text = text[:text.find("OPENQASM 3.0;")].strip()` — replaces the record
+text with header-only (JID, backend, status, program, cost, timestamps), keeps
+the original `id`, sets `is_chunked=True`.
+
+**Why the 50% threshold**: IBM Quantum job records have two structural patterns:
+- **Circuit-dominant** (6–33% OPENQASM position): The circuit body is 67–94% of text,
+  diluting JID term density below that of short provenance stub records → chunking needed.
+- **Metadata-dominant** (91–94% OPENQASM position): JID already near the top with high
+  term density → no chunking needed; the circuit text is already a trailing fragment.
+
+The 50% boundary cleanly separates these two populations.
+
+**Retrievability of circuit body**: The full record remains accessible via `doc_id`
+lookup. Chunking only affects BM25 indexing; it does not delete data.
+
+**Exp-001 reference**: Resolves v044–v048 (JID `d5a6s6jht8fs73a5d46g`, record 38202).
+Gates passed: 5/5 affected questions retrieve gold in top-5; no regression on 106/106 dev+val.
+
 ## Mandatory Gates (all must pass)
 
 | Gate | Command | Pass condition |

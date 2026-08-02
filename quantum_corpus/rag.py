@@ -151,6 +151,45 @@ def expand_query(text: str) -> str:
     return expanded
 
 
+def _chunk_circuit_headers(records: Sequence[dict]) -> list[dict]:
+    """Split long ibm_job records at the OPENQASM boundary.
+
+    IBM Quantum job records with a circuit dump have structured metadata
+    (JID, backend, status, program, cost, timestamps) in the first ~200 chars
+    followed by ``OPENQASM 3.0;`` and the circuit body (often 2000+ chars).
+    When the circuit body dominates (>50% of total text), BM25 term density
+    for the JID is diluted — short provenance stub records then outrank the
+    gold job record on JID queries.
+
+    Chunking preserves only the header (everything before OPENQASM 3.0;),
+    keeps the original record ID, and adds ``is_chunked=True`` so that callers
+    can retrieve the full record via doc_id lookup if needed.
+
+    Args:
+        records: corpus records as dicts.
+
+    Returns:
+        The same list with long-circuit ibm_job records replaced by their
+        header-only form.  Records that are not ibm_job, or whose OPENQASM
+        marker appears after 50% of text, are returned unchanged.
+    """
+    out: list[dict] = []
+    for r in records:
+        text = r.get("text", "")
+        if r.get("source_type") != "ibm_job":
+            out.append(r)
+            continue
+        oq_pos = text.find("OPENQASM 3.0;")
+        if oq_pos <= 0 or oq_pos >= len(text) * 0.50:
+            out.append(r)
+            continue
+        chunked = dict(r)
+        chunked["text"] = text[:oq_pos].strip()
+        chunked["is_chunked"] = True
+        out.append(chunked)
+    return out
+
+
 class RAGIndex:
     def __init__(self):
         self.docs: List[dict] = []          # {id, project, source_type, doc_id, text}
@@ -164,6 +203,17 @@ class RAGIndex:
     @classmethod
     def build(cls, records: Sequence[dict]) -> "RAGIndex":
         idx = cls()
+        records = list(records)
+        # ── Chunking: split long ibm_job records at the OPENQASM boundary ──
+        # IBM Quantum job records with a circuit dump have the JID/backend/status
+        # metadata in the first ~200 chars followed by OPENQASM 3.0 circuit text.
+        # When the circuit body dominates (>50% of text), BM25 term density for
+        # the JID is diluted enough that short provenance stub records outrank the
+        # gold job record. Chunking preserves only the header, making JID terms
+        # densely concentrated and independently retrievable.
+        # The full record (with circuit body) remains accessible via doc_id lookup.
+        records = _chunk_circuit_headers(records)
+
         for r in records:
             terms = _tok(r.get("text", ""))
             if not terms:
@@ -173,6 +223,7 @@ class RAGIndex:
                 "source_type": r.get("source_type", ""), "doc_id": r.get("doc_id", ""),
                 "text": r.get("text", ""),
                 "source_identity": r.get("source_identity", ""),
+                "is_chunked": r.get("is_chunked"),
             })
             tf = Counter(terms)
             idx.term_freqs.append(dict(tf))
