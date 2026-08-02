@@ -1,0 +1,19 @@
+{
+  "id": "v044-v048",
+  "category": "factual/numeric",
+  "question_pattern": "What [field] did IBM Quantum job d5a6s6jht8fs73a5d46g [have/run as]?",
+  "gold_record_ids": [38202],
+  "gold_source_identity": "1a158202c33b60b72feb5f727abb0fa79ee87cb4e42d1c4489dbce9746e89f26",
+  "retrieved_top5_ids": [503, 502, 35540, 35537, 35508],
+  "gold_in_top5": false,
+  "gold_position": "not in top 10",
+  "failure_type": "bm25_chunking_rank",
+  "root_cause": "BM25 ranking places a short provenance record (503: 672 chars, JID at char 52) above the gold job record (38202: 2366 chars, JID at char 26). The short record's JID appears in a structured field near the start, giving it higher BM25 term density for the query terms 'IBM Quantum job [jid]'. The gold record has the JID at char 26 followed immediately by 'on backend ibm_fez', but its 2354-token OPENQASM circuit body dilutes the term density after the first 50 tokens. Ranker cannot distinguish: a provenance stub (public, train split) from an unrelated project vs. the actual job record (sensitive, val split).",
+  "records_involved": {
+    "503": {"doc_id": "GRE:imports/qsg/ibm-ibm_fez-d5a6s6jht8fs73a5d46g.provenance.json", "split": "train", "sensitivity": "public", "jid_position": "char 52/672", "score": 0.0164},
+    "502": {"doc_id": "GRE:imports/qsg/ibm-ibm_fez-d5a6s6jht8fs73a5d46g.json", "split": "val", "sensitivity": "public", "jid_position": "char 27/1024", "score": 0.0161},
+    "38202_gold": {"doc_id": "ibm-quantum:d5a6s6jht8fs73a5d46g", "split": "val", "sensitivity": "sensitive", "jid_position": "char 26/2366", "score": "not retrieved"}
+  },
+  "affected_qa_ids": ["v044", "v045", "v046", "v047", "v048"],
+  "notes": "All 5 items for JID d5a6s6jht8fs73a5d46g fail. The model abstained correctly for 4/5 (v045-v048) when given the wrong context. This is a retrieval problem, not a synthesis problem."
+}
