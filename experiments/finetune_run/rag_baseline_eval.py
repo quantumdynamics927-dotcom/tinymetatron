@@ -168,6 +168,7 @@ def score_answer(item: dict, model_answer: str, retrieved_hits: list[dict]) -> d
         "cannot determine",
         "cannot provide",
         "cannot locate",
+        "does not provide",
         "retrieval context does not contain",
     ]
     answer_lower = model_answer.lower()
