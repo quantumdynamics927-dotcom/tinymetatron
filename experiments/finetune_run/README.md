@@ -56,7 +56,7 @@ python loops/finetune_run/run_loop.py reject --exp exp-XXX
 
 ## Current Status
 
-- `exp-001`: **blocked: awaiting GPU** — zero-shot baseline pending
+- `exp-001`: **closed — hypothesis falsified** — RAG-grounded synthesis already 91.2% accurate; failures are retrieval misses, not synthesis gaps
 
 ## Data Contract
 

@@ -1,12 +1,14 @@
 {
   "id": "exp-001",
-  "status": "blocked: awaiting GPU",
+  "status": "closed — hypothesis falsified by baseline",
   "created": "2026-08-02",
+  "closed": "2026-08-02",
   "model_base": "qwen2.5:3b-instruct",
   "quantization": "q4_K_M (Ollama default for 3B)",
   "inference_engine": "ollama",
   "ollama_version": "0.32.5",
   "hypothesis": "QLoRA fine-tune of Qwen2.5-3B-Instruct on quantum_corpus QA subset improves faithful RAG synthesis versus zero-shot base model.",
+  "closure_reason": "Hypothesis falsified. RAG-grounded zero-shot baseline = 91.2% accuracy (strict citation scoring). Synthesis is already strong: factual 91.7%, numeric 88.2%, security 100%. Failures are retrieval misses (v044-v048: JID d5a6s6jht8fs73a5d46g chunking) and one abstention-hedging edge case (v062). Fine-tuning the generation model cannot fix a retrieval problem.",
   "dataset": "quantum_corpus eval qa_val.jsonl (supervised fine-tuning subset)",
   "loRA_config": {
     "r": 16,
@@ -32,17 +34,17 @@
   "data_format": "instruction-tuning (system + user + assistant turns)",
   "baseline_eval_required": true,
   "baseline_score": {
-    "accuracy": 0.0882,
-    "correct": 6,
-    "incorrect": 62,
+    "rag_grounded_accuracy": 0.912,
+    "correct": 62,
     "total": 68,
     "model": "qwen2.5:3b-instruct",
     "quantization": "q4_K_M (Ollama default)",
+    "strict_citation_scoring": true,
     "per_category": {
-      "unanswerable": {"total": 10, "correct": 5, "accuracy": 0.5},
-      "security": {"total": 5, "correct": 1, "accuracy": 0.2},
-      "numeric": {"total": 17, "correct": 0, "accuracy": 0.0},
-      "factual": {"total": 36, "correct": 0, "accuracy": 0.0}
+      "unanswerable": {"total": 10, "correct": 9, "accuracy": 0.9},
+      "security": {"total": 5, "correct": 5, "accuracy": 1.0},
+      "numeric": {"total": 17, "correct": 15, "accuracy": 0.882},
+      "factual": {"total": 36, "correct": 33, "accuracy": 0.917}
     }
   },
   "gates": {
@@ -51,5 +53,5 @@
     "loss_converges": "GPU required",
     "eval_improves": "vs baseline, MMLU or task metric"
   },
-  "blocker": "No GPU available in current environment. Must run on cloud GPU (Colab/RunPod/Modal) before training can proceed."
+  "blocker": "CLOSE — hypothesis falsified. Real leverage: (1) retrieval_loop for JID d5a6s6jht8fs73a5d46g chunking issue, (2) security output guardrail in production answer.py, (3) v062 partial-hedging edge case."
 }

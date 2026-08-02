@@ -1,0 +1,25 @@
+{
+  "exp_id": "exp-001",
+  "state": "HYPOTHESIS_CREATED",
+  "created_at": "2026-08-02T00:00:00Z",
+  "root_cause": "bm25_chunking_rank — long OPENQASM/circuit records have critical identifiers (JID, backend, status) at the start of the text field, followed by hundreds to thousands of tokens of circuit data that dilute BM25 term density. Short provenance stub records (source_artifact_id, experiment_id) rank above the gold job record because their JID appears in a metadata field near the top with high term density. This causes 5/5 questions for JID d5a6s6jht8fs73a5d46g (gold record 38202) to miss top-5.",
+  "hypothesis": "Chunking long circuit-dump records (token_count > 500) so that the JID/metadata header becomes an independently retrievable chunk, separate from the OPENQASM circuit body, will surface the gold record in top-5 for affected JID questions without degrading performance on other categories.",
+  "proposed_action": "Pre-process corpus records before BM25 indexing: for any record where (a) token_count > 500, (b) text contains 'OPENQASM' or 'circuit' near the end, split the text into two chunks at a 'Circuit' or 'OPENQASM' boundary. The header chunk (JID + metadata) becomes its own document. The circuit body is either discarded or stored as a secondary chunk. Use header chunk for retrieval ranking.",
+  "code_commit_before": null,
+  "validation_results": {
+    "affected_qa_ids": ["v044", "v045", "v046", "v047", "v048"],
+    "root_cause_confirmed": true,
+    "retrieval_failure_cards_updated": true
+  },
+  "gate_results": {
+    "gate_regression_check": "PENDING — must verify 106/106 dev+val retrieval baseline is not degraded",
+    "gate_chunking_preserves_recall": "PENDING",
+    "gate_no_new_failures": "PENDING"
+  },
+  "human_approval": null,
+  "approval_note": "",
+  "code_commit_after": null,
+  "metrics_delta": {},
+  "loop_id": null,
+  "project": "tinymetatron-retrieval"
+}

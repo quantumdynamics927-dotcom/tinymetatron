@@ -110,11 +110,26 @@ def _check_correctness(item: dict, answer: str) -> bool | None:
         return None
     return ev in answer
 
+def _extract_cited_ids(answer: str) -> set[int]:
+    """Parse Record ID citations from model answer text.
+    Handles formats: 'Record 36895', '[Record 36895]', 'record 36895', etc."""
+    ids = set()
+    for m in re.finditer(r"(?:record|\[record)\s*(\d+)", answer, re.IGNORECASE):
+        try:
+            ids.add(int(m.group(1)))
+        except ValueError:
+            pass
+    return ids
+
 def score_answer(item: dict, model_answer: str, retrieved_hits: list[dict]) -> dict:
-    """Score one answer. Abstention is not scored as correct for answerable items."""
+    """Score one answer using strict citation matching.
+    An answer is correct only if the model cites a gold record ID in its answer.
+    Text-matching alone is insufficient — a model can get the right answer
+    by citing the wrong source (v044 case: cited 502, gold=38202, both ibm_fez).
+    """
     expected_abstention = item.get("expected_abstention", False)
-    category = item.get("category", "unknown")
     notes = item.get("notes", "")
+    gold_ids = set(item.get("gold_record_ids", []))
 
     # Determine if model abstained
     abstain_phrases = [
@@ -152,12 +167,20 @@ def score_answer(item: dict, model_answer: str, retrieved_hits: list[dict]) -> d
     abstained = any(p in answer_lower for p in abstain_phrases)
 
     if expected_abstention:
-        # Correct if model correctly abstained (didn't fabulate)
         correct = abstained
         abstention_correct = abstained and not _leaked(model_answer)
     else:
-        # Correct if expected value appears in answer
-        correct = _check_correctness(item, model_answer)
+        # Strict: correct only if a gold record is cited in the answer.
+        # Text-matching is not sufficient (v044: right answer, wrong source).
+        cited_ids = _extract_cited_ids(model_answer)
+        if gold_ids and cited_ids:
+            correct = bool(cited_ids & gold_ids)
+        elif not gold_ids:
+            # No gold IDs — fall back to text match
+            correct = _check_correctness(item, model_answer)
+        else:
+            # Gold IDs exist but none cited — incorrect
+            correct = False
         abstention_correct = None
 
     return {
@@ -167,6 +190,7 @@ def score_answer(item: dict, model_answer: str, retrieved_hits: list[dict]) -> d
         "expected_abstention": expected_abstention,
         "retrieved_top3_ids": [h["id"] for h in retrieved_hits[:3]],
         "gold_value": _expected_value(notes),
+        "cited_ids": list(cited_ids) if not expected_abstention else [],
     }
 
 def _leaked(answer: str) -> bool:
