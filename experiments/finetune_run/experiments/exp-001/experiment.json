@@ -1,0 +1,42 @@
+{
+  "id": "exp-001",
+  "status": "blocked: awaiting GPU",
+  "created": "2026-08-02",
+  "model_base": "qwen2.5:3b-instruct",
+  "quantization": "q4_K_M (Ollama default for 3B)",
+  "inference_engine": "ollama",
+  "ollama_version": "0.32.5",
+  "hypothesis": "QLoRA fine-tune of Qwen2.5-3B-Instruct on quantum_corpus QA subset improves faithful RAG synthesis versus zero-shot base model.",
+  "dataset": "quantum_corpus eval qa_val.jsonl (supervised fine-tuning subset)",
+  "loRA_config": {
+    "r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": "all_linear",
+    "bias": "none",
+    "task_type": "CAUSAL_LM"
+  },
+  "training_config": {
+    "max_seq_length": 2048,
+    "per_device_train_batch_size": "TBD (GPU required)",
+    "gradient_accumulation_steps": "TBD (GPU required)",
+    "learning_rate": 2e-4,
+    "scheduler": "cosine",
+    "warmup_ratio": 0.03,
+    "epochs": 2,
+    "gradient_checkpointing": true,
+    "optim": "paged_adamw_8bit",
+    "fp16": false,
+    "bf16": false
+  },
+  "data_format": "instruction-tuning (system + user + assistant turns)",
+  "baseline_eval_required": true,
+  "baseline_score": null,
+  "gates": {
+    "zero_shot_baseline": "MANDATORY before training",
+    "train_tokenizes_ok": "GPU required",
+    "loss_converges": "GPU required",
+    "eval_improves": "vs baseline, MMLU or task metric"
+  },
+  "blocker": "No GPU available in current environment. Must run on cloud GPU (Colab/RunPod/Modal) before training can proceed."
+}

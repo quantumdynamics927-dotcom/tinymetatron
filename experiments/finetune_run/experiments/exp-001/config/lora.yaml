@@ -1,0 +1,39 @@
+# QLoRA Configuration — exp-001
+# DO NOT EXECUTE — structure only. Blocked: awaiting GPU.
+
+lora_config:
+  r: 16                          # LoRA rank
+  lora_alpha: 32                 # scaling = lora_alpha / r = 2.0
+  lora_dropout: 0.05
+  target_modules:                # all linear layers in Qwen2.5
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  bias: none
+  task_type: CAUSAL_LM
+
+training_config:
+  max_seq_length: 2048
+  per_device_train_batch_size: null  # TBD: depends on VRAM (aim for 6-10GB total)
+  gradient_accumulation_steps: null    # TBD: adjust to reach effective batch ~8-16
+  learning_rate: 2.0e-4
+  scheduler: cosine
+  warmup_ratio: 0.03
+  num_train_epochs: 2
+  gradient_checkpointing: true
+  optim: paged_adamw_8bit
+  fp16: false
+  bf16: false
+  logging_steps: 10
+  save_steps: 100
+  eval_steps: 100
+  save_total_limit: 2
+
+# Framework: PEFT + Transformers
+# Quantization: 4-bit via bitsandbytes (bnb)
+# Expected VRAM: ~6-8GB for Q4_K_M + LoRA adapters
+# NOT executable in current CPU-only environment

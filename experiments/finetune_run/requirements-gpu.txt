@@ -1,0 +1,33 @@
+# GPU training dependencies for quantum-corpus fine-tuning experiments
+# Install with: pip install -r requirements-gpu.txt
+# Python >= 3.10 required
+
+# Core fine-tuning framework
+peft>=0.14.0
+transformers>=4.46.0
+accelerate>=0.26.0
+
+# Quantization (4-bit QLoRA)
+bitsandbytes>=0.44.0
+
+# Training utilities
+trl>=0.14.0          # SFTTrainer
+huggingface_hub>=0.20.0  # modeldownload
+
+# Optional: Unsloth for faster training (drop-in replacement for PEFT)
+# unsloth>=2024.11.0   # enable if using Unsloth-backed training
+
+# Data processing
+pandas>=2.0.0
+pyarrow>=14.0.0
+
+# Logging / experiment tracking
+tensorboard>=2.15.0
+wandb>=0.16.0       # optional, enable if using W&B
+
+# Integrity
+safetensors>=0.4.0
+
+# CPU fallback only (not used on GPU but needed for environment parity)
+scipy>=1.11.0
+numpy>=1.26.0
