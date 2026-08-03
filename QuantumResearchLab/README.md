@@ -57,6 +57,7 @@ Every experiment follows: **propose → implement → validate → report**
 
 - **CHSH + Mermin require different measurement operators** — unifying them with one basis choice fails; CHSH uses RY (A=cos·Z+sin·X), Mermin uses RZ+H (A=cos·X+sin·Y)
 - **Feedforward corrections are load-bearing** in teleportation — removing them drops fidelity from 1.0 to ~0.50
+- **Three-qubit bit-flip QEC** corrects all single-X errors perfectly (noiseless); under qrl-004 noise, syndrome accuracy ~50% and QEC provides +0.05 mean fidelity improvement over no-QEC baseline
 - **Multi-qubit entanglement degrades exponentially** under realistic noise — Mermin/GHZ collapses to classical (M~1.0) at p1q=0.2%, p2q=1.5% while CHSH remains above bound
 
 ## Experiment Structure
