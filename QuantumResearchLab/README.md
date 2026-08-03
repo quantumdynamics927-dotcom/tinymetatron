@@ -10,6 +10,7 @@ A validated simulator experiment library demonstrating core quantum computing ph
 | `qrl-2026-003` | GHZ + Mermin Inequality | M = 4.0 > 2 (achieves quantum maximum) | ✅ Validated |
 | `qrl-2026-004` | Noise Degradation Study | CHSH robust; Mermin collapses to ~1.0 under noise | ✅ Validated |
 | `qrl-2026-005` | Bennett 1993 Teleportation | F = 1.0 for all states (|+i>, |-}}, etc.) | ✅ Validated |
+| `qrl-2026-006` | Golden-Angle Sphere Sweep | F=1.0 noiseless; noisy min=0.000 (golden) vs 0.044 (random) | ✅ Validated |
 
 ## Quick Start
 
@@ -19,6 +20,7 @@ python qrl-2026-002-chsh-bell-test/run.py
 python qrl-2026-003-ghz-mermin-test/run.py
 python qrl-2026-004-noise-degradation/run.py
 python qrl-2026-005-teleportation/run.py
+python qrl-2026-006-teleport-sphere-sweep/run.py
 
 # Verification (statevector dry-run)
 python qrl-2026-003-ghz-mermin-test/circuit.py
@@ -34,6 +36,10 @@ python qrl-2026-005-teleportation/circuit.py
 - `compute_correlator_3q(counts, shots)` — 3-qubit correlator E
 - `exact_correlator_3q(th0, th1, th2)` — exact E = cos(th0+th1+th2) for GHZ
 - `make_noise_model(p1q, p2q, ro_err)` — realistic IBM-calibrated noise model
+- `golden_angle_sphere_points(n)` — Weyl equidistribution sampling on Bloch sphere
+- `sphere_point_to_statevector(theta, phi)` — Bloch point → normalized statevector
+- `uniform_random_sphere_points(n)` — baseline random sampling for comparison
+- `sphere_discrepancy(points)` — nearest-neighbor CV uniformity measure
 - `SHOT_SENSITIVITY_SMALL`, `SHOT_SENSITIVITY_LARGE`, `SHOT_TELEPORTATION` — shot constants
 
 ## Protocol
