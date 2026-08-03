@@ -11,7 +11,7 @@ A validated simulator experiment library demonstrating core quantum computing ph
 | `qrl-2026-004` | Noise Degradation Study | CHSH robust; Mermin collapses to ~1.0 under noise | ✅ Validated |
 | `qrl-2026-005` | Bennett 1993 Teleportation | F = 1.0 for all states (|+i>, |-}}, etc.) | ✅ Validated |
 | `qrl-2026-006` | Golden-Angle Sphere Sweep | F=1.0 noiseless; noisy min=0.000 (golden) vs 0.044 (random) | ✅ Validated |
-| `qrl-2026-007` | Bit-Flip QEC | QEC F=1.0 noiseless; noisy improvement +0.052 over no-QEC baseline | ✅ Validated |
+| `qrl-2026-007` | Bit-Flip QEC | QEC F=1.0 noiseless; noisy improvement +0.055, syndrome accuracy 98.4% | ✅ Validated |
 
 ## Quick Start
 
@@ -57,7 +57,7 @@ Every experiment follows: **propose → implement → validate → report**
 
 - **CHSH + Mermin require different measurement operators** — unifying them with one basis choice fails; CHSH uses RY (A=cos·Z+sin·X), Mermin uses RZ+H (A=cos·X+sin·Y)
 - **Feedforward corrections are load-bearing** in teleportation — removing them drops fidelity from 1.0 to ~0.50
-- **Three-qubit bit-flip QEC** corrects all single-X errors perfectly (noiseless); under qrl-004 noise, syndrome accuracy ~50% and QEC provides +0.05 mean fidelity improvement over no-QEC baseline
+- **Three-qubit bit-flip QEC** corrects all single-X errors perfectly (noiseless); under qrl-004 noise, syndrome accuracy ~98% and QEC provides +0.055 mean fidelity improvement over no-QEC baseline
 - **Multi-qubit entanglement degrades exponentially** under realistic noise — Mermin/GHZ collapses to classical (M~1.0) at p1q=0.2%, p2q=1.5% while CHSH remains above bound
 
 ## Experiment Structure
