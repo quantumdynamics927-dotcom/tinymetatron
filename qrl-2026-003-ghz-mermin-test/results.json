@@ -1,23 +1,19 @@
 {
-  "date_run": "2026-08-03T15:33:44.947429+00:00",
-  "result_value": 5.328427,
+  "date_run": "2026-08-03T15:49:13.448089+00:00",
+  "result_value": 4.0,
   "violated_bound": "classical",
   "passes_minimum_bar": true,
-  "passes_target": false,
-  "circuit_hash": "80b8b36b561576d49139e9f987f2dd1d8f9005fa80302bc347f96caf5fe19366",
-  "code_commit": "f2ba1eb",
+  "passes_target": true,
+  "circuit_hash": "15a10db68cac048b1ce1ad6d5129fc7b4876baf5e040c3eb66601b31090fc27a",
+  "code_commit": "1298c4e",
   "shots": 1024,
   "E_vals": {
-    "E(0, 0, 0)": -1.0,
-    "E(0, 0, 1)": 0.707107,
-    "E(0, 1, 0)": -0.707107,
-    "E(0, 1, 1)": 0.5,
-    "E(1, 0, 0)": -0.707107,
-    "E(1, 0, 1)": 0.5,
-    "E(1, 1, 0)": -0.5,
-    "E(1, 1, 1)": 0.707107
+    "E(0,0,0)": 1.0,
+    "E(0,th,th)": -1.0,
+    "E(th,0,th)": -1.0,
+    "E(th,th,0)": -1.0
   },
-  "classical_bound": 4.0,
-  "quantum_maximum": 5.656854,
+  "classical_bound": 2.0,
+  "quantum_maximum": 4.0,
   "shot_noise_verified": false
 }

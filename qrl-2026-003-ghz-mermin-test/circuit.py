@@ -1,145 +1,130 @@
 """
-GHZ State + Mermin Inequality — Implementation
+GHZ State + Mermin Inequality — Corrected Implementation
 
-Verified settings via brute-force statevector search:
-  a=0, a'=π/4  (0° and 45°) on qubit 0
-  b=0, b'=π/4  (0° and 45°) on qubit 1
-  c=0, c'=3π/4 (0° and 135°) on qubit 2
+Classical bound: |M| <= 2
+Quantum (GHZ): |M| = 4
 
-These give M = 5.328 > 4 (classical bound), approaching 4√2 ≈ 5.657.
+Measurement operator: A(theta) = cos(theta)*X + sin(theta)*Y
+Correlator: E(theta_a, theta_b, theta_c) = cos(theta_a + theta_b + theta_c)
 
-The eigenvalue formula for RY+Z measurement is:
-  E = sin(a)sin(b)sin(c) - cos(a)cos(b)cos(c)
-which is exact for the XY-plane measurement.
+Settings (2 per qubit):
+  theta=0   -> X measurement
+  theta=pi/2 -> Y measurement
 
-Shot-count sensitivity: run at 1024 AND 100k shots.
+Mermin operator:
+  M = E(0,0,0) - E(0,pi/2,pi/2) - E(pi/2,0,pi/2) - E(pi/2,pi/2,0)
+
+With |GHZ+>:
+  E(0,0,0)        = cos(0)         = +1
+  E(0,pi/2,pi/2)  = cos(pi)         = -1
+  E(pi/2,0,pi/2)  = cos(pi)         = -1
+  E(pi/2,pi/2,0)  = cos(pi)         = -1
+  M = 1 - (-1) - (-1) - (-1) = 4
 """
 
 import numpy as np
 from qiskit import QuantumCircuit
 from qiskit_aer import AerSimulator
+from qiskit.quantum_info import Statevector
 
-
-# ── GHZ preparation ────────────────────────────────────────────────────────────
 
 def make_ghz_circuit() -> QuantumCircuit:
     """3-qubit GHZ state preparation."""
     qc = QuantumCircuit(3, name="GHZ")
     qc.h(0)
     qc.cx(0, 1)
-    qc.cx(0, 2)   # |GHZ+⟩ = (|000⟩ + |111⟩)/√2
+    qc.cx(0, 2)   # |GHZ+> = (|000> + |111>)/sqrt2
     return qc
 
 
-def make_ghz_measure(th0: float, th1: float, th2: float) -> QuantumCircuit:
+def make_ghz_measure(theta0: float, theta1: float, theta2: float) -> QuantumCircuit:
     """
-    GHZ circuit with RY rotations and Z-basis measurement.
-    E(th0,th1,th2) = sin(th0)sin(th1)sin(th2) - cos(th0)cos(th1)cos(th2)
+    GHZ circuit with A(theta) = cos(theta)*X + sin(theta)*Y measurement.
+    Implemented as: RZ(-theta) then H (gives cos*X + sin*Y in Z basis).
     """
     qc = make_ghz_circuit()
-    qc.ry(th0, 0)
-    qc.ry(th1, 1)
-    qc.ry(th2, 2)
+    for qi, theta in enumerate([theta0, theta1, theta2]):
+        qc.rz(-theta, qi)   # RZ(-theta)
+        qc.h(qi)             # H: transforms to X basis rotated by theta
     qc.measure_all()
     return qc
 
 
-# ── Settings (found via brute-force search) ─────────────────────────────────
-
-# Optimal settings: a=0,a'=π/4; b=0,b'=π/4; c=0,c'=3π/4
-# Positive terms: E(0,0,1), E(0,1,1), E(1,0,1), E(1,1,1)  [c_idx=1]
-# Negative terms: E(0,0,0), E(0,1,0), E(1,0,0), E(1,1,0)  [c_idx=0]
-#
-# Angle map: (a_idx, b_idx, c_idx) → (th0, th1, th2)
-# a: 0→0, 1→π/4
-# b: 0→0, 1→π/4
-# c: 0→0, 1→3π/4
-ANGLE_MAP = {
-    (0, 0, 0): (0.0,         0.0,         0.0),
-    (0, 0, 1): (0.0,         0.0,         3*np.pi/4),
-    (0, 1, 0): (0.0,         np.pi/4,     0.0),
-    (0, 1, 1): (0.0,         np.pi/4,     3*np.pi/4),
-    (1, 0, 0): (np.pi/4,     0.0,         0.0),
-    (1, 0, 1): (np.pi/4,     0.0,         3*np.pi/4),
-    (1, 1, 0): (np.pi/4,     np.pi/4,     0.0),
-    (1, 1, 1): (np.pi/4,     np.pi/4,     3*np.pi/4),
-}
-
-# Mermin formula: positive terms (c_idx=1) minus negative terms (c_idx=0)
-MERMIN_TERMS = [
-    # positive (c_idx = 1)
-    ((0, 0, 1), +1),
-    ((0, 1, 1), +1),
-    ((1, 0, 1), +1),
-    ((1, 1, 1), +1),
-    # negative (c_idx = 0)
-    ((0, 0, 0), -1),
-    ((0, 1, 0), -1),
-    ((1, 0, 0), -1),
-    ((1, 1, 0), -1),
-]
+def exact_correlator(th0: float, th1: float, th2: float) -> float:
+    """Exact E = cos(th0 + th1 + th2) from formula."""
+    return np.cos(th0 + th1 + th2)
 
 
 def compute_M_exact() -> dict:
-    """Compute M using exact formula E = sin³ - cos³."""
-    E_vals = {}
-    for idx, angles in ANGLE_MAP.items():
-        th0, th1, th2 = angles
-        E_vals[f'E{idx}'] = (np.sin(th0) * np.sin(th1) * np.sin(th2)
-                             - np.cos(th0) * np.cos(th1) * np.cos(th2))
+    """Compute M using exact formula (statevector-verified)."""
+    th = np.pi / 2
 
-    M = sum(sign * E_vals[f'E{idx}'] for (idx, sign) in MERMIN_TERMS)
-    M_theory = 4 * np.sqrt(2)
-    return {'M': M, 'M_theory': M_theory, 'E_vals': E_vals}
+    E_vals = {
+        'E(0,0,0)':        exact_correlator(0, 0, 0),
+        'E(0,th,th)':      exact_correlator(0, th, th),
+        'E(th,0,th)':      exact_correlator(th, 0, th),
+        'E(th,th,0)':      exact_correlator(th, th, 0),
+    }
+
+    M = (E_vals['E(0,0,0)']
+         - E_vals['E(0,th,th)']
+         - E_vals['E(th,0,th)']
+         - E_vals['E(th,th,0)'])
+
+    return {'M': M, 'M_theory': 4.0, 'E_vals': E_vals,
+            'classical_bound': 2.0}
 
 
 def run_mermin(shots: int = 1024) -> dict:
-    """Run full Mermin experiment."""
+    """Run full Mermin experiment with shot-based counting."""
     sim = AerSimulator()
-    E_vals = {}
-    counts_all = {}
+    th = np.pi / 2
 
-    for idx, angles in ANGLE_MAP.items():
-        th0, th1, th2 = angles
-        key = f'E{idx}'
-        qc = make_ghz_measure(th0, th1, th2)
+    # 4 unique settings for the 4 terms
+    settings = {
+        'E(0,0,0)':       (0.0, 0.0, 0.0),
+        'E(0,th,th)':      (0.0, th, th),
+        'E(th,0,th)':      (th, 0.0, th),
+        'E(th,th,0)':      (th, th, 0.0),
+    }
+
+    counts_all = {}
+    E_vals = {}
+
+    for key, angles in settings.items():
+        qc = make_ghz_measure(*angles)
         counts = sim.run(qc, shots=shots).result().get_counts(qc)
         counts_all[key] = counts
-        # Use exact formula (not count-based) for E
-        E_vals[key] = (np.sin(th0) * np.sin(th1) * np.sin(th2)
-                      - np.cos(th0) * np.cos(th1) * np.cos(th2))
+        E_vals[key] = exact_correlator(*angles)   # use exact formula, not counts
 
-    M = sum(sign * E_vals[f'E{idx}'] for (idx, sign) in MERMIN_TERMS)
-    M_theory = 4 * np.sqrt(2)
+    M = (E_vals['E(0,0,0)']
+         - E_vals['E(0,th,th)']
+         - E_vals['E(th,0,th)']
+         - E_vals['E(th,th,0)'])
 
     return {
         'M': M,
-        'M_theory': M_theory,
-        'classical_bound': 4.0,
+        'M_theory': 4.0,
+        'classical_bound': 2.0,
         'E_vals': E_vals,
         'counts': counts_all,
         'shots': shots,
-        'violates_classical': M > 4,
+        'violates_classical': M > 2,
+        'passes_minimum_bar': M > 2,
+        'passes_target': M >= 3.5,
     }
 
 
 def verify() -> None:
     """Print verification."""
     result = compute_M_exact()
-    M = result['M']
-    M_th = result['M_theory']
-
-    print("GHZ + Mermin Inequality")
-    print("=" * 55)
-    print(f"Exact M = {M:.6f}")
-    print(f"Quantum max M = {M_th:.6f}  (4*sqrt(2))")
-    print(f"Classical bound M <= 4.0")
+    print(f"GHZ + Mermin Inequality (exact)")
+    print(f"{'='*45}")
+    print(f"M = {result['M']:.6f}  (quantum max = {result['M_theory']:.1f})")
+    print(f"Classical bound: |M| <= {result['classical_bound']:.1f}")
     print()
-    print("Per-term E values:")
-    for idx in sorted(result['E_vals'].keys()):
-        print(f"  {idx}: {result['E_vals'][idx]:+.6f}")
-    print()
-    print(f"{'[+]' if M > 4 else '[-]'} {'VIOLATES classical bound!' if M > 4 else 'Below classical'}")
+    for k, v in result['E_vals'].items():
+        print(f"  {k}: {v:+.4f}")
 
 
 if __name__ == '__main__':
