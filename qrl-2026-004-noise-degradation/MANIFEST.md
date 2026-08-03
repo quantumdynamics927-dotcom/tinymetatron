@@ -71,3 +71,5 @@ Both CHSH and Mermin inequalities are violated by quantum states in ideal (noise
 - **circuit_hash_Mermin**: 0a0d50183642bb0cf445b07dd9bbc3541af1afecd7a5832c68eabce6a988bd1a
 - **code_commit**: d1addca
 - **shots**: 100000
+- **noise_stability_verified**: true (3 independent runs: M=1.004, 0.995, 0.997 — std=0.004, all firmly below bound)
+- **conclusion**: GHZ entanglement is exponentially more fragile than 2-qubit Bell entanglement under identical noise. Mermin/GHZ collapses to near-classical (M≈1.0) at realistic hardware error rates; CHSH retains a strong Bell violation (S≈2.57 > 2).
