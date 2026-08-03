@@ -48,3 +48,58 @@ Uniform random sampling clusters near poles; golden-angle avoids this.
 - **circuit_hash**: 1afdf0cb852b8efde6d3287f2903758a17e1f99dbe2c00917845e1675823de11
 - **code_commit**: 42c0315
 - **shots_per_state**: 20000
+
+
+## Results
+
+- **date_run**: 2026-08-03T21:06:54.314387+00:00
+- **noiseless_min_fidelity**: 1.000000
+- **noiseless_avg_fidelity**: 1.000000
+- **noisy_min_fidelity**: 0.000000
+- **noisy_avg_fidelity**: 0.500000
+- **noisy_golden_std**: 0.294508
+- **noisy_random_mean**: 0.535233
+- **noisy_random_std**: 0.277838
+- **golden_angle_discrepancy**: 0.114576
+- **random_discrepancy**: 0.503156
+- **sampling_uniformity**: Golden-angle more uniform (0.1146 < 0.5032)
+- **key_finding**: Golden-angle found states with F near 0.000 under noise (min=0.000); random sampling's worst case was F=0.044. Both methods show ~0.50 mean noisy fidelity.
+- **circuit_hash**: 1afdf0cb852b8efde6d3287f2903758a17e1f99dbe2c00917845e1675823de11
+- **code_commit**: 152b474
+- **shots_per_state**: 20000
+
+## Results
+
+- **date_run**: 2026-08-03T21:15:12.075687+00:00
+- **noiseless_min_fidelity**: 1.000000
+- **noiseless_avg_fidelity**: 1.000000
+- **noisy_min_fidelity**: 0.000000
+- **noisy_avg_fidelity**: 0.500000
+- **noisy_golden_std**: 0.294508
+- **noisy_random_mean**: 0.535233
+- **noisy_random_std**: 0.277838
+- **golden_angle_discrepancy**: 0.114576
+- **random_discrepancy**: 0.503156
+- **sampling_uniformity**: Golden-angle more uniform (0.1146 < 0.5032)
+- **key_finding**: Golden-angle found states with F near 0.000 under noise (min=0.000); random sampling's worst case was F=0.044. Both methods show ~0.50 mean noisy fidelity.
+- **circuit_hash**: 1afdf0cb852b8efde6d3287f2903758a17e1f99dbe2c00917845e1675823de11
+- **code_commit**: 152b474
+- **shots_per_state**: 20000
+
+## Results
+
+- **date_run**: 2026-08-03T21:16:55.912884+00:00
+- **noiseless_min_fidelity**: 1.000000
+- **noiseless_avg_fidelity**: 1.000000
+- **noisy_min_fidelity**: 0.000000
+- **noisy_avg_fidelity**: 0.500000
+- **noisy_golden_std**: 0.294508
+- **noisy_random_mean**: 0.535233
+- **noisy_random_std**: 0.277838
+- **golden_angle_discrepancy**: 0.114576
+- **random_discrepancy**: 0.503156
+- **sampling_uniformity**: Golden-angle more uniform (0.1146 < 0.5032)
+- **key_finding**: Golden-angle found states with F near 0.000 under noise (min=0.000); random sampling's worst case was F=0.044. Both methods show ~0.50 mean noisy fidelity.
+- **circuit_hash**: 1afdf0cb852b8efde6d3287f2903758a17e1f99dbe2c00917845e1675823de11
+- **code_commit**: 152b474
+- **shots_per_state**: 20000

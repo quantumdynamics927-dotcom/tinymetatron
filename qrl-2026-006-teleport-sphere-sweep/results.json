@@ -1,5 +1,5 @@
 {
-  "date_run": "2026-08-03T19:18:28.328387+00:00",
+  "date_run": "2026-08-03T21:16:55.912884+00:00",
   "noiseless": {
     "n_points": 50,
     "golden_angle_mean": 1.0,
@@ -25,5 +25,5 @@
     "sampling_more_uniform": true
   },
   "circuit_hash": "1afdf0cb852b8efde6d3287f2903758a17e1f99dbe2c00917845e1675823de11",
-  "code_commit": "42c0315"
+  "code_commit": "152b474"
 }

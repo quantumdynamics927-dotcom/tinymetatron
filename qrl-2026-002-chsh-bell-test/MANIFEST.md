@@ -71,3 +71,14 @@ This configuration is the standard optimal CHSH strategy for the |Φ+⟩ state.
 - **hardware-pending**: blocked — no IBM Quantum provider access (no API credentials, no active paid plan)
 - **next**: Re-run with realistic noise model using `qiskit_aer.noise.NoiseModel` to simulate hardware-like degradation. CHSH expected to remain above classical bound; Mermin/GHZ expected to show greater noise sensitivity.
 
+
+
+## Results
+
+- **date_run**: 2026-08-03T21:13:42.189848+00:00
+- **result_value**: 2.845703
+- **violated_bound**: classical
+- **circuit_hash**: a4eb7a2b9a1dec6bcd4dde85adf6a06f26d854868c05c2f43b9442f337ab1969
+- **code_commit**: 152b474
+- **passes_minimum_bar**: true (S > 2 = any quantum advantage)
+- **passes_target**: true (S >= 2.7 = near quantum maximum)

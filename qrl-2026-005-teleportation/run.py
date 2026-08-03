@@ -24,7 +24,8 @@ def git_commit() -> str:
     except Exception:
         return "unknown"
 
-sys.path.insert(0, str(EXP_DIR))
+sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(1, str(EXP_DIR))
 from circuit import run_fidelity_check
 
 

@@ -80,3 +80,19 @@ The Bennett 1993 teleportation protocol uses a shared Bell pair and classical co
 - **circuit_hash**: 0638fb077f374fd3344165314a5ac4247b301f4a95d3ae6d8e61a3bf3d7fb9a8
 - **code_commit**: 97d4d85
 - **shots**: 50000
+
+
+## Results
+
+- **date_run**: 2026-08-03T21:13:59.598143+00:00
+- **fidelity_0**: 1.000000
+- **fidelity_plus**: 1.000000
+- **fidelity_plus_i**: 1.000000
+- **fidelity_minus**: 1.000000
+- **average_fidelity**: 1.000000
+- **above_minimum_bar**: true (F > 0.9)
+- **above_target**: true (F >= 0.99)
+- **analytical_fidelities**: all = 1.000000 (Bennett 1993 protocol guarantee)
+- **circuit_hash**: 4498ca8dcef531c490f62fa16f8c399537b739f6a30e7bc6d490d351bf1c7685
+- **code_commit**: 152b474
+- **shots**: 50000

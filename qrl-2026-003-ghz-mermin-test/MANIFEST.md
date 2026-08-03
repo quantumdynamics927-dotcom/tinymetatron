@@ -103,3 +103,15 @@ The correct correlator formula **E(θ_a, θ_b, θ_c) = cos(θ_a + θ_b + θ_c)**
 - M = 1 − (−1) − (−1) − (−1) = 4.0 exactly
 
 **Rule established:** Always verify the formula against a statevector before writing shot-based simulation code.
+
+
+## Results
+
+- **date_run**: 2026-08-03T21:13:43.277148+00:00
+- **result_value**: 4.000000
+- **violated_bound**: classical
+- **circuit_hash**: 69051e620494d6b4ebaf02c40a36b540e3135cd7974ee98b149bc702090b03ac
+- **code_commit**: 152b474
+- **passes_minimum_bar**: true (M > 2 = quantum advantage)
+- **passes_target**: true (M >= 3.5 = near quantum max)
+- **shot_noise_verified**: false

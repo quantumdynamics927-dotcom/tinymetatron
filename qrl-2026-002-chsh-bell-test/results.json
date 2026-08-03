@@ -1,12 +1,12 @@
 {
-  "date_run": "2026-08-02T20:09:10.859441+00:00",
-  "result_value": 2.82812,
+  "date_run": "2026-08-03T21:13:42.189848+00:00",
+  "result_value": 2.845703,
   "violated_bound": "classical",
   "passes_minimum_bar": true,
   "passes_target": true,
-  "circuit_hash": "158766364b2d2c9f3ed75a346e3b2c6d47e285c2bc6edaea8df8641d96e5512b",
-  "code_commit": "edefbb9",
-  "shots": 100000,
+  "circuit_hash": "a4eb7a2b9a1dec6bcd4dde85adf6a06f26d854868c05c2f43b9442f337ab1969",
+  "code_commit": "152b474",
+  "shots": 1024,
   "angles": {
     "a": 0.0,
     "a_prime": 1.5707963267948966,
@@ -14,13 +14,11 @@
     "b_prime": 2.356194490192345
   },
   "E_vals": {
-    "E(0.0000,0.7854)": 0.70452,
-    "E(0.0000,2.3562)": -0.71026,
-    "E(1.5708,0.7854)": 0.70632,
-    "E(1.5708,2.3562)": 0.70702
+    "E(0.0000,0.7854)": 0.705078,
+    "E(0.0000,2.3562)": -0.6875,
+    "E(1.5708,0.7854)": 0.738281,
+    "E(1.5708,2.3562)": 0.714844
   },
   "classical_bound": 2.0,
-  "quantum_maximum": 2.828427,
-  "note": "1024-shot result (S=2.830078) exceeded Tsirelson bound due to shot noise. Re-run at 100k shots gives S=2.828120, within 0.0003 of theoretical maximum 2.828427. Confirmed as shot noise, not a bug.",
-  "shot_noise_verified": true
+  "quantum_maximum": 2.828427
 }

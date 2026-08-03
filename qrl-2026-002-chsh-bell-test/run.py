@@ -28,7 +28,10 @@ def git_commit() -> str:
 
 
 # ── import circuit logic ───────────────────────────────────────────────────────
-sys.path.insert(0, str(EXP_DIR))
+# Insert REPO_ROOT first so circuit.py (which adds its parent to sys.path)
+# can find qrl_common from the repo root.
+sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(1, str(EXP_DIR))
 from circuit import make_chsh_circuit, compute_correlation
 from qiskit_aer import AerSimulator
 
@@ -84,8 +87,8 @@ def main():
     print(f"Shots: {shots}")
     print()
     print(f"S = {S:.6f}")
-    print(f"Classical bound:  S <= 2.0  → {'VIOLATED ✓' if S > 2 else 'NOT VIOLATED ✗'}")
-    print(f"Quantum maximum: S <= {q_max}  → {'AT QUANTUM LIMIT ✓' if S > 2.7 else 'BELOW TARGET'}")
+    print(f"Classical bound:  S <= 2.0  -> {'VIOLATED [OK]' if S > 2 else 'NOT VIOLATED [FAIL]'}")
+    print(f"Quantum maximum: S <= {q_max}  -> {'AT QUANTUM LIMIT [OK]' if S > 2.7 else 'BELOW TARGET [FAIL]'}")
 
     # Build record
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()

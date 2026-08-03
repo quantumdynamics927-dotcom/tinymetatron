@@ -109,3 +109,54 @@ The following bugs were discovered and fixed through systematic debugging:
 - **circuit_hash**: 7e221d823bfa1d9c870d670d06eaf3b6469180b7b48aeb34273ca6ade1b7ed7f
 - **code_commit**: 3fa2073
 - **shots_per_test**: 20000
+
+## Results
+
+- **date_run**: 2026-08-03T21:05:22.404547+00:00
+- **noiseless_qec_mean_fidelity**: 1.000000
+- **noiseless_qec_min_fidelity**: 1.000000
+- **noiseless_baseline_mean_fidelity**: 0.250000
+- **noiseless_mean_improvement**: 0.750000
+- **noiseless_syndrome_accuracy**: 100.00%
+- **noisy_qec_mean_fidelity**: 0.494015
+- **noisy_qec_min_fidelity**: 0.000000
+- **noisy_baseline_mean_fidelity**: 0.445112
+- **noisy_mean_improvement**: 0.048903
+- **noisy_syndrome_accuracy**: 98.36%
+- **circuit_hash**: 7e221d823bfa1d9c870d670d06eaf3b6469180b7b48aeb34273ca6ade1b7ed7f
+- **code_commit**: 152b474
+- **shots_per_test**: 20000
+
+## Results
+
+- **date_run**: 2026-08-03T21:15:33.748338+00:00
+- **noiseless_qec_mean_fidelity**: 1.000000
+- **noiseless_qec_min_fidelity**: 1.000000
+- **noiseless_baseline_mean_fidelity**: 0.250000
+- **noiseless_mean_improvement**: 0.750000
+- **noiseless_syndrome_accuracy**: 100.00%
+- **noisy_qec_mean_fidelity**: 0.494255
+- **noisy_qec_min_fidelity**: 0.000000
+- **noisy_baseline_mean_fidelity**: 0.441974
+- **noisy_mean_improvement**: 0.052281
+- **noisy_syndrome_accuracy**: 98.36%
+- **circuit_hash**: 7e221d823bfa1d9c870d670d06eaf3b6469180b7b48aeb34273ca6ade1b7ed7f
+- **code_commit**: 152b474
+- **shots_per_test**: 20000
+
+## Results
+
+- **date_run**: 2026-08-03T21:17:18.711910+00:00
+- **noiseless_qec_mean_fidelity**: 1.000000
+- **noiseless_qec_min_fidelity**: 1.000000
+- **noiseless_baseline_mean_fidelity**: 0.250000
+- **noiseless_mean_improvement**: 0.750000
+- **noiseless_syndrome_accuracy**: 100.00%
+- **noisy_qec_mean_fidelity**: 0.494009
+- **noisy_qec_min_fidelity**: 0.000000
+- **noisy_baseline_mean_fidelity**: 0.442332
+- **noisy_mean_improvement**: 0.051677
+- **noisy_syndrome_accuracy**: 98.34%
+- **circuit_hash**: 7e221d823bfa1d9c870d670d06eaf3b6469180b7b48aeb34273ca6ade1b7ed7f
+- **code_commit**: 152b474
+- **shots_per_test**: 20000
