@@ -1,5 +1,5 @@
 {
-  "date_run": "2026-08-03T20:21:53.740702+00:00",
+  "date_run": "2026-08-03T20:50:27.372789+00:00",
   "noiseless": {
     "shots": 20000,
     "qec_mean_fidelity": 1.0,
@@ -10,12 +10,12 @@
   },
   "noisy": {
     "shots": 20000,
-    "qec_mean_fidelity": 0.493837,
+    "qec_mean_fidelity": 0.494267,
     "qec_min_fidelity": 0.0,
-    "baseline_mean_fidelity": 0.442187,
-    "mean_improvement": 0.05165,
-    "syndrome_accuracy": 0.499
+    "baseline_mean_fidelity": 0.439376,
+    "mean_improvement": 0.054891,
+    "syndrome_accuracy": 0.9837
   },
-  "circuit_hash": "b0bfb0042a1912736b2630c5044809d481b3ed219f0e2230f42830ea9d50fcbf",
-  "code_commit": "6c26eaf"
+  "circuit_hash": "7e221d823bfa1d9c870d670d06eaf3b6469180b7b48aeb34273ca6ade1b7ed7f",
+  "code_commit": "3fa2073"
 }

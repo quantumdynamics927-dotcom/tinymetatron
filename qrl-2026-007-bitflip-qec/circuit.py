@@ -84,18 +84,20 @@ def syndrome_to_qubit(syndrome: str) -> int | None:
     if syndrome == '00':
         return None
     elif syndrome == '10':
-        return 0
+        return 2  # s1=1,s2=0: X on q2
     elif syndrome == '11':
-        return 1
+        return 1  # s1=1,s2=1: X on q1
     elif syndrome == '01':
-        return 2
+        return 0  # s1=0,s2=1: X on q0
     raise ValueError(f'Unknown syndrome: {syndrome}')
 
 
 # -- Full QEC protocol ------------------------------------------------------
 
-# Expected syndrome map (verified by statevector): {None: '00', 0: '10', 1: '11', 2: '01'}
-EXPECTED_SYN = {None: '00', 0: '10', 1: '11', 2: '01'}
+# Expected syndrome map (verified by statevector):
+# {None: '00', 0: '01', 1: '11', 2: '10'}
+# Syndrome = (s1,s2) = (q0 XOR q1, q1 XOR q2) in clbit order (clbit0=s1, clbit1=s2)
+EXPECTED_SYN = {None: '00', 0: '01', 1: '11', 2: '10'}
 
 
 def run_qec_with_recovery(input_sv: list, error_qubit: int | None,
