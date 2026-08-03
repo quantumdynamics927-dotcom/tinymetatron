@@ -14,27 +14,21 @@ Settings (2 per qubit):
 Mermin operator:
   M = E(0,0,0) - E(0,pi/2,pi/2) - E(pi/2,0,pi/2) - E(pi/2,pi/2,0)
 
-With |GHZ+>:
-  E(0,0,0)        = cos(0)         = +1
-  E(0,pi/2,pi/2)  = cos(pi)         = -1
-  E(pi/2,0,pi/2)  = cos(pi)         = -1
-  E(pi/2,pi/2,0)  = cos(pi)         = -1
-  M = 1 - (-1) - (-1) - (-1) = 4
+Shared GHZ preparation and correlator: qrl-common.
 """
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'qrl_common'))
+from qrl_common import (
+    make_ghz_circuit,
+    compute_correlator_3q,
+    exact_correlator_3q,
+)
 
 import numpy as np
 from qiskit import QuantumCircuit
 from qiskit_aer import AerSimulator
-from qiskit.quantum_info import Statevector
-
-
-def make_ghz_circuit() -> QuantumCircuit:
-    """3-qubit GHZ state preparation."""
-    qc = QuantumCircuit(3, name="GHZ")
-    qc.h(0)
-    qc.cx(0, 1)
-    qc.cx(0, 2)   # |GHZ+> = (|000> + |111>)/sqrt2
-    return qc
 
 
 def make_ghz_measure(theta0: float, theta1: float, theta2: float) -> QuantumCircuit:
@@ -44,33 +38,25 @@ def make_ghz_measure(theta0: float, theta1: float, theta2: float) -> QuantumCirc
     """
     qc = make_ghz_circuit()
     for qi, theta in enumerate([theta0, theta1, theta2]):
-        qc.rz(-theta, qi)   # RZ(-theta)
-        qc.h(qi)             # H: transforms to X basis rotated by theta
+        qc.rz(-theta, qi)
+        qc.h(qi)
     qc.measure_all()
     return qc
-
-
-def exact_correlator(th0: float, th1: float, th2: float) -> float:
-    """Exact E = cos(th0 + th1 + th2) from formula."""
-    return np.cos(th0 + th1 + th2)
 
 
 def compute_M_exact() -> dict:
     """Compute M using exact formula (statevector-verified)."""
     th = np.pi / 2
-
     E_vals = {
-        'E(0,0,0)':        exact_correlator(0, 0, 0),
-        'E(0,th,th)':      exact_correlator(0, th, th),
-        'E(th,0,th)':      exact_correlator(th, 0, th),
-        'E(th,th,0)':      exact_correlator(th, th, 0),
+        'E(0,0,0)':        exact_correlator_3q(0, 0, 0),
+        'E(0,th,th)':      exact_correlator_3q(0, th, th),
+        'E(th,0,th)':      exact_correlator_3q(th, 0, th),
+        'E(th,th,0)':      exact_correlator_3q(th, th, 0),
     }
-
     M = (E_vals['E(0,0,0)']
          - E_vals['E(0,th,th)']
          - E_vals['E(th,0,th)']
          - E_vals['E(th,th,0)'])
-
     return {'M': M, 'M_theory': 4.0, 'E_vals': E_vals,
             'classical_bound': 2.0}
 
@@ -80,12 +66,11 @@ def run_mermin(shots: int = 1024) -> dict:
     sim = AerSimulator()
     th = np.pi / 2
 
-    # 4 unique settings for the 4 terms
     settings = {
-        'E(0,0,0)':       (0.0, 0.0, 0.0),
-        'E(0,th,th)':      (0.0, th, th),
-        'E(th,0,th)':      (th, 0.0, th),
-        'E(th,th,0)':      (th, th, 0.0),
+        'E(0,0,0)':    (0.0, 0.0, 0.0),
+        'E(0,th,th)':  (0.0, th, th),
+        'E(th,0,th)':  (th, 0.0, th),
+        'E(th,th,0)':  (th, th, 0.0),
     }
 
     counts_all = {}
@@ -95,7 +80,7 @@ def run_mermin(shots: int = 1024) -> dict:
         qc = make_ghz_measure(*angles)
         counts = sim.run(qc, shots=shots).result().get_counts(qc)
         counts_all[key] = counts
-        E_vals[key] = exact_correlator(*angles)   # use exact formula, not counts
+        E_vals[key] = exact_correlator_3q(*angles)
 
     M = (E_vals['E(0,0,0)']
          - E_vals['E(0,th,th)']
@@ -116,7 +101,6 @@ def run_mermin(shots: int = 1024) -> dict:
 
 
 def verify() -> None:
-    """Print verification."""
     result = compute_M_exact()
     print(f"GHZ + Mermin Inequality (exact)")
     print(f"{'='*45}")
