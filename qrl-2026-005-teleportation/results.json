@@ -1,0 +1,23 @@
+{
+  "date_run": "2026-08-03T18:15:20.123382+00:00",
+  "fidelities": {
+    "|0>": 1.0,
+    "|+>": 1.0,
+    "|+i>": 1.0,
+    "|->": 1.0
+  },
+  "analytical_fidelities": {
+    "|0>": 1.0,
+    "|+>": 1.0,
+    "|+i>": 1.0,
+    "|->": 1.0
+  },
+  "average_fidelity": 1.0,
+  "min_fidelity": 1.0,
+  "max_fidelity": 1.0,
+  "above_minimum_bar": true,
+  "above_target": true,
+  "shots": 50000,
+  "circuit_hash": "0638fb077f374fd3344165314a5ac4247b301f4a95d3ae6d8e61a3bf3d7fb9a8",
+  "code_commit": "97d4d85"
+}
