@@ -5,7 +5,7 @@
 - **title**: Mermin Inequality Violation on a Simulated 3-Qubit GHZ State
 - **date_proposed**: 2026-08-02
 - **circuit_family**: 3-qubit GHZ entangled state (|GHZ⟩ = (|000⟩+|111⟩)/√2)
-- **backend**: simulator (Qiskit Aer noise-free)
+- **backend**: simulator (Qiskit Aer noise-free); hardware-pending (no provider access)
 - **hypothesis**: A Mermin measurement on an ideal 3-qubit GHZ state, simulated noiselessly, will yield M = 4, violating the classical bound of |M| ≤ 2 and achieving the quantum maximum for this state.
 
 ## Physics Background
@@ -81,6 +81,11 @@ M = E(0,0,0) - E(0,π/2,π/2) - E(π/2,0,π/2) - E(π/2,π/2,0)
 - **passes_minimum_bar**: true (M > 2 = quantum advantage)
 - **passes_target**: true (M >= 3.5 = near quantum max)
 - **shot_noise_verified**: false
+
+## Status
+- **simulator-validated**: YES — M=4.0 > 2, classical bound violated
+- **hardware-pending**: blocked — no IBM Quantum provider access (no API credentials, no active paid plan)
+- **next**: Re-run with realistic noise model using `qiskit_aer.noise.NoiseModel` to simulate hardware-like degradation. CHSH expected to remain above classical bound; Mermin/GHZ expected to show greater noise sensitivity (3-qubit entanglement is more fragile than 2-qubit).
 
 ## Derivation Lessons
 
