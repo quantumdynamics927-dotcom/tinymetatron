@@ -11,6 +11,7 @@ A validated simulator experiment library demonstrating core quantum computing ph
 | `qrl-2026-004` | Noise Degradation Study | CHSH robust; Mermin collapses to ~1.0 under noise | ✅ Validated |
 | `qrl-2026-005` | Bennett 1993 Teleportation | F = 1.0 for all states (|+i>, |-}}, etc.) | ✅ Validated |
 | `qrl-2026-006` | Golden-Angle Sphere Sweep | F=1.0 noiseless; noisy min=0.000 (golden) vs 0.044 (random) | ✅ Validated |
+| `qrl-2026-007` | Bit-Flip QEC | QEC F=1.0 noiseless; noisy improvement +0.052 over no-QEC baseline | ✅ Validated |
 
 ## Quick Start
 
@@ -21,6 +22,7 @@ python qrl-2026-003-ghz-mermin-test/run.py
 python qrl-2026-004-noise-degradation/run.py
 python qrl-2026-005-teleportation/run.py
 python qrl-2026-006-teleport-sphere-sweep/run.py
+python qrl-2026-007-bitflip-qec/run.py
 
 # Verification (statevector dry-run)
 python qrl-2026-003-ghz-mermin-test/circuit.py
