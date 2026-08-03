@@ -81,3 +81,20 @@ M = E(0,0,0) - E(0,π/2,π/2) - E(π/2,0,π/2) - E(π/2,π/2,0)
 - **passes_minimum_bar**: true (M > 2 = quantum advantage)
 - **passes_target**: true (M >= 3.5 = near quantum max)
 - **shot_noise_verified**: false
+
+## Derivation Lessons
+
+Two critical errors were made during the formula derivation phase before the correct implementation was reached:
+
+**Error 1 — Wrong measurement operator:**
+The initial approach used A(θ) = cos(θ)·Z + sin(θ)·X as the measurement operator. This is incorrect for the GHZ Mermin test. The correct operator is **A(θ) = cos(θ)·X + sin(θ)·Y**. The RZ(-θ) + H gate sequence used in the correct implementation produces cos(θ)·X + sin(θ)·Y in the Z basis, not the Z+X mix initially assumed.
+
+**Error 2 — Wrong classical bound:**
+The initial manifest listed the classical bound as |M| ≤ 4, with a quantum bound of 4√2 ≈ 5.657. The correct classical bound for the 3-qubit Mermin inequality is **|M| ≤ 2**, and the quantum maximum is **|M| = 4**. This was identified and corrected after user intervention.
+
+**How the correct formula was found:**
+The correct correlator formula **E(θ_a, θ_b, θ_c) = cos(θ_a + θ_b + θ_c)** was provided by the user and verified via statevector computation before writing any shot-based code. Statevector verification confirmed:
+- E(0,0,0) = +1, E(0,π/2,π/2) = -1, E(π/2,0,π/2) = -1, E(π/2,π/2,0) = -1
+- M = 1 − (−1) − (−1) − (−1) = 4.0 exactly
+
+**Rule established:** Always verify the formula against a statevector before writing shot-based simulation code.
