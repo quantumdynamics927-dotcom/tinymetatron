@@ -142,3 +142,138 @@ def make_noise_model(p1q: float = 0.002, p2q: float = 0.015,
             ReadoutError([[1 - ro_err, ro_err], [ro_err, 1 - ro_err]]), [qubit])
 
     return nm
+
+
+# ── Golden-Angle Bloch Sphere Sampling ─────────────────────────────────────────
+#
+# Reference: Weyl equidistribution theorem — for irrational α, the sequence
+# {nα mod 1} is uniformly distributed on [0, 1]. The golden ratio φ = (1+√5)/2
+# is particularly well-suited because its reciprocal 1/φ = φ - 1 ≈ 0.618...
+# is also irrational, giving the golden angle:
+#   θ_g = 2π * (1 - 1/φ) = 2π/φ² ≈ 2.4021 rad ≈ 137.508°
+#
+# For N points on the Bloch sphere (Weyl/golden-angle sampling):
+#   θ_n = arccos(1 - 2n/(N-1))   n = 0, ..., N-1   (elevation, uniform in cos θ)
+#   φ_n = n * θ_g  (azimuthal, irrational rotation per step)
+#
+# The resulting set {φ_n mod 2π} is equidistributed, giving more uniform
+# coverage than uniform random (which clusters at poles) or naive grid.
+#
+# This is standard in quantum tomography and sphere sampling literature.
+
+GOLDEN_RATIO = (1 + 5 ** 0.5) / 2  # φ ≈ 1.6180339887
+GOLDEN_ANGLE = 2 * np.pi * (1 - 1 / GOLDEN_RATIO)  # ≈ 2.4021 rad ≈ 137.508°
+
+
+def golden_angle_sphere_points(n_points: int) -> list:
+    """
+    Generate N points uniformly distributed on the Bloch sphere
+    using the golden-angle (Weyl equidistribution) sequence.
+
+    Args:
+        n_points: number of points to generate (N)
+
+    Returns:
+        List of (theta, phi) tuples in radians.
+        theta ∈ [0, π] (polar angle from +Z axis)
+        phi ∈ [0, 2π) (azimuthal angle)
+
+    Reference: Weyl (1916), golden-angle spiral on sphere.
+    """
+    points = []
+    for n in range(n_points):
+        # Uniform in cos(θ) from -1 to 1: z = cos(θ) = 1 - 2n/(N-1)
+        cos_theta = 1.0 - (2.0 * n) / (n_points - 1) if n_points > 1 else 0.0
+        theta = np.arccos(np.clip(cos_theta, -1.0, 1.0))
+        # Azimuthal: golden-angle increment per point
+        phi = (n * GOLDEN_ANGLE) % (2 * np.pi)
+        points.append((theta, phi))
+    return points
+
+
+def sphere_point_to_statevector(theta: float, phi: float) -> np.ndarray:
+    """
+    Convert a Bloch sphere point to a normalized 2-qubit statevector.
+
+    |ψ(θ,φ)⟩ = cos(θ/2) |0⟩ + e^{iφ} sin(θ/2) |1⟩
+
+    Args:
+        theta: polar angle in radians [0, π]
+        phi: azimuthal angle in radians [0, 2π)
+
+    Returns:
+        Normalized complex statevector [α, β] where |α|²+|β|² = 1
+    """
+    alpha = np.cos(theta / 2)
+    beta = np.exp(1j * phi) * np.sin(theta / 2)
+    sv = np.array([alpha, beta], dtype=complex)
+    return sv / np.linalg.norm(sv)
+
+
+def uniform_random_sphere_points(n_points: int, seed: int = 42) -> list:
+    """
+    Generate N points on the Bloch sphere via naive uniform random sampling.
+    Uses the standard spherical coordinate method: cos(θ) ~ U(-1,1), φ ~ U(0, 2π).
+
+    This is a comparison baseline for the golden-angle method.
+    The random method clusters near the poles; golden-angle avoids this.
+
+    Args:
+        n_points: number of points
+        seed: random seed for reproducibility
+
+    Returns:
+        List of (theta, phi) tuples in radians.
+    """
+    rng = np.random.default_rng(seed)
+    cos_thetas = rng.uniform(-1, 1, size=n_points)
+    thetas = np.arccos(cos_thetas)
+    phis = rng.uniform(0, 2 * np.pi, size=n_points)
+    return list(zip(thetas, phis))
+
+
+def sphere_discrepancy(points: list) -> float:
+    """
+    Compute a simple discrepancy statistic for a set of sphere points.
+
+    Uses the centered Euclidean nearest-neighbor distance variance:
+    - For each point, compute Euclidean distance to its nearest neighbor
+    - Compute variance of these distances
+    Lower variance = more uniform spacing.
+
+    For N evenly spaced points, variance → 0.
+    For clustered points, variance is high.
+
+    Args:
+        points: list of (theta, phi) tuples (radians)
+
+    Returns:
+        Float — coefficient of variation of nearest-neighbor distances
+        (std / mean). Lower is more uniform.
+    """
+    if len(points) < 2:
+        return 0.0
+
+    # Convert to Cartesian unit vectors
+    vecs = []
+    for theta, phi in points:
+        x = np.sin(theta) * np.cos(phi)
+        y = np.sin(theta) * np.sin(phi)
+        z = np.cos(theta)
+        vecs.append(np.array([x, y, z]))
+    vecs = np.array(vecs)
+
+    # Nearest-neighbor distances
+    nn_dists = []
+    for i, v in enumerate(vecs):
+        dists = np.linalg.norm(vecs - v, axis=1)
+        dists[i] = np.inf  # exclude self
+        nn_dists.append(np.min(dists))
+
+    nn_dists = np.array(nn_dists)
+    mean = np.mean(nn_dists)
+    std = np.std(nn_dists)
+    if mean == 0:
+        return 0.0
+    return std / mean  # coefficient of variation
+
