@@ -1,11 +1,11 @@
 {
-  "date_run": "2026-08-03T21:13:57.522160+00:00",
-  "noiseless_CHSH_S": 2.83292,
-  "noisy_CHSH_S": 2.56544,
-  "noiseless_Mermin_M": 0.99918,
-  "noisy_Mermin_M": 1.00328,
-  "chsh_degradation": 0.26748,
-  "mermin_degradation": -0.0041,
+  "date_run": "2026-08-03T22:17:06.653992+00:00",
+  "noiseless_CHSH_S": 2.81578,
+  "noisy_CHSH_S": 2.56844,
+  "noiseless_Mermin_M": 0.99998,
+  "noisy_Mermin_M": 1.00562,
+  "chsh_degradation": 0.24734,
+  "mermin_degradation": -0.00564,
   "chsh_above_bound": true,
   "mermin_above_bound": false,
   "outcome": "CHSH_ONLY \u2014 CHSH is robust, Mermin degraded below bound (informative)",
@@ -16,7 +16,7 @@
   },
   "circuit_hash_CHSH": "0cfa72d733a2172be8087aec37b954f3b1e9ba81a37b9cd7c14ba8195a0c5784",
   "circuit_hash_Mermin": "0cfa72d733a2172be8087aec37b954f3b1e9ba81a37b9cd7c14ba8195a0c5784",
-  "code_commit": "152b474",
+  "code_commit": "dad8e05",
   "shots": 100000,
   "classical_bound": 2.0
 }

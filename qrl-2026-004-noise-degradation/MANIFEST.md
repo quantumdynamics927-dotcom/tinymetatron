@@ -92,3 +92,21 @@ Both CHSH and Mermin inequalities are violated by quantum states in ideal (noise
 - **circuit_hash_Mermin**: 0cfa72d733a2172be8087aec37b954f3b1e9ba81a37b9cd7c14ba8195a0c5784
 - **code_commit**: 152b474
 - **shots**: 100000
+
+## Results
+
+- **date_run**: 2026-08-03T22:17:06.653992+00:00
+- **noiseless_CHSH_S**: 2.815780
+- **noisy_CHSH_S**: 2.568440
+- **noiseless_Mermin_M**: 0.999980
+- **noisy_Mermin_M**: 1.005620
+- **chsh_degradation**: 0.247340
+- **mermin_degradation**: -0.005640
+- **chsh_above_bound**: true (S > 2)
+- **mermin_above_bound**: false (M > 2)
+- **outcome**: CHSH_ONLY — CHSH is robust, Mermin degraded below bound (informative)
+- **noise_params**: p1q=0.002, p2q=0.015, readout=0.02
+- **circuit_hash_CHSH**: 0cfa72d733a2172be8087aec37b954f3b1e9ba81a37b9cd7c14ba8195a0c5784
+- **circuit_hash_Mermin**: 0cfa72d733a2172be8087aec37b954f3b1e9ba81a37b9cd7c14ba8195a0c5784
+- **code_commit**: dad8e05
+- **shots**: 100000

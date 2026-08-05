@@ -82,3 +82,13 @@ This configuration is the standard optimal CHSH strategy for the |Φ+⟩ state.
 - **code_commit**: 152b474
 - **passes_minimum_bar**: true (S > 2 = any quantum advantage)
 - **passes_target**: true (S >= 2.7 = near quantum maximum)
+
+## Results
+
+- **date_run**: 2026-08-03T22:17:01.426873+00:00
+- **result_value**: 2.894531
+- **violated_bound**: classical
+- **circuit_hash**: a4eb7a2b9a1dec6bcd4dde85adf6a06f26d854868c05c2f43b9442f337ab1969
+- **code_commit**: dad8e05
+- **passes_minimum_bar**: true (S > 2 = any quantum advantage)
+- **passes_target**: true (S >= 2.7 = near quantum maximum)

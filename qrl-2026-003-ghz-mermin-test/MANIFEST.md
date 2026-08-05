@@ -115,3 +115,14 @@ The correct correlator formula **E(θ_a, θ_b, θ_c) = cos(θ_a + θ_b + θ_c)**
 - **passes_minimum_bar**: true (M > 2 = quantum advantage)
 - **passes_target**: true (M >= 3.5 = near quantum max)
 - **shot_noise_verified**: false
+
+## Results
+
+- **date_run**: 2026-08-03T22:17:02.474717+00:00
+- **result_value**: 4.000000
+- **violated_bound**: classical
+- **circuit_hash**: 69051e620494d6b4ebaf02c40a36b540e3135cd7974ee98b149bc702090b03ac
+- **code_commit**: dad8e05
+- **passes_minimum_bar**: true (M > 2 = quantum advantage)
+- **passes_target**: true (M >= 3.5 = near quantum max)
+- **shot_noise_verified**: false

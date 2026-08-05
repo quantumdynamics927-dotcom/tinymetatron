@@ -160,3 +160,20 @@ The following bugs were discovered and fixed through systematic debugging:
 - **circuit_hash**: 7e221d823bfa1d9c870d670d06eaf3b6469180b7b48aeb34273ca6ade1b7ed7f
 - **code_commit**: 152b474
 - **shots_per_test**: 20000
+
+## Results
+
+- **date_run**: 2026-08-03T22:18:30.087431+00:00
+- **noiseless_qec_mean_fidelity**: 1.000000
+- **noiseless_qec_min_fidelity**: 1.000000
+- **noiseless_baseline_mean_fidelity**: 0.250000
+- **noiseless_mean_improvement**: 0.750000
+- **noiseless_syndrome_accuracy**: 100.00%
+- **noisy_qec_mean_fidelity**: 0.494385
+- **noisy_qec_min_fidelity**: 0.000000
+- **noisy_baseline_mean_fidelity**: 0.441083
+- **noisy_mean_improvement**: 0.053302
+- **noisy_syndrome_accuracy**: 98.37%
+- **circuit_hash**: 7e221d823bfa1d9c870d670d06eaf3b6469180b7b48aeb34273ca6ade1b7ed7f
+- **code_commit**: dad8e05
+- **shots_per_test**: 20000
