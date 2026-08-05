@@ -20,6 +20,14 @@ reports/private/
 quantum_corpus/eval/private/
 **/_val_hits.json
 
+# Local data directories
+data_v2/
+tokenizers/
+
+# QSG/QRL cross-repo validation scripts (local only)
+qsg_static_posthoc_validation.py
+qsg_layer3_validation.py
+
 # Model artifacts and local data
 ckpt/
 data/
@@ -51,8 +59,14 @@ Thumbs.db
 # Confidential documents (patent/work product — keep locally only)
 TMT_Patent_*.pdf
 TMT_Patent_*.zip
+TMT_Patent_Draft_*.md
+TMT_Patent_Dv*.md
 TMT_Enablement_Declaration*.pdf
 TMT_Claims_EP_US*.pdf
+TMT_Private/
+*.png
+tiny_metatron_slm_kompletne_technicke_zhrnutie_sk_it_prof.md
+"Tiny Metatron Slm"*
 
 # HuggingFace / model tokens
 hf_token*
