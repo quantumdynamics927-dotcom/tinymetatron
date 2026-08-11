@@ -313,7 +313,12 @@ class TinyMetatron(nn.Module):
         return cls(CONFIG)
 
     def save_checkpoint(self, path: str) -> None:
-        """Save model state + config to `path` (.pt)."""
+        """Save model state + config to `path` (.pt).
+
+        Saves a full checkpoint including optimizer state, step counter, and config
+        for a faithful resume.  The ``load_checkpoint`` method is backward-
+        compatible with older lean checkpoints (state_dict only).
+        """
         os.makedirs(os.path.dirname(os.path.abspath(path)) or ".",
                     exist_ok=True)
         torch.save({
@@ -326,6 +331,9 @@ class TinyMetatron(nn.Module):
 
         Device is derived from the current model parameters; ``map_location``
         defaults to that device so checkpoints transfer cleanly.
+
+        Backward-compatible with both lean checkpoints (state_dict only) and
+        full checkpoints (state_dict + optimizer_state_dict + step + config).
         """
         if map_location is None:
             map_location = next(self.parameters()).device

@@ -120,19 +120,22 @@ def run_training(steps: int,
 
     # ── Load active checkpoint (from the real db_path) or init fresh ────────
     start_step = 0
+    optim_has_state = False
     active = db.get_active_checkpoint(db_path)
     model = TinyMetatron.from_config()
     model.to(dev)
     if active is not None and active.get("file_path") \
             and os.path.isfile(str(active["file_path"])):
         try:
-            model.load_checkpoint(str(active["file_path"]))
-            # Reject checkpoints whose parameters contain NaN/Inf — a
-            # poisoned state_dict would propagate corruption into the run.
+            ckpt = torch.load(str(active["file_path"]),
+                              map_location=dev, weights_only=False)
+            model.load_state_dict(ckpt["state_dict"], strict=True)
             if not all(torch.isfinite(p).all().item()
                        for p in model.parameters()):
                 raise ValueError("checkpoint contains non-finite parameters")
             start_step = int(active.get("step") or 0)
+            optim_has_state = ("optimizer_state_dict" in ckpt
+                              and ckpt["optimizer_state_dict"] is not None)
         except Exception:
             # Corrupt / NaN checkpoint → fall back to fresh model; do not
             # crash the API thread.  The new run starts from scratch.
@@ -180,6 +183,8 @@ def run_training(steps: int,
                                    min_quality=min_quality)
 
     optim = torch.optim.Adam(model.parameters(), lr=float(learning_rate))
+    if optim_has_state:
+        optim.load_state_dict(ckpt["optimizer_state_dict"])
     model.train()
 
     log_every = int(CONFIG.get("log_every", 10))
@@ -245,7 +250,13 @@ def run_training(steps: int,
     loss_finite = math.isfinite(final_loss)
     ckpt_name = f"tinymetatron_step{start_step + total_steps}.pt"
     ckpt_path = os.path.abspath(os.path.join(checkpoint_dir, ckpt_name))
-    model.save_checkpoint(ckpt_path)
+    torch.save({
+        "state_dict": model.state_dict(),
+        "optimizer_state_dict": optim.state_dict(),
+        "config": model.config,
+        "step": start_step + total_steps,
+        "final_loss": final_loss,
+    }, ckpt_path)
     if params_finite and loss_finite:
         db.save_checkpoint(db_path, step=start_step + total_steps,
                             loss=final_loss, file_path=ckpt_path, is_active=True)
