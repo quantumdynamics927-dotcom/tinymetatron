@@ -23,6 +23,21 @@ CLI for data management.
   character-level vocabulary; see `vocab.json` and `tokenizer.py`).
 - Sequence length: 32. Hidden size: 256. Layers: 6. Heads: 4.
 
+## IP housekeeping
+
+- Patent drafts and diagrams were moved to `~/TMT_Private/`, outside Git-tracked paths.
+- `.gitignore` now excludes IP-sensitive and local-artifact paths:
+  - `data_v2/`
+  - `tokenizers/`
+  - `qsg_static_posthoc_validation.py`
+  - `qsg_layer3_validation.py`
+  - `ckpt/`
+  - `data/`
+  - `models/`
+  - `*.pt`
+- `data_v2/` remains local (~660 KB) and is not committed.
+- No patent-related files are exposed by the checked remote paths.
+
 ## Architecture
 
 The model (`tinymetatron_model.py`) composes three patented components:
