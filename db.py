@@ -81,10 +81,26 @@ def _now() -> str:
 
 
 def init_db(path: str) -> None:
-    """Create the three tables + indexes if they do not already exist."""
+    """
+    Create the three tables + indexes if they do not already exist.
+
+    Also runs live schema migrations (ALTER TABLE ADD COLUMN) for new columns
+    added after initial deployment so existing .db files stay current.
+    """
     conn = _connect(path)
     try:
         conn.executescript(_SCHEMA)
+        # ── Migrations for new columns added post-deployment ────────────────────
+        cols = {r[1] for r in conn.execute(
+            "PRAGMA table_info(training_data)").fetchall()}
+        if "split" not in cols:
+            conn.execute(
+                "ALTER TABLE training_data ADD COLUMN split TEXT NOT NULL DEFAULT 'train'")
+        mcols = {r[1] for r in conn.execute(
+            "PRAGMA table_info(model_checkpoints)").fetchall()}
+        if "val_loss" not in mcols:
+            conn.execute(
+                "ALTER TABLE model_checkpoints ADD COLUMN val_loss REAL")
         conn.commit()
     finally:
         conn.close()
