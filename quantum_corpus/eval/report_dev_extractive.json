@@ -1,0 +1,2432 @@
+{
+  "summary": {
+    "n_items": 60,
+    "n_answerable": 60,
+    "recall@1": 0.3167,
+    "recall@3": 0.95,
+    "recall@5": 1.0,
+    "mrr": 0.6236,
+    "citation_precision@5": 0.2,
+    "recall@5_by_category": {
+      "factual": 1.0,
+      "conceptual": null,
+      "cross_record": null,
+      "numeric": null
+    },
+    "n_abstention_expected": 0,
+    "abstention_recall": null,
+    "abstention_precision": null,
+    "false_abstentions_on_answerable": 0,
+    "leakage_rate": 0.0,
+    "leakage_count": 0,
+    "rubric_correctness": 0.5,
+    "n_rubric_scored": 60,
+    "mean_latency_ms": 34.61,
+    "target": "dev",
+    "index": "train+val",
+    "mode": "extractive",
+    "n_index_docs": 38094
+  },
+  "items": [
+    {
+      "id": "d001",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4ua0b5eastc73ch00a0 run as / have?",
+      "gold_record_ids": [
+        36893
+      ],
+      "retrieved_top5": [
+        23517,
+        36893,
+        35537,
+        24320,
+        25304
+      ],
+      "scores_top5": [
+        19.443,
+        19.254,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[23517] source_project: somnath-import, source_artifact_id: d4ua0b5eastc73ch00a0, source_path: E:\\AGI model\\data\\consolidated\\job-d4ua0b5eastc73ch00a0-info.json, source…",
+      "cited_ids": [
+        23517,
+        36893,
+        35537
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 31.68
+    },
+    {
+      "id": "d002",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4ua0b5eastc73ch00a0 run as / have?",
+      "gold_record_ids": [
+        36893
+      ],
+      "retrieved_top5": [
+        36893,
+        23517,
+        35540,
+        35537,
+        35508
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        14.972,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36893] IBM Quantum job d4ua0b5eastc73ch00a0 on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-12-12T23:07:24.93028Z. Measurement s…",
+      "cited_ids": [
+        36893,
+        23517,
+        35540
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 29.69
+    },
+    {
+      "id": "d003",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4ua0b5eastc73ch00a0 run as / have?",
+      "gold_record_ids": [
+        36893
+      ],
+      "retrieved_top5": [
+        36893,
+        23517,
+        36932,
+        36934,
+        36948
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36893] IBM Quantum job d4ua0b5eastc73ch00a0 on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-12-12T23:07:24.93028Z. Measurement s…",
+      "cited_ids": [
+        36893,
+        23517,
+        36932
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 39.39
+    },
+    {
+      "id": "d004",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4ald3a489vs73a2jl7g run as / have?",
+      "gold_record_ids": [
+        36894
+      ],
+      "retrieved_top5": [
+        359,
+        36894,
+        358,
+        35537,
+        24320
+      ],
+      "scores_top5": [
+        19.443,
+        19.254,
+        17.636,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[359] source_project: somnath-import, source_artifact_id: d4ald3a489vs73a2jl7g, source_path: E:\\AGI model\\data\\consolidated\\job-d4ald3a489vs73a2jl7g-info.json, source…",
+      "cited_ids": [
+        359,
+        36894,
+        358
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 35.94
+    },
+    {
+      "id": "d005",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4ald3a489vs73a2jl7g run as / have?",
+      "gold_record_ids": [
+        36894
+      ],
+      "retrieved_top5": [
+        36894,
+        359,
+        358,
+        35540,
+        35537
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        15.068,
+        14.972,
+        14.715
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36894] IBM Quantum job d4ald3a489vs73a2jl7g on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-13T03:54:53.233304Z. Measurement …",
+      "cited_ids": [
+        36894,
+        359,
+        358
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 25.49
+    },
+    {
+      "id": "d006",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4ald3a489vs73a2jl7g run as / have?",
+      "gold_record_ids": [
+        36894
+      ],
+      "retrieved_top5": [
+        36894,
+        359,
+        358,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        15.068,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36894] IBM Quantum job d4ald3a489vs73a2jl7g on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-13T03:54:53.233304Z. Measurement …",
+      "cited_ids": [
+        36894,
+        359,
+        358
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 24.81
+    },
+    {
+      "id": "d007",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4bu2gsi51bc738jfacg run as / have?",
+      "gold_record_ids": [
+        36895
+      ],
+      "retrieved_top5": [
+        36895,
+        360,
+        35537,
+        24320,
+        25304
+      ],
+      "scores_top5": [
+        19.254,
+        17.636,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36895] IBM Quantum job d4bu2gsi51bc738jfacg on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-15T02:11:15.240458Z. Measurement …",
+      "cited_ids": [
+        36895,
+        360,
+        35537
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 29.0
+    },
+    {
+      "id": "d008",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4bu2gsi51bc738jfacg run as / have?",
+      "gold_record_ids": [
+        36895
+      ],
+      "retrieved_top5": [
+        36895,
+        360,
+        35540,
+        35537,
+        35508
+      ],
+      "scores_top5": [
+        19.924,
+        15.068,
+        14.972,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36895] IBM Quantum job d4bu2gsi51bc738jfacg on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-15T02:11:15.240458Z. Measurement …",
+      "cited_ids": [
+        36895,
+        360,
+        35540
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 31.69
+    },
+    {
+      "id": "d009",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4bu2gsi51bc738jfacg run as / have?",
+      "gold_record_ids": [
+        36895
+      ],
+      "retrieved_top5": [
+        36895,
+        360,
+        36932,
+        36934,
+        36948
+      ],
+      "scores_top5": [
+        20.377,
+        15.068,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36895] IBM Quantum job d4bu2gsi51bc738jfacg on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-15T02:11:15.240458Z. Measurement …",
+      "cited_ids": [
+        36895,
+        360,
+        36932
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 37.02
+    },
+    {
+      "id": "d010",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4dubr1eg65s738lsbug run as / have?",
+      "gold_record_ids": [
+        36896
+      ],
+      "retrieved_top5": [
+        363,
+        36896,
+        362,
+        35537,
+        24320
+      ],
+      "scores_top5": [
+        19.443,
+        19.254,
+        17.636,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[363] source_project: somnath-import, source_artifact_id: d4dubr1eg65s738lsbug, source_path: E:\\AGI model\\data\\consolidated\\job-d4dubr1eg65s738lsbug-info.json, source…",
+      "cited_ids": [
+        363,
+        36896,
+        362
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 29.23
+    },
+    {
+      "id": "d011",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4dubr1eg65s738lsbug run as / have?",
+      "gold_record_ids": [
+        36896
+      ],
+      "retrieved_top5": [
+        36896,
+        363,
+        362,
+        35540,
+        35537
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        15.068,
+        14.972,
+        14.715
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36896] IBM Quantum job d4dubr1eg65s738lsbug on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-18T03:20:12.535075Z. Measurement …",
+      "cited_ids": [
+        36896,
+        363,
+        362
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 36.35
+    },
+    {
+      "id": "d012",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4dubr1eg65s738lsbug run as / have?",
+      "gold_record_ids": [
+        36896
+      ],
+      "retrieved_top5": [
+        36896,
+        363,
+        362,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        15.068,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36896] IBM Quantum job d4dubr1eg65s738lsbug on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-18T03:20:12.535075Z. Measurement …",
+      "cited_ids": [
+        36896,
+        363,
+        362
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 33.73
+    },
+    {
+      "id": "d013",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4fbk30lslhc73cvi040 run as / have?",
+      "gold_record_ids": [
+        36897
+      ],
+      "retrieved_top5": [
+        23489,
+        36897,
+        35537,
+        24320,
+        25304
+      ],
+      "scores_top5": [
+        19.443,
+        19.254,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[23489] source_project: somnath-import, source_artifact_id: d4fbk30lslhc73cvi040, source_path: E:\\AGI model\\data\\consolidated\\job-d4fbk30lslhc73cvi040-info.json, source…",
+      "cited_ids": [
+        23489,
+        36897,
+        35537
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 38.58
+    },
+    {
+      "id": "d014",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4fbk30lslhc73cvi040 run as / have?",
+      "gold_record_ids": [
+        36897
+      ],
+      "retrieved_top5": [
+        36897,
+        23489,
+        35540,
+        35537,
+        35508
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        14.972,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36897] IBM Quantum job d4fbk30lslhc73cvi040 on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-20T06:49:48.781227Z. Measurement …",
+      "cited_ids": [
+        36897,
+        23489,
+        35540
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 24.56
+    },
+    {
+      "id": "d015",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4fbk30lslhc73cvi040 run as / have?",
+      "gold_record_ids": [
+        36897
+      ],
+      "retrieved_top5": [
+        36897,
+        23489,
+        36932,
+        36934,
+        36948
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36897] IBM Quantum job d4fbk30lslhc73cvi040 on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-20T06:49:48.781227Z. Measurement …",
+      "cited_ids": [
+        36897,
+        23489,
+        36932
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 22.89
+    },
+    {
+      "id": "d016",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4hkrsh2bisc73a4j9jg run as / have?",
+      "gold_record_ids": [
+        36898
+      ],
+      "retrieved_top5": [
+        365,
+        36898,
+        364,
+        35537,
+        24320
+      ],
+      "scores_top5": [
+        19.443,
+        19.254,
+        17.636,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[365] source_project: somnath-import, source_artifact_id: d4hkrsh2bisc73a4j9jg, source_path: E:\\AGI model\\data\\consolidated\\job-d4hkrsh2bisc73a4j9jg-info.json, source…",
+      "cited_ids": [
+        365,
+        36898,
+        364
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 24.08
+    },
+    {
+      "id": "d017",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4hkrsh2bisc73a4j9jg run as / have?",
+      "gold_record_ids": [
+        36898
+      ],
+      "retrieved_top5": [
+        36898,
+        365,
+        364,
+        35540,
+        35537
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        15.068,
+        14.972,
+        14.715
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36898] IBM Quantum job d4hkrsh2bisc73a4j9jg on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-23T18:09:54.962883Z. Measurement …",
+      "cited_ids": [
+        36898,
+        365,
+        364
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 25.65
+    },
+    {
+      "id": "d018",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4hkrsh2bisc73a4j9jg run as / have?",
+      "gold_record_ids": [
+        36898
+      ],
+      "retrieved_top5": [
+        36898,
+        365,
+        364,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        15.068,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36898] IBM Quantum job d4hkrsh2bisc73a4j9jg on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-23T18:09:54.962883Z. Measurement …",
+      "cited_ids": [
+        36898,
+        365,
+        364
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 29.78
+    },
+    {
+      "id": "d019",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4jsmlqv0j9c73e3n4p0 run as / have?",
+      "gold_record_ids": [
+        36899
+      ],
+      "retrieved_top5": [
+        367,
+        36899,
+        35537,
+        24320,
+        25304
+      ],
+      "scores_top5": [
+        19.85,
+        19.547,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[367] source_project: somnath-import, source_artifact_id: d4jsmlqv0j9c73e3n4p0, source_path: E:\\AGI model\\data\\consolidated\\job-d4jsmlqv0j9c73e3n4p0-info.json, source…",
+      "cited_ids": [
+        367,
+        36899,
+        35537
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 31.33
+    },
+    {
+      "id": "d020",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4jsmlqv0j9c73e3n4p0 run as / have?",
+      "gold_record_ids": [
+        36899
+      ],
+      "retrieved_top5": [
+        36899,
+        367,
+        35540,
+        35537,
+        35508
+      ],
+      "scores_top5": [
+        20.216,
+        17.363,
+        14.972,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36899] IBM Quantum job d4jsmlqv0j9c73e3n4p0 on backend ibm_fez, status Cancelled, program sampler, tags [], cost 600, created 2025-11-27T03:53:59.92687Z. Measurement s…",
+      "cited_ids": [
+        36899,
+        367,
+        35540
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Cancelled",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 26.86
+    },
+    {
+      "id": "d021",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4jsmlqv0j9c73e3n4p0 run as / have?",
+      "gold_record_ids": [
+        36899
+      ],
+      "retrieved_top5": [
+        36899,
+        367,
+        36932,
+        36934,
+        36948
+      ],
+      "scores_top5": [
+        20.669,
+        17.363,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36899] IBM Quantum job d4jsmlqv0j9c73e3n4p0 on backend ibm_fez, status Cancelled, program sampler, tags [], cost 600, created 2025-11-27T03:53:59.92687Z. Measurement s…",
+      "cited_ids": [
+        36899,
+        367,
+        36932
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 38.01
+    },
+    {
+      "id": "d022",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4jtd1574pkc7386drng run as / have?",
+      "gold_record_ids": [
+        36900
+      ],
+      "retrieved_top5": [
+        369,
+        36900,
+        35537,
+        24320,
+        25304
+      ],
+      "scores_top5": [
+        19.85,
+        19.547,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[369] source_project: somnath-import, source_artifact_id: d4jtd1574pkc7386drng, source_path: E:\\AGI model\\data\\consolidated\\job-d4jtd1574pkc7386drng-info.json, source…",
+      "cited_ids": [
+        369,
+        36900,
+        35537
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 49.49
+    },
+    {
+      "id": "d023",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4jtd1574pkc7386drng run as / have?",
+      "gold_record_ids": [
+        36900
+      ],
+      "retrieved_top5": [
+        36900,
+        369,
+        35540,
+        35537,
+        35508
+      ],
+      "scores_top5": [
+        20.216,
+        17.363,
+        14.972,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36900] IBM Quantum job d4jtd1574pkc7386drng on backend ibm_fez, status Cancelled, program sampler, tags [], cost 600, created 2025-11-27T04:41:40.807017Z. Measurement …",
+      "cited_ids": [
+        36900,
+        369,
+        35540
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Cancelled",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 39.96
+    },
+    {
+      "id": "d024",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4jtd1574pkc7386drng run as / have?",
+      "gold_record_ids": [
+        36900
+      ],
+      "retrieved_top5": [
+        36900,
+        369,
+        36932,
+        36934,
+        36948
+      ],
+      "scores_top5": [
+        20.669,
+        17.363,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36900] IBM Quantum job d4jtd1574pkc7386drng on backend ibm_fez, status Cancelled, program sampler, tags [], cost 600, created 2025-11-27T04:41:40.807017Z. Measurement …",
+      "cited_ids": [
+        36900,
+        369,
+        36932
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 45.16
+    },
+    {
+      "id": "d025",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4ke2110i6jc73deo07g run as / have?",
+      "gold_record_ids": [
+        36901
+      ],
+      "retrieved_top5": [
+        371,
+        36901,
+        370,
+        35537,
+        24320
+      ],
+      "scores_top5": [
+        19.139,
+        19.036,
+        17.387,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[371] source_project: somnath-import, source_artifact_id: d4ke2110i6jc73deo07g, source_path: E:\\AGI model\\data\\consolidated\\job-d4ke2110i6jc73deo07g-info.json, source…",
+      "cited_ids": [
+        371,
+        36901,
+        370
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 43.7
+    },
+    {
+      "id": "d026",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4ke2110i6jc73deo07g run as / have?",
+      "gold_record_ids": [
+        36901
+      ],
+      "retrieved_top5": [
+        36901,
+        371,
+        35540,
+        370,
+        35537
+      ],
+      "scores_top5": [
+        19.705,
+        16.652,
+        14.972,
+        14.819,
+        14.715
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36901] IBM Quantum job d4ke2110i6jc73deo07g on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-27T23:38:44.053903Z. Measurement …",
+      "cited_ids": [
+        36901,
+        371,
+        35540
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 49.52
+    },
+    {
+      "id": "d027",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4ke2110i6jc73deo07g run as / have?",
+      "gold_record_ids": [
+        36901
+      ],
+      "retrieved_top5": [
+        36901,
+        371,
+        36932,
+        36934,
+        36948
+      ],
+      "scores_top5": [
+        20.158,
+        16.652,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36901] IBM Quantum job d4ke2110i6jc73deo07g on backend ibm_fez, status Completed, program sampler, tags [], cost 600, created 2025-11-27T23:38:44.053903Z. Measurement …",
+      "cited_ids": [
+        36901,
+        371,
+        36932
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 45.24
+    },
+    {
+      "id": "d028",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfl02v0j9c73e69300 run as / have?",
+      "gold_record_ids": [
+        36902
+      ],
+      "retrieved_top5": [
+        36861,
+        27590,
+        36902,
+        23491,
+        35537
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36861] IBM Quantum job d4mfl02v0j9c73e69300 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfl02v0j9c73e69300', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36861,
+        27590,
+        36902
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 32.57
+    },
+    {
+      "id": "d029",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfl02v0j9c73e69300 run as / have?",
+      "gold_record_ids": [
+        36902
+      ],
+      "retrieved_top5": [
+        36861,
+        36902,
+        27590,
+        23491,
+        35540
+      ],
+      "scores_top5": [
+        23.432,
+        19.385,
+        19.02,
+        16.207,
+        14.972
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36861] IBM Quantum job d4mfl02v0j9c73e69300 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfl02v0j9c73e69300', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36861,
+        36902,
+        27590
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 46.06
+    },
+    {
+      "id": "d030",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfl02v0j9c73e69300 run as / have?",
+      "gold_record_ids": [
+        36902
+      ],
+      "retrieved_top5": [
+        36861,
+        36902,
+        23491,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36861] IBM Quantum job d4mfl02v0j9c73e69300 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfl02v0j9c73e69300', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36861,
+        36902,
+        23491
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 50.98
+    },
+    {
+      "id": "d031",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq290i6jc73dgo720 run as / have?",
+      "gold_record_ids": [
+        36903
+      ],
+      "retrieved_top5": [
+        36862,
+        27592,
+        373,
+        36903,
+        372
+      ],
+      "scores_top5": [
+        24.284,
+        19.658,
+        18.896,
+        18.861,
+        17.188
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "mrr": 0.25,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36862] IBM Quantum job d4mfq290i6jc73dgo720 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq290i6jc73dgo720', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36862,
+        27592,
+        373
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 40.47
+    },
+    {
+      "id": "d032",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq290i6jc73dgo720 run as / have?",
+      "gold_record_ids": [
+        36903
+      ],
+      "retrieved_top5": [
+        36862,
+        36903,
+        27592,
+        373,
+        35540
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        19.295,
+        16.409,
+        14.972
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36862] IBM Quantum job d4mfq290i6jc73dgo720 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq290i6jc73dgo720', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36862,
+        36903,
+        27592
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 28.09
+    },
+    {
+      "id": "d033",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq290i6jc73dgo720 run as / have?",
+      "gold_record_ids": [
+        36903
+      ],
+      "retrieved_top5": [
+        36862,
+        36903,
+        373,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        24.113,
+        19.983,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36862] IBM Quantum job d4mfq290i6jc73dgo720 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq290i6jc73dgo720', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36862,
+        36903,
+        373
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 24.55
+    },
+    {
+      "id": "d034",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq2s3tdfc73dqdpfg run as / have?",
+      "gold_record_ids": [
+        36904
+      ],
+      "retrieved_top5": [
+        36863,
+        27594,
+        23493,
+        36904,
+        35537
+      ],
+      "scores_top5": [
+        24.284,
+        19.658,
+        18.896,
+        18.861,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "mrr": 0.25,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36863] IBM Quantum job d4mfq2s3tdfc73dqdpfg on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq2s3tdfc73dqdpfg', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36863,
+        27594,
+        23493
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 24.13
+    },
+    {
+      "id": "d035",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq2s3tdfc73dqdpfg run as / have?",
+      "gold_record_ids": [
+        36904
+      ],
+      "retrieved_top5": [
+        36863,
+        36904,
+        27594,
+        23493,
+        35540
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        19.295,
+        16.409,
+        14.972
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36863] IBM Quantum job d4mfq2s3tdfc73dqdpfg on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq2s3tdfc73dqdpfg', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36863,
+        36904,
+        27594
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 23.11
+    },
+    {
+      "id": "d036",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq2s3tdfc73dqdpfg run as / have?",
+      "gold_record_ids": [
+        36904
+      ],
+      "retrieved_top5": [
+        36863,
+        36904,
+        23493,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        24.113,
+        19.983,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36863] IBM Quantum job d4mfq2s3tdfc73dqdpfg on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq2s3tdfc73dqdpfg', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36863,
+        36904,
+        23493
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 26.81
+    },
+    {
+      "id": "d037",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq3iv0j9c73e697m0 run as / have?",
+      "gold_record_ids": [
+        36905
+      ],
+      "retrieved_top5": [
+        36864,
+        27596,
+        375,
+        36905,
+        374
+      ],
+      "scores_top5": [
+        24.284,
+        19.658,
+        18.896,
+        18.861,
+        17.188
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "mrr": 0.25,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36864] IBM Quantum job d4mfq3iv0j9c73e697m0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq3iv0j9c73e697m0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36864,
+        27596,
+        375
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 27.9
+    },
+    {
+      "id": "d038",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq3iv0j9c73e697m0 run as / have?",
+      "gold_record_ids": [
+        36905
+      ],
+      "retrieved_top5": [
+        36864,
+        36905,
+        27596,
+        375,
+        35540
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        19.295,
+        16.409,
+        14.972
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36864] IBM Quantum job d4mfq3iv0j9c73e697m0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq3iv0j9c73e697m0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36864,
+        36905,
+        27596
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 25.1
+    },
+    {
+      "id": "d039",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq3iv0j9c73e697m0 run as / have?",
+      "gold_record_ids": [
+        36905
+      ],
+      "retrieved_top5": [
+        36864,
+        36905,
+        375,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        24.113,
+        19.983,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36864] IBM Quantum job d4mfq3iv0j9c73e697m0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq3iv0j9c73e697m0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36864,
+        36905,
+        375
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 27.91
+    },
+    {
+      "id": "d040",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq490i6jc73dgo74g run as / have?",
+      "gold_record_ids": [
+        36906
+      ],
+      "retrieved_top5": [
+        36865,
+        27598,
+        36906,
+        377,
+        376
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        17.023
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36865] IBM Quantum job d4mfq490i6jc73dgo74g on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq490i6jc73dgo74g', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36865,
+        27598,
+        36906
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 46.93
+    },
+    {
+      "id": "d041",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq490i6jc73dgo74g run as / have?",
+      "gold_record_ids": [
+        36906
+      ],
+      "retrieved_top5": [
+        36865,
+        36906,
+        27598,
+        377,
+        35540
+      ],
+      "scores_top5": [
+        23.432,
+        19.385,
+        19.02,
+        16.207,
+        14.972
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36865] IBM Quantum job d4mfq490i6jc73dgo74g on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq490i6jc73dgo74g', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36865,
+        36906,
+        27598
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 31.05
+    },
+    {
+      "id": "d042",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq490i6jc73dgo74g run as / have?",
+      "gold_record_ids": [
+        36906
+      ],
+      "retrieved_top5": [
+        36865,
+        36906,
+        377,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36865] IBM Quantum job d4mfq490i6jc73dgo74g on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq490i6jc73dgo74g', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36865,
+        36906,
+        377
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 26.36
+    },
+    {
+      "id": "d043",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq4p0i6jc73dgo75g run as / have?",
+      "gold_record_ids": [
+        36907
+      ],
+      "retrieved_top5": [
+        36866,
+        23495,
+        36907,
+        35537,
+        24320
+      ],
+      "scores_top5": [
+        24.284,
+        18.896,
+        18.861,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36866] IBM Quantum job d4mfq4p0i6jc73dgo75g on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq4p0i6jc73dgo75g', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36866,
+        23495,
+        36907
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 28.92
+    },
+    {
+      "id": "d044",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq4p0i6jc73dgo75g run as / have?",
+      "gold_record_ids": [
+        36907
+      ],
+      "retrieved_top5": [
+        36866,
+        36907,
+        23495,
+        35540,
+        35537
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        16.409,
+        14.972,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36866] IBM Quantum job d4mfq4p0i6jc73dgo75g on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq4p0i6jc73dgo75g', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36866,
+        36907,
+        23495
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 29.68
+    },
+    {
+      "id": "d045",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq4p0i6jc73dgo75g run as / have?",
+      "gold_record_ids": [
+        36907
+      ],
+      "retrieved_top5": [
+        36866,
+        36907,
+        23495,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        24.113,
+        19.983,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36866] IBM Quantum job d4mfq4p0i6jc73dgo75g on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq4p0i6jc73dgo75g', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36866,
+        36907,
+        23495
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 32.91
+    },
+    {
+      "id": "d046",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq5qv0j9c73e697o0 run as / have?",
+      "gold_record_ids": [
+        36908
+      ],
+      "retrieved_top5": [
+        36867,
+        27602,
+        36908,
+        35537,
+        24320
+      ],
+      "scores_top5": [
+        24.284,
+        19.658,
+        18.861,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36867] IBM Quantum job d4mfq5qv0j9c73e697o0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq5qv0j9c73e697o0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36867,
+        27602,
+        36908
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 45.22
+    },
+    {
+      "id": "d047",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq5qv0j9c73e697o0 run as / have?",
+      "gold_record_ids": [
+        36908
+      ],
+      "retrieved_top5": [
+        36867,
+        36908,
+        27602,
+        35540,
+        35537
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        19.295,
+        14.972,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36867] IBM Quantum job d4mfq5qv0j9c73e697o0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq5qv0j9c73e697o0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36867,
+        36908,
+        27602
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 49.53
+    },
+    {
+      "id": "d048",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq5qv0j9c73e697o0 run as / have?",
+      "gold_record_ids": [
+        36908
+      ],
+      "retrieved_top5": [
+        36867,
+        36908,
+        36932,
+        36934,
+        36948
+      ],
+      "scores_top5": [
+        24.113,
+        19.983,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36867] IBM Quantum job d4mfq5qv0j9c73e697o0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq5qv0j9c73e697o0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36867,
+        36908,
+        36932
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 50.8
+    },
+    {
+      "id": "d049",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq690i6jc73dgo770 run as / have?",
+      "gold_record_ids": [
+        36909
+      ],
+      "retrieved_top5": [
+        36868,
+        379,
+        36909,
+        378,
+        35537
+      ],
+      "scores_top5": [
+        24.284,
+        18.896,
+        18.861,
+        17.188,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36868] IBM Quantum job d4mfq690i6jc73dgo770 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq690i6jc73dgo770', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36868,
+        379,
+        36909
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 36.02
+    },
+    {
+      "id": "d050",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq690i6jc73dgo770 run as / have?",
+      "gold_record_ids": [
+        36909
+      ],
+      "retrieved_top5": [
+        36868,
+        36909,
+        379,
+        35540,
+        35537
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        16.409,
+        14.972,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36868] IBM Quantum job d4mfq690i6jc73dgo770 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq690i6jc73dgo770', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36868,
+        36909,
+        379
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 30.67
+    },
+    {
+      "id": "d051",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq690i6jc73dgo770 run as / have?",
+      "gold_record_ids": [
+        36909
+      ],
+      "retrieved_top5": [
+        36868,
+        36909,
+        379,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        24.113,
+        19.983,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36868] IBM Quantum job d4mfq690i6jc73dgo770 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq690i6jc73dgo770', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36868,
+        36909,
+        379
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 29.58
+    },
+    {
+      "id": "d052",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq7c3tdfc73dqdpk0 run as / have?",
+      "gold_record_ids": [
+        36910
+      ],
+      "retrieved_top5": [
+        36869,
+        27606,
+        36910,
+        23499,
+        35537
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36869] IBM Quantum job d4mfq7c3tdfc73dqdpk0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq7c3tdfc73dqdpk0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36869,
+        27606,
+        36910
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 24.89
+    },
+    {
+      "id": "d053",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq7c3tdfc73dqdpk0 run as / have?",
+      "gold_record_ids": [
+        36910
+      ],
+      "retrieved_top5": [
+        36869,
+        36910,
+        27606,
+        23499,
+        35540
+      ],
+      "scores_top5": [
+        23.432,
+        19.385,
+        19.02,
+        16.207,
+        14.972
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36869] IBM Quantum job d4mfq7c3tdfc73dqdpk0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq7c3tdfc73dqdpk0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36869,
+        36910,
+        27606
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 32.82
+    },
+    {
+      "id": "d054",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq7c3tdfc73dqdpk0 run as / have?",
+      "gold_record_ids": [
+        36910
+      ],
+      "retrieved_top5": [
+        36869,
+        36910,
+        23499,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36869] IBM Quantum job d4mfq7c3tdfc73dqdpk0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq7c3tdfc73dqdpk0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36869,
+        36910,
+        23499
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 46.02
+    },
+    {
+      "id": "d055",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq810i6jc73dgo790 run as / have?",
+      "gold_record_ids": [
+        36911
+      ],
+      "retrieved_top5": [
+        36870,
+        27608,
+        36911,
+        381,
+        380
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        17.023
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36870] IBM Quantum job d4mfq810i6jc73dgo790 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq810i6jc73dgo790', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36870,
+        27608,
+        36911
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 47.78
+    },
+    {
+      "id": "d056",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq810i6jc73dgo790 run as / have?",
+      "gold_record_ids": [
+        36911
+      ],
+      "retrieved_top5": [
+        36870,
+        36911,
+        27608,
+        381,
+        35540
+      ],
+      "scores_top5": [
+        23.432,
+        19.385,
+        19.02,
+        16.207,
+        14.972
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36870] IBM Quantum job d4mfq810i6jc73dgo790 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq810i6jc73dgo790', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36870,
+        36911,
+        27608
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 43.69
+    },
+    {
+      "id": "d057",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq810i6jc73dgo790 run as / have?",
+      "gold_record_ids": [
+        36911
+      ],
+      "retrieved_top5": [
+        36870,
+        36911,
+        381,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36870] IBM Quantum job d4mfq810i6jc73dgo790 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq810i6jc73dgo790', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36870,
+        36911,
+        381
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 31.09
+    },
+    {
+      "id": "d058",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq8qv0j9c73e697r0 run as / have?",
+      "gold_record_ids": [
+        36912
+      ],
+      "retrieved_top5": [
+        36871,
+        27610,
+        36912,
+        383,
+        382
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        17.023
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36871] IBM Quantum job d4mfq8qv0j9c73e697r0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq8qv0j9c73e697r0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36871,
+        27610,
+        36912
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 29.9
+    },
+    {
+      "id": "d059",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq8qv0j9c73e697r0 run as / have?",
+      "gold_record_ids": [
+        36912
+      ],
+      "retrieved_top5": [
+        36871,
+        36912,
+        27610,
+        383,
+        35540
+      ],
+      "scores_top5": [
+        23.432,
+        19.385,
+        19.02,
+        16.207,
+        14.972
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36871] IBM Quantum job d4mfq8qv0j9c73e697r0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq8qv0j9c73e697r0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36871,
+        36912,
+        27610
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 39.59
+    },
+    {
+      "id": "d060",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq8qv0j9c73e697r0 run as / have?",
+      "gold_record_ids": [
+        36912
+      ],
+      "retrieved_top5": [
+        36871,
+        36912,
+        383,
+        36932,
+        36934
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "expected_abstention": false,
+      "answer": "[36871] IBM Quantum job d4mfq8qv0j9c73e697r0 on backend <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq8qv0j9c73e697r0', 'sampler')>>, status DONE, program ,…",
+      "cited_ids": [
+        36871,
+        36912,
+        383
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 46.87
+    }
+  ]
+}

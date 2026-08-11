@@ -65,8 +65,11 @@ TMT_Enablement_Declaration*.pdf
 TMT_Claims_EP_US*.pdf
 TMT_Private/
 *.png
+*.docx
+*.pdf
 tiny_metatron_slm_kompletne_technicke_zhrnutie_sk_it_prof.md
 "Tiny Metatron Slm"*
+TOKENIZER_PILOT.md
 
 # HuggingFace / model tokens
 hf_token*

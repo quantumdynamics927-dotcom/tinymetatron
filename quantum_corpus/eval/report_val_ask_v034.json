@@ -1,0 +1,2961 @@
+{
+  "summary": {
+    "n_items": 60,
+    "n_answerable": 60,
+    "recall@1": 0.0,
+    "recall@3": 0.0,
+    "recall@5": 0.0,
+    "mrr": 0.0,
+    "citation_precision@5": 0.0,
+    "si_recall@1": 0.0,
+    "si_recall@5": 0.0,
+    "si_mrr": 0.0,
+    "recall@5_by_category": {
+      "factual": 0.0,
+      "conceptual": null,
+      "cross_record": null,
+      "numeric": null
+    },
+    "n_abstention_expected": 0,
+    "n_answerable_for_abstention": 60,
+    "abstention_recall": null,
+    "abstention_precision": null,
+    "false_abstentions_on_answerable": 0,
+    "false_abstention_rate_on_answerable": NaN,
+    "false_answer_rate_on_unanswerable": null,
+    "false_answers_on_unanswerable": 0,
+    "leakage_rate": 0.0,
+    "leakage_count": 0,
+    "rubric_correctness": 0.0333,
+    "n_rubric_scored": 60,
+    "mean_latency_ms": 86.3,
+    "target": "dev",
+    "index": "train+val",
+    "mode": "ask",
+    "retriever": "hybrid",
+    "structured": false,
+    "gates": {
+      "score_floor_bm25": 3.0,
+      "score_floor_hybrid": 0.008,
+      "sep_ratio": 1.5,
+      "sep_band": 2.0,
+      "min_concepts": 1,
+      "grounding_sim_floor": 0.0
+    },
+    "n_index_docs": 38095
+  },
+  "items": [
+    {
+      "id": "d001",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4ua0b5eastc73ch00a0 run as / have?",
+      "gold_record_ids": [
+        36893
+      ],
+      "gold_source_identities": [
+        "ca4d2b02ac3cff9d95aa9f3f614e5712099de68b1e0aa85c66b5090dd679570c"
+      ],
+      "retrieved_top5": [
+        23517,
+        24320,
+        25304,
+        23516,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "22fa48dc75d9ef7a309fc448cff0d34cc71a6c9e6e9766481a826b8be762e6c2",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "a06b7e24b5782faa20fcb4adf78468a6a6d35bd9ac5341df1143a83710d231bc",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23517]: source_project: somnath-import, source_artifact_id: d4ua0b5eastc73ch00a0, source_path: E:\\AGI model\\data\\consolidated\\job-d4ua0b5eastc73ch00a0-info.json, source_commit: , source_date: 2025-12-12, back\nCitations: 23517, 24320, 25304",
+      "cited_ids": [
+        23517,
+        24320,
+        25304,
+        23516,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 73.05
+    },
+    {
+      "id": "d002",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4ua0b5eastc73ch00a0 run as / have?",
+      "gold_record_ids": [
+        36893
+      ],
+      "gold_source_identities": [
+        "ca4d2b02ac3cff9d95aa9f3f614e5712099de68b1e0aa85c66b5090dd679570c"
+      ],
+      "retrieved_top5": [
+        23517
+      ],
+      "retrieved_source_identities_top5": [
+        "22fa48dc75d9ef7a309fc448cff0d34cc71a6c9e6e9766481a826b8be762e6c2"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23517]: source_project: somnath-import, source_artifact_id: d4ua0b5eastc73ch00a0, source_path: E:\\AGI model\\data\\consolidated\\job-d4ua0b5eastc73ch00a0-info.json, source_commit: , source_date: 2025-12-12, back\nCitations: 23517",
+      "cited_ids": [
+        23517
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 90.92
+    },
+    {
+      "id": "d003",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4ua0b5eastc73ch00a0 run as / have?",
+      "gold_record_ids": [
+        36893
+      ],
+      "gold_source_identities": [
+        "ca4d2b02ac3cff9d95aa9f3f614e5712099de68b1e0aa85c66b5090dd679570c"
+      ],
+      "retrieved_top5": [
+        23517
+      ],
+      "retrieved_source_identities_top5": [
+        "22fa48dc75d9ef7a309fc448cff0d34cc71a6c9e6e9766481a826b8be762e6c2"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23517]: source_project: somnath-import, source_artifact_id: d4ua0b5eastc73ch00a0, source_path: E:\\AGI model\\data\\consolidated\\job-d4ua0b5eastc73ch00a0-info.json, source_commit: , source_date: 2025-12-12, back\nCitations: 23517",
+      "cited_ids": [
+        23517
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 89.38
+    },
+    {
+      "id": "d004",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4ald3a489vs73a2jl7g run as / have?",
+      "gold_record_ids": [
+        36894
+      ],
+      "gold_source_identities": [
+        "6e024cdfab2d8022c4fb6addc612becfa82483cc5c140f5ec80433f92ffc25df"
+      ],
+      "retrieved_top5": [
+        359,
+        358,
+        24320,
+        25304,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "bcea871d85e60803af61cd44dfedc1b806379b8a27b56acb452a1d44dae4c55c",
+        "65dc63128de47b061f29e9008fc080bdc229eea593d4756a0ed515cd77ee7efa",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [359]: source_project: somnath-import, source_artifact_id: d4ald3a489vs73a2jl7g, source_path: E:\\AGI model\\data\\consolidated\\job-d4ald3a489vs73a2jl7g-info.json, source_commit: , source_date: 2025-11-13, back\nCitations: 359, 358, 24320",
+      "cited_ids": [
+        359,
+        358,
+        24320,
+        25304,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 94.33
+    },
+    {
+      "id": "d005",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4ald3a489vs73a2jl7g run as / have?",
+      "gold_record_ids": [
+        36894
+      ],
+      "gold_source_identities": [
+        "6e024cdfab2d8022c4fb6addc612becfa82483cc5c140f5ec80433f92ffc25df"
+      ],
+      "retrieved_top5": [
+        359,
+        358
+      ],
+      "retrieved_source_identities_top5": [
+        "bcea871d85e60803af61cd44dfedc1b806379b8a27b56acb452a1d44dae4c55c",
+        "65dc63128de47b061f29e9008fc080bdc229eea593d4756a0ed515cd77ee7efa"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [359]: source_project: somnath-import, source_artifact_id: d4ald3a489vs73a2jl7g, source_path: E:\\AGI model\\data\\consolidated\\job-d4ald3a489vs73a2jl7g-info.json, source_commit: , source_date: 2025-11-13, back\nCitations: 359, 358",
+      "cited_ids": [
+        359,
+        358
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 92.27
+    },
+    {
+      "id": "d006",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4ald3a489vs73a2jl7g run as / have?",
+      "gold_record_ids": [
+        36894
+      ],
+      "gold_source_identities": [
+        "6e024cdfab2d8022c4fb6addc612becfa82483cc5c140f5ec80433f92ffc25df"
+      ],
+      "retrieved_top5": [
+        359,
+        358
+      ],
+      "retrieved_source_identities_top5": [
+        "bcea871d85e60803af61cd44dfedc1b806379b8a27b56acb452a1d44dae4c55c",
+        "65dc63128de47b061f29e9008fc080bdc229eea593d4756a0ed515cd77ee7efa"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [359]: source_project: somnath-import, source_artifact_id: d4ald3a489vs73a2jl7g, source_path: E:\\AGI model\\data\\consolidated\\job-d4ald3a489vs73a2jl7g-info.json, source_commit: , source_date: 2025-11-13, back\nCitations: 359, 358",
+      "cited_ids": [
+        359,
+        358
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 87.62
+    },
+    {
+      "id": "d007",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4bu2gsi51bc738jfacg run as / have?",
+      "gold_record_ids": [
+        36895
+      ],
+      "gold_source_identities": [
+        "37704140472c1e6df4cf2743bd608448addfa91efbf3842c0436f36bcbefa9cf"
+      ],
+      "retrieved_top5": [
+        360,
+        24320,
+        25304,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "9ca7e0a93706af2c92dff513fb615fbfd5ca0056aa51e67eb0b330a178762a5e",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [360]: experiment_id: ibm-ibm_fez-d4bu2gsi51bc738jfacg, project: qsg, date: 2025-11-15, hypothesis_tag: other, circuit_family: gate_based, notes: , backend: ibm_fez, qubit_count: 5, depth: 0, shots: 1024, ca\nCitations: 360, 24320, 25304",
+      "cited_ids": [
+        360,
+        24320,
+        25304,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 86.47
+    },
+    {
+      "id": "d008",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4bu2gsi51bc738jfacg run as / have?",
+      "gold_record_ids": [
+        36895
+      ],
+      "gold_source_identities": [
+        "37704140472c1e6df4cf2743bd608448addfa91efbf3842c0436f36bcbefa9cf"
+      ],
+      "retrieved_top5": [
+        360
+      ],
+      "retrieved_source_identities_top5": [
+        "9ca7e0a93706af2c92dff513fb615fbfd5ca0056aa51e67eb0b330a178762a5e"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [360]: experiment_id: ibm-ibm_fez-d4bu2gsi51bc738jfacg, project: qsg, date: 2025-11-15, hypothesis_tag: other, circuit_family: gate_based, notes: , backend: ibm_fez, qubit_count: 5, depth: 0, shots: 1024, ca\nCitations: 360",
+      "cited_ids": [
+        360
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 85.76
+    },
+    {
+      "id": "d009",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4bu2gsi51bc738jfacg run as / have?",
+      "gold_record_ids": [
+        36895
+      ],
+      "gold_source_identities": [
+        "37704140472c1e6df4cf2743bd608448addfa91efbf3842c0436f36bcbefa9cf"
+      ],
+      "retrieved_top5": [
+        360
+      ],
+      "retrieved_source_identities_top5": [
+        "9ca7e0a93706af2c92dff513fb615fbfd5ca0056aa51e67eb0b330a178762a5e"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [360]: experiment_id: ibm-ibm_fez-d4bu2gsi51bc738jfacg, project: qsg, date: 2025-11-15, hypothesis_tag: other, circuit_family: gate_based, notes: , backend: ibm_fez, qubit_count: 5, depth: 0, shots: 1024, ca\nCitations: 360",
+      "cited_ids": [
+        360
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 79.72
+    },
+    {
+      "id": "d010",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4dubr1eg65s738lsbug run as / have?",
+      "gold_record_ids": [
+        36896
+      ],
+      "gold_source_identities": [
+        "d70d018af15febe5047d7f57c6ec2cf25145f3f4bdab3c9b579ac2695b3a9b9d"
+      ],
+      "retrieved_top5": [
+        363,
+        362,
+        24320,
+        25304,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "232e87dd1b04ace25e9f77d8eb976c26cfef8a408944b3bf3409d57ccc974de4",
+        "2e00796f13202d39d871ce9c6c08e8e7da06b27a2f3954ddc7179ddcf3bc81db",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [363]: source_project: somnath-import, source_artifact_id: d4dubr1eg65s738lsbug, source_path: E:\\AGI model\\data\\consolidated\\job-d4dubr1eg65s738lsbug-info.json, source_commit: , source_date: 2025-11-18, back\nCitations: 363, 362, 24320",
+      "cited_ids": [
+        363,
+        362,
+        24320,
+        25304,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 89.2
+    },
+    {
+      "id": "d011",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4dubr1eg65s738lsbug run as / have?",
+      "gold_record_ids": [
+        36896
+      ],
+      "gold_source_identities": [
+        "d70d018af15febe5047d7f57c6ec2cf25145f3f4bdab3c9b579ac2695b3a9b9d"
+      ],
+      "retrieved_top5": [
+        363,
+        362
+      ],
+      "retrieved_source_identities_top5": [
+        "232e87dd1b04ace25e9f77d8eb976c26cfef8a408944b3bf3409d57ccc974de4",
+        "2e00796f13202d39d871ce9c6c08e8e7da06b27a2f3954ddc7179ddcf3bc81db"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [363]: source_project: somnath-import, source_artifact_id: d4dubr1eg65s738lsbug, source_path: E:\\AGI model\\data\\consolidated\\job-d4dubr1eg65s738lsbug-info.json, source_commit: , source_date: 2025-11-18, back\nCitations: 363, 362",
+      "cited_ids": [
+        363,
+        362
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 88.09
+    },
+    {
+      "id": "d012",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4dubr1eg65s738lsbug run as / have?",
+      "gold_record_ids": [
+        36896
+      ],
+      "gold_source_identities": [
+        "d70d018af15febe5047d7f57c6ec2cf25145f3f4bdab3c9b579ac2695b3a9b9d"
+      ],
+      "retrieved_top5": [
+        363,
+        362
+      ],
+      "retrieved_source_identities_top5": [
+        "232e87dd1b04ace25e9f77d8eb976c26cfef8a408944b3bf3409d57ccc974de4",
+        "2e00796f13202d39d871ce9c6c08e8e7da06b27a2f3954ddc7179ddcf3bc81db"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [363]: source_project: somnath-import, source_artifact_id: d4dubr1eg65s738lsbug, source_path: E:\\AGI model\\data\\consolidated\\job-d4dubr1eg65s738lsbug-info.json, source_commit: , source_date: 2025-11-18, back\nCitations: 363, 362",
+      "cited_ids": [
+        363,
+        362
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 86.52
+    },
+    {
+      "id": "d013",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4fbk30lslhc73cvi040 run as / have?",
+      "gold_record_ids": [
+        36897
+      ],
+      "gold_source_identities": [
+        "66738317319611dfcecd3472e5d1edd9044cf353e48382a1d0cf343af9bf63b9"
+      ],
+      "retrieved_top5": [
+        23489,
+        24320,
+        25304,
+        23488,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "24b2497926aa1eee914c36c1cdddeb09a60e0637585092450d9a089eeede4b3d",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "cca21fc7c83ef4d22023a04a37c9f065c4829bebf4c597c059a9de6a73c91102",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23489]: source_project: somnath-import, source_artifact_id: d4fbk30lslhc73cvi040, source_path: E:\\AGI model\\data\\consolidated\\job-d4fbk30lslhc73cvi040-info.json, source_commit: , source_date: 2025-11-20, back\nCitations: 23489, 24320, 25304",
+      "cited_ids": [
+        23489,
+        24320,
+        25304,
+        23488,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 81.21
+    },
+    {
+      "id": "d014",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4fbk30lslhc73cvi040 run as / have?",
+      "gold_record_ids": [
+        36897
+      ],
+      "gold_source_identities": [
+        "66738317319611dfcecd3472e5d1edd9044cf353e48382a1d0cf343af9bf63b9"
+      ],
+      "retrieved_top5": [
+        23489
+      ],
+      "retrieved_source_identities_top5": [
+        "24b2497926aa1eee914c36c1cdddeb09a60e0637585092450d9a089eeede4b3d"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23489]: source_project: somnath-import, source_artifact_id: d4fbk30lslhc73cvi040, source_path: E:\\AGI model\\data\\consolidated\\job-d4fbk30lslhc73cvi040-info.json, source_commit: , source_date: 2025-11-20, back\nCitations: 23489",
+      "cited_ids": [
+        23489
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 83.48
+    },
+    {
+      "id": "d015",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4fbk30lslhc73cvi040 run as / have?",
+      "gold_record_ids": [
+        36897
+      ],
+      "gold_source_identities": [
+        "66738317319611dfcecd3472e5d1edd9044cf353e48382a1d0cf343af9bf63b9"
+      ],
+      "retrieved_top5": [
+        23489
+      ],
+      "retrieved_source_identities_top5": [
+        "24b2497926aa1eee914c36c1cdddeb09a60e0637585092450d9a089eeede4b3d"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23489]: source_project: somnath-import, source_artifact_id: d4fbk30lslhc73cvi040, source_path: E:\\AGI model\\data\\consolidated\\job-d4fbk30lslhc73cvi040-info.json, source_commit: , source_date: 2025-11-20, back\nCitations: 23489",
+      "cited_ids": [
+        23489
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 72.78
+    },
+    {
+      "id": "d016",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4hkrsh2bisc73a4j9jg run as / have?",
+      "gold_record_ids": [
+        36898
+      ],
+      "gold_source_identities": [
+        "09681d88deff9e168828d0182d2804486512f8ce706121bbb67f7d7551b6db08"
+      ],
+      "retrieved_top5": [
+        365,
+        364,
+        24320,
+        25304,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "bc5b6b4b59a7e7d79eb12fc0da630eca8ca4a1f533b5ca278c0b50094f0cc0d7",
+        "4246db95d78ef9969404122b9904e34ec26fa0cae0394ed576ae2ea42a11f488",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [365]: source_project: somnath-import, source_artifact_id: d4hkrsh2bisc73a4j9jg, source_path: E:\\AGI model\\data\\consolidated\\job-d4hkrsh2bisc73a4j9jg-info.json, source_commit: , source_date: 2025-11-23, back\nCitations: 365, 364, 24320",
+      "cited_ids": [
+        365,
+        364,
+        24320,
+        25304,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 97.33
+    },
+    {
+      "id": "d017",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4hkrsh2bisc73a4j9jg run as / have?",
+      "gold_record_ids": [
+        36898
+      ],
+      "gold_source_identities": [
+        "09681d88deff9e168828d0182d2804486512f8ce706121bbb67f7d7551b6db08"
+      ],
+      "retrieved_top5": [
+        365,
+        364
+      ],
+      "retrieved_source_identities_top5": [
+        "bc5b6b4b59a7e7d79eb12fc0da630eca8ca4a1f533b5ca278c0b50094f0cc0d7",
+        "4246db95d78ef9969404122b9904e34ec26fa0cae0394ed576ae2ea42a11f488"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [365]: source_project: somnath-import, source_artifact_id: d4hkrsh2bisc73a4j9jg, source_path: E:\\AGI model\\data\\consolidated\\job-d4hkrsh2bisc73a4j9jg-info.json, source_commit: , source_date: 2025-11-23, back\nCitations: 365, 364",
+      "cited_ids": [
+        365,
+        364
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 93.85
+    },
+    {
+      "id": "d018",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4hkrsh2bisc73a4j9jg run as / have?",
+      "gold_record_ids": [
+        36898
+      ],
+      "gold_source_identities": [
+        "09681d88deff9e168828d0182d2804486512f8ce706121bbb67f7d7551b6db08"
+      ],
+      "retrieved_top5": [
+        365,
+        364
+      ],
+      "retrieved_source_identities_top5": [
+        "bc5b6b4b59a7e7d79eb12fc0da630eca8ca4a1f533b5ca278c0b50094f0cc0d7",
+        "4246db95d78ef9969404122b9904e34ec26fa0cae0394ed576ae2ea42a11f488"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [365]: source_project: somnath-import, source_artifact_id: d4hkrsh2bisc73a4j9jg, source_path: E:\\AGI model\\data\\consolidated\\job-d4hkrsh2bisc73a4j9jg-info.json, source_commit: , source_date: 2025-11-23, back\nCitations: 365, 364",
+      "cited_ids": [
+        365,
+        364
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 79.73
+    },
+    {
+      "id": "d019",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4jsmlqv0j9c73e3n4p0 run as / have?",
+      "gold_record_ids": [
+        36899
+      ],
+      "gold_source_identities": [
+        "eb072880c059e60e1be956c15921fd4c046527b6d3952a1ce59e5ba9248dc58a"
+      ],
+      "retrieved_top5": [
+        367,
+        24320,
+        25304,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "cb5e104f509d3e8508ae453b454cadbccad0974ac4ed9913c4bb5ebd23323030",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [367]: source_project: somnath-import, source_artifact_id: d4jsmlqv0j9c73e3n4p0, source_path: E:\\AGI model\\data\\consolidated\\job-d4jsmlqv0j9c73e3n4p0-info.json, source_commit: , source_date: 2025-11-27, back\nCitations: 367, 24320, 25304",
+      "cited_ids": [
+        367,
+        24320,
+        25304,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 77.56
+    },
+    {
+      "id": "d020",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4jsmlqv0j9c73e3n4p0 run as / have?",
+      "gold_record_ids": [
+        36899
+      ],
+      "gold_source_identities": [
+        "eb072880c059e60e1be956c15921fd4c046527b6d3952a1ce59e5ba9248dc58a"
+      ],
+      "retrieved_top5": [
+        367
+      ],
+      "retrieved_source_identities_top5": [
+        "cb5e104f509d3e8508ae453b454cadbccad0974ac4ed9913c4bb5ebd23323030"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [367]: source_project: somnath-import, source_artifact_id: d4jsmlqv0j9c73e3n4p0, source_path: E:\\AGI model\\data\\consolidated\\job-d4jsmlqv0j9c73e3n4p0-info.json, source_commit: , source_date: 2025-11-27, back\nCitations: 367",
+      "cited_ids": [
+        367
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Cancelled",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 84.91
+    },
+    {
+      "id": "d021",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4jsmlqv0j9c73e3n4p0 run as / have?",
+      "gold_record_ids": [
+        36899
+      ],
+      "gold_source_identities": [
+        "eb072880c059e60e1be956c15921fd4c046527b6d3952a1ce59e5ba9248dc58a"
+      ],
+      "retrieved_top5": [
+        367
+      ],
+      "retrieved_source_identities_top5": [
+        "cb5e104f509d3e8508ae453b454cadbccad0974ac4ed9913c4bb5ebd23323030"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [367]: source_project: somnath-import, source_artifact_id: d4jsmlqv0j9c73e3n4p0, source_path: E:\\AGI model\\data\\consolidated\\job-d4jsmlqv0j9c73e3n4p0-info.json, source_commit: , source_date: 2025-11-27, back\nCitations: 367",
+      "cited_ids": [
+        367
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 89.95
+    },
+    {
+      "id": "d022",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4jtd1574pkc7386drng run as / have?",
+      "gold_record_ids": [
+        36900
+      ],
+      "gold_source_identities": [
+        "e1ee351066cc4204c17cf1bb41cf164ebfc9d984c2a68c010bad6a82fe9197f1"
+      ],
+      "retrieved_top5": [
+        369,
+        24320,
+        25304,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "f0bad95c31589b1ae9ee6dcd38f354fcc34dd3ad1d94e3ca56eb3fa48ad52b2a",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [369]: source_project: somnath-import, source_artifact_id: d4jtd1574pkc7386drng, source_path: E:\\AGI model\\data\\consolidated\\job-d4jtd1574pkc7386drng-info.json, source_commit: , source_date: 2025-11-27, back\nCitations: 369, 24320, 25304",
+      "cited_ids": [
+        369,
+        24320,
+        25304,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 93.09
+    },
+    {
+      "id": "d023",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4jtd1574pkc7386drng run as / have?",
+      "gold_record_ids": [
+        36900
+      ],
+      "gold_source_identities": [
+        "e1ee351066cc4204c17cf1bb41cf164ebfc9d984c2a68c010bad6a82fe9197f1"
+      ],
+      "retrieved_top5": [
+        369
+      ],
+      "retrieved_source_identities_top5": [
+        "f0bad95c31589b1ae9ee6dcd38f354fcc34dd3ad1d94e3ca56eb3fa48ad52b2a"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [369]: source_project: somnath-import, source_artifact_id: d4jtd1574pkc7386drng, source_path: E:\\AGI model\\data\\consolidated\\job-d4jtd1574pkc7386drng-info.json, source_commit: , source_date: 2025-11-27, back\nCitations: 369",
+      "cited_ids": [
+        369
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Cancelled",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 90.66
+    },
+    {
+      "id": "d024",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4jtd1574pkc7386drng run as / have?",
+      "gold_record_ids": [
+        36900
+      ],
+      "gold_source_identities": [
+        "e1ee351066cc4204c17cf1bb41cf164ebfc9d984c2a68c010bad6a82fe9197f1"
+      ],
+      "retrieved_top5": [
+        369
+      ],
+      "retrieved_source_identities_top5": [
+        "f0bad95c31589b1ae9ee6dcd38f354fcc34dd3ad1d94e3ca56eb3fa48ad52b2a"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [369]: source_project: somnath-import, source_artifact_id: d4jtd1574pkc7386drng, source_path: E:\\AGI model\\data\\consolidated\\job-d4jtd1574pkc7386drng-info.json, source_commit: , source_date: 2025-11-27, back\nCitations: 369",
+      "cited_ids": [
+        369
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 89.98
+    },
+    {
+      "id": "d025",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4ke2110i6jc73deo07g run as / have?",
+      "gold_record_ids": [
+        36901
+      ],
+      "gold_source_identities": [
+        "d88a97da0d37a026c42413d403dacf92a60575b7a677773e0f397b00cd44bcf1"
+      ],
+      "retrieved_top5": [
+        371,
+        370,
+        24320,
+        25304,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "7d1668970210bb993c57afe39b8a6839dcf92bfc69b5ebf395d6e762a980d3b6",
+        "4f6abdb2ce6904cba6cc5f25bb4e9bc57c2e8c0ca49a17f359fe9aa65083a873",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [371]: source_project: somnath-import, source_artifact_id: d4ke2110i6jc73deo07g, source_path: E:\\AGI model\\data\\consolidated\\job-d4ke2110i6jc73deo07g-info.json, source_commit: , source_date: 2025-11-27, back\nCitations: 371, 370, 24320",
+      "cited_ids": [
+        371,
+        370,
+        24320,
+        25304,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 92.95
+    },
+    {
+      "id": "d026",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4ke2110i6jc73deo07g run as / have?",
+      "gold_record_ids": [
+        36901
+      ],
+      "gold_source_identities": [
+        "d88a97da0d37a026c42413d403dacf92a60575b7a677773e0f397b00cd44bcf1"
+      ],
+      "retrieved_top5": [
+        371,
+        370
+      ],
+      "retrieved_source_identities_top5": [
+        "7d1668970210bb993c57afe39b8a6839dcf92bfc69b5ebf395d6e762a980d3b6",
+        "4f6abdb2ce6904cba6cc5f25bb4e9bc57c2e8c0ca49a17f359fe9aa65083a873"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [371]: source_project: somnath-import, source_artifact_id: d4ke2110i6jc73deo07g, source_path: E:\\AGI model\\data\\consolidated\\job-d4ke2110i6jc73deo07g-info.json, source_commit: , source_date: 2025-11-27, back\nCitations: 371, 370",
+      "cited_ids": [
+        371,
+        370
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 94.12
+    },
+    {
+      "id": "d027",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4ke2110i6jc73deo07g run as / have?",
+      "gold_record_ids": [
+        36901
+      ],
+      "gold_source_identities": [
+        "d88a97da0d37a026c42413d403dacf92a60575b7a677773e0f397b00cd44bcf1"
+      ],
+      "retrieved_top5": [
+        371,
+        370
+      ],
+      "retrieved_source_identities_top5": [
+        "7d1668970210bb993c57afe39b8a6839dcf92bfc69b5ebf395d6e762a980d3b6",
+        "4f6abdb2ce6904cba6cc5f25bb4e9bc57c2e8c0ca49a17f359fe9aa65083a873"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [371]: source_project: somnath-import, source_artifact_id: d4ke2110i6jc73deo07g, source_path: E:\\AGI model\\data\\consolidated\\job-d4ke2110i6jc73deo07g-info.json, source_commit: , source_date: 2025-11-27, back\nCitations: 371, 370",
+      "cited_ids": [
+        371,
+        370
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 93.64
+    },
+    {
+      "id": "d028",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfl02v0j9c73e69300 run as / have?",
+      "gold_record_ids": [
+        36902
+      ],
+      "gold_source_identities": [
+        "6e41f9e69172cd214929517229e5c98c862f921f4858d78dc675d4a21108f7de"
+      ],
+      "retrieved_top5": [
+        27590,
+        23491,
+        24320,
+        25304,
+        23490
+      ],
+      "retrieved_source_identities_top5": [
+        "803d317d58ab32ad45c7658cfde4f5de8634510be0305f0acc010dc8c4c80d22",
+        "c07f6ecc125363894f129aa2f9e031799c5fcdf07c4b037b954a86748540ac9e",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "fd0806d88586ecb890b72bb5c8e222339b2b61bba059285e71080b1d765bc83b"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27590]: job_id: d4mfl02v0j9c73e69300, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfl02v0j9c73e69300', 'sampler')>>\nCitations: 27590, 23491, 24320",
+      "cited_ids": [
+        27590,
+        23491,
+        24320,
+        25304,
+        23490
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 68.7
+    },
+    {
+      "id": "d029",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfl02v0j9c73e69300 run as / have?",
+      "gold_record_ids": [
+        36902
+      ],
+      "gold_source_identities": [
+        "6e41f9e69172cd214929517229e5c98c862f921f4858d78dc675d4a21108f7de"
+      ],
+      "retrieved_top5": [
+        27590,
+        23491
+      ],
+      "retrieved_source_identities_top5": [
+        "803d317d58ab32ad45c7658cfde4f5de8634510be0305f0acc010dc8c4c80d22",
+        "c07f6ecc125363894f129aa2f9e031799c5fcdf07c4b037b954a86748540ac9e"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27590]: job_id: d4mfl02v0j9c73e69300, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfl02v0j9c73e69300', 'sampler')>>\nCitations: 27590, 23491",
+      "cited_ids": [
+        27590,
+        23491
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 91.6
+    },
+    {
+      "id": "d030",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfl02v0j9c73e69300 run as / have?",
+      "gold_record_ids": [
+        36902
+      ],
+      "gold_source_identities": [
+        "6e41f9e69172cd214929517229e5c98c862f921f4858d78dc675d4a21108f7de"
+      ],
+      "retrieved_top5": [
+        23491,
+        27590
+      ],
+      "retrieved_source_identities_top5": [
+        "c07f6ecc125363894f129aa2f9e031799c5fcdf07c4b037b954a86748540ac9e",
+        "803d317d58ab32ad45c7658cfde4f5de8634510be0305f0acc010dc8c4c80d22"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23491]: source_project: somnath-import, source_artifact_id: d4mfl02v0j9c73e69300, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfl02v0j9c73e69300-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 23491, 27590",
+      "cited_ids": [
+        23491,
+        27590
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 88.32
+    },
+    {
+      "id": "d031",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq290i6jc73dgo720 run as / have?",
+      "gold_record_ids": [
+        36903
+      ],
+      "gold_source_identities": [
+        "4183dc540b0d7c2bfd004ffeea3cc1074fab18128a6cd3bfdf84d626f1f21fa8"
+      ],
+      "retrieved_top5": [
+        27592,
+        373,
+        372,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "7a076389b30d00e350cc6986501ffcaabfe7718e38b9e15f8cb1810fbb2c06ff",
+        "8f643f870402788d67ca8a719acb3737def1137a38c093490528d992019d491f",
+        "f9b898a7b19354526a1bf1f34cefcb2d677ca0bcf7bebe922d8608ba8e30c201",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27592]: job_id: d4mfq290i6jc73dgo720, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq290i6jc73dgo720', 'sampler')>>\nCitations: 27592, 373, 372",
+      "cited_ids": [
+        27592,
+        373,
+        372,
+        24320,
+        25304
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 82.83
+    },
+    {
+      "id": "d032",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq290i6jc73dgo720 run as / have?",
+      "gold_record_ids": [
+        36903
+      ],
+      "gold_source_identities": [
+        "4183dc540b0d7c2bfd004ffeea3cc1074fab18128a6cd3bfdf84d626f1f21fa8"
+      ],
+      "retrieved_top5": [
+        27592,
+        373,
+        372
+      ],
+      "retrieved_source_identities_top5": [
+        "7a076389b30d00e350cc6986501ffcaabfe7718e38b9e15f8cb1810fbb2c06ff",
+        "8f643f870402788d67ca8a719acb3737def1137a38c093490528d992019d491f",
+        "f9b898a7b19354526a1bf1f34cefcb2d677ca0bcf7bebe922d8608ba8e30c201"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27592]: job_id: d4mfq290i6jc73dgo720, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq290i6jc73dgo720', 'sampler')>>\nCitations: 27592, 373, 372",
+      "cited_ids": [
+        27592,
+        373,
+        372
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 92.62
+    },
+    {
+      "id": "d033",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq290i6jc73dgo720 run as / have?",
+      "gold_record_ids": [
+        36903
+      ],
+      "gold_source_identities": [
+        "4183dc540b0d7c2bfd004ffeea3cc1074fab18128a6cd3bfdf84d626f1f21fa8"
+      ],
+      "retrieved_top5": [
+        373,
+        372,
+        27592
+      ],
+      "retrieved_source_identities_top5": [
+        "8f643f870402788d67ca8a719acb3737def1137a38c093490528d992019d491f",
+        "f9b898a7b19354526a1bf1f34cefcb2d677ca0bcf7bebe922d8608ba8e30c201",
+        "7a076389b30d00e350cc6986501ffcaabfe7718e38b9e15f8cb1810fbb2c06ff"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [373]: source_project: somnath-import, source_artifact_id: d4mfq290i6jc73dgo720, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq290i6jc73dgo720-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 373, 372, 27592",
+      "cited_ids": [
+        373,
+        372,
+        27592
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 87.26
+    },
+    {
+      "id": "d034",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq2s3tdfc73dqdpfg run as / have?",
+      "gold_record_ids": [
+        36904
+      ],
+      "gold_source_identities": [
+        "2d025d89c92416fdae904be54ae922df2ed4093e705c217661158e9143073931"
+      ],
+      "retrieved_top5": [
+        27594,
+        23493,
+        24320,
+        25304,
+        23492
+      ],
+      "retrieved_source_identities_top5": [
+        "fa25af28f49da6e6eec29690a3b5ec95105e21089fe71f3f35c12658dc099bdb",
+        "e56ba482a962ea7c88348d6cf76708620cab8088e0e90b89e0f39fd2a134a10c",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "fc3f2df6120359284c163ef22ff71473170d7cf4ad0d56eee01d592c8f591d5a"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27594]: job_id: d4mfq2s3tdfc73dqdpfg, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq2s3tdfc73dqdpfg', 'sampler')>>\nCitations: 27594, 23493, 24320",
+      "cited_ids": [
+        27594,
+        23493,
+        24320,
+        25304,
+        23492
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 91.28
+    },
+    {
+      "id": "d035",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq2s3tdfc73dqdpfg run as / have?",
+      "gold_record_ids": [
+        36904
+      ],
+      "gold_source_identities": [
+        "2d025d89c92416fdae904be54ae922df2ed4093e705c217661158e9143073931"
+      ],
+      "retrieved_top5": [
+        27594,
+        23493
+      ],
+      "retrieved_source_identities_top5": [
+        "fa25af28f49da6e6eec29690a3b5ec95105e21089fe71f3f35c12658dc099bdb",
+        "e56ba482a962ea7c88348d6cf76708620cab8088e0e90b89e0f39fd2a134a10c"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27594]: job_id: d4mfq2s3tdfc73dqdpfg, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq2s3tdfc73dqdpfg', 'sampler')>>\nCitations: 27594, 23493",
+      "cited_ids": [
+        27594,
+        23493
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 99.41
+    },
+    {
+      "id": "d036",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq2s3tdfc73dqdpfg run as / have?",
+      "gold_record_ids": [
+        36904
+      ],
+      "gold_source_identities": [
+        "2d025d89c92416fdae904be54ae922df2ed4093e705c217661158e9143073931"
+      ],
+      "retrieved_top5": [
+        23493,
+        27594
+      ],
+      "retrieved_source_identities_top5": [
+        "e56ba482a962ea7c88348d6cf76708620cab8088e0e90b89e0f39fd2a134a10c",
+        "fa25af28f49da6e6eec29690a3b5ec95105e21089fe71f3f35c12658dc099bdb"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23493]: source_project: somnath-import, source_artifact_id: d4mfq2s3tdfc73dqdpfg, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq2s3tdfc73dqdpfg-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 23493, 27594",
+      "cited_ids": [
+        23493,
+        27594
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 100.3
+    },
+    {
+      "id": "d037",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq3iv0j9c73e697m0 run as / have?",
+      "gold_record_ids": [
+        36905
+      ],
+      "gold_source_identities": [
+        "5901fec43666df341e7f08cf028c676df427997e46d843850bac27d14483ea59"
+      ],
+      "retrieved_top5": [
+        27596,
+        375,
+        374,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "5203491d28dfbe43121d056a056614b3373db912b61148d69c52047c13e9b19d",
+        "b838a5d2ff5e62d46722c21feebb09db2aa992673f9758eba5079f9ae49757fc",
+        "63253d6639701b34800e9fcdb78f98b9b0d3fc2005952eac6b2328c017ddebca",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27596]: job_id: d4mfq3iv0j9c73e697m0, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq3iv0j9c73e697m0', 'sampler')>>\nCitations: 27596, 375, 374",
+      "cited_ids": [
+        27596,
+        375,
+        374,
+        24320,
+        25304
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 63.78
+    },
+    {
+      "id": "d038",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq3iv0j9c73e697m0 run as / have?",
+      "gold_record_ids": [
+        36905
+      ],
+      "gold_source_identities": [
+        "5901fec43666df341e7f08cf028c676df427997e46d843850bac27d14483ea59"
+      ],
+      "retrieved_top5": [
+        27596,
+        375,
+        374
+      ],
+      "retrieved_source_identities_top5": [
+        "5203491d28dfbe43121d056a056614b3373db912b61148d69c52047c13e9b19d",
+        "b838a5d2ff5e62d46722c21feebb09db2aa992673f9758eba5079f9ae49757fc",
+        "63253d6639701b34800e9fcdb78f98b9b0d3fc2005952eac6b2328c017ddebca"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27596]: job_id: d4mfq3iv0j9c73e697m0, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq3iv0j9c73e697m0', 'sampler')>>\nCitations: 27596, 375, 374",
+      "cited_ids": [
+        27596,
+        375,
+        374
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 92.11
+    },
+    {
+      "id": "d039",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq3iv0j9c73e697m0 run as / have?",
+      "gold_record_ids": [
+        36905
+      ],
+      "gold_source_identities": [
+        "5901fec43666df341e7f08cf028c676df427997e46d843850bac27d14483ea59"
+      ],
+      "retrieved_top5": [
+        375,
+        374,
+        27596
+      ],
+      "retrieved_source_identities_top5": [
+        "b838a5d2ff5e62d46722c21feebb09db2aa992673f9758eba5079f9ae49757fc",
+        "63253d6639701b34800e9fcdb78f98b9b0d3fc2005952eac6b2328c017ddebca",
+        "5203491d28dfbe43121d056a056614b3373db912b61148d69c52047c13e9b19d"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [375]: source_project: somnath-import, source_artifact_id: d4mfq3iv0j9c73e697m0, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq3iv0j9c73e697m0-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 375, 374, 27596",
+      "cited_ids": [
+        375,
+        374,
+        27596
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 84.91
+    },
+    {
+      "id": "d040",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq490i6jc73dgo74g run as / have?",
+      "gold_record_ids": [
+        36906
+      ],
+      "gold_source_identities": [
+        "165f516d2b4566a3f1ef813dc7b8dab3e284014f232954ebfb93383d4b43f2e2"
+      ],
+      "retrieved_top5": [
+        27598,
+        377,
+        376,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "84bf9267b1c7153ce5352a2480d21c9f88d036ce55e7a84710d26b7819b66029",
+        "15e5a32354fda98faa9a8c25fda8c78ca73a26e25febccf799793a8107b24b58",
+        "dbcdaab02137a72b0b77106c79b2b977859ef5e788267f65326573de1258c643",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27598]: job_id: d4mfq490i6jc73dgo74g, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq490i6jc73dgo74g', 'sampler')>>\nCitations: 27598, 377, 376",
+      "cited_ids": [
+        27598,
+        377,
+        376,
+        24320,
+        25304
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 88.57
+    },
+    {
+      "id": "d041",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq490i6jc73dgo74g run as / have?",
+      "gold_record_ids": [
+        36906
+      ],
+      "gold_source_identities": [
+        "165f516d2b4566a3f1ef813dc7b8dab3e284014f232954ebfb93383d4b43f2e2"
+      ],
+      "retrieved_top5": [
+        27598,
+        377,
+        376
+      ],
+      "retrieved_source_identities_top5": [
+        "84bf9267b1c7153ce5352a2480d21c9f88d036ce55e7a84710d26b7819b66029",
+        "15e5a32354fda98faa9a8c25fda8c78ca73a26e25febccf799793a8107b24b58",
+        "dbcdaab02137a72b0b77106c79b2b977859ef5e788267f65326573de1258c643"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27598]: job_id: d4mfq490i6jc73dgo74g, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq490i6jc73dgo74g', 'sampler')>>\nCitations: 27598, 377, 376",
+      "cited_ids": [
+        27598,
+        377,
+        376
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 86.5
+    },
+    {
+      "id": "d042",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq490i6jc73dgo74g run as / have?",
+      "gold_record_ids": [
+        36906
+      ],
+      "gold_source_identities": [
+        "165f516d2b4566a3f1ef813dc7b8dab3e284014f232954ebfb93383d4b43f2e2"
+      ],
+      "retrieved_top5": [
+        377,
+        376,
+        27598
+      ],
+      "retrieved_source_identities_top5": [
+        "15e5a32354fda98faa9a8c25fda8c78ca73a26e25febccf799793a8107b24b58",
+        "dbcdaab02137a72b0b77106c79b2b977859ef5e788267f65326573de1258c643",
+        "84bf9267b1c7153ce5352a2480d21c9f88d036ce55e7a84710d26b7819b66029"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [377]: source_project: somnath-import, source_artifact_id: d4mfq490i6jc73dgo74g, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq490i6jc73dgo74g-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 377, 376, 27598",
+      "cited_ids": [
+        377,
+        376,
+        27598
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 83.27
+    },
+    {
+      "id": "d043",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq4p0i6jc73dgo75g run as / have?",
+      "gold_record_ids": [
+        36907
+      ],
+      "gold_source_identities": [
+        "baa0f2ddca7bdb0278beca2666cbb6b09dbf73f20c1d0915d0c530451bef3ef8"
+      ],
+      "retrieved_top5": [
+        23495,
+        24320,
+        25304,
+        23494,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "060bca877a0fa1d139dd9dfd91f857a886e4e019a99bce8889dd0556e29a40c9",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "342d52b27a7573860fc39d5363fce8ad653b1297c42ec202a9b4ff262424c152",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015,
+        0.015,
+        0.014,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23495]: source_project: somnath-import, source_artifact_id: d4mfq4p0i6jc73dgo75g, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq4p0i6jc73dgo75g-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 23495, 24320, 25304",
+      "cited_ids": [
+        23495,
+        24320,
+        25304,
+        23494,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 92.35
+    },
+    {
+      "id": "d044",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq4p0i6jc73dgo75g run as / have?",
+      "gold_record_ids": [
+        36907
+      ],
+      "gold_source_identities": [
+        "baa0f2ddca7bdb0278beca2666cbb6b09dbf73f20c1d0915d0c530451bef3ef8"
+      ],
+      "retrieved_top5": [
+        23495
+      ],
+      "retrieved_source_identities_top5": [
+        "060bca877a0fa1d139dd9dfd91f857a886e4e019a99bce8889dd0556e29a40c9"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23495]: source_project: somnath-import, source_artifact_id: d4mfq4p0i6jc73dgo75g, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq4p0i6jc73dgo75g-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 23495",
+      "cited_ids": [
+        23495
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 89.19
+    },
+    {
+      "id": "d045",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq4p0i6jc73dgo75g run as / have?",
+      "gold_record_ids": [
+        36907
+      ],
+      "gold_source_identities": [
+        "baa0f2ddca7bdb0278beca2666cbb6b09dbf73f20c1d0915d0c530451bef3ef8"
+      ],
+      "retrieved_top5": [
+        23495
+      ],
+      "retrieved_source_identities_top5": [
+        "060bca877a0fa1d139dd9dfd91f857a886e4e019a99bce8889dd0556e29a40c9"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23495]: source_project: somnath-import, source_artifact_id: d4mfq4p0i6jc73dgo75g, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq4p0i6jc73dgo75g-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 23495",
+      "cited_ids": [
+        23495
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 84.44
+    },
+    {
+      "id": "d046",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq5qv0j9c73e697o0 run as / have?",
+      "gold_record_ids": [
+        36908
+      ],
+      "gold_source_identities": [
+        "69980d8fee9500879c8f6ed970a60a49711573f28a270da66d350c2f9bd9d5c7"
+      ],
+      "retrieved_top5": [
+        27602,
+        24320,
+        25304,
+        23496,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "e02a1938d4dd27f576991a9eafbbe59cd1f483c11f8b79a894a059a4b2500913",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "a6ab9f41f0bda5ee49c05f43ac7189892ec9728a7b1b7062f20db2ead85c4f94",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015,
+        0.015,
+        0.014,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27602]: job_id: d4mfq5qv0j9c73e697o0, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq5qv0j9c73e697o0', 'sampler')>>\nCitations: 27602, 24320, 25304",
+      "cited_ids": [
+        27602,
+        24320,
+        25304,
+        23496,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 98.33
+    },
+    {
+      "id": "d047",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq5qv0j9c73e697o0 run as / have?",
+      "gold_record_ids": [
+        36908
+      ],
+      "gold_source_identities": [
+        "69980d8fee9500879c8f6ed970a60a49711573f28a270da66d350c2f9bd9d5c7"
+      ],
+      "retrieved_top5": [
+        27602
+      ],
+      "retrieved_source_identities_top5": [
+        "e02a1938d4dd27f576991a9eafbbe59cd1f483c11f8b79a894a059a4b2500913"
+      ],
+      "scores_top5": [
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27602]: job_id: d4mfq5qv0j9c73e697o0, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq5qv0j9c73e697o0', 'sampler')>>\nCitations: 27602",
+      "cited_ids": [
+        27602
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 83.98
+    },
+    {
+      "id": "d048",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq5qv0j9c73e697o0 run as / have?",
+      "gold_record_ids": [
+        36908
+      ],
+      "gold_source_identities": [
+        "69980d8fee9500879c8f6ed970a60a49711573f28a270da66d350c2f9bd9d5c7"
+      ],
+      "retrieved_top5": [
+        27602
+      ],
+      "retrieved_source_identities_top5": [
+        "e02a1938d4dd27f576991a9eafbbe59cd1f483c11f8b79a894a059a4b2500913"
+      ],
+      "scores_top5": [
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27602]: job_id: d4mfq5qv0j9c73e697o0, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq5qv0j9c73e697o0', 'sampler')>>\nCitations: 27602",
+      "cited_ids": [
+        27602
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": true,
+      "abstention_correct": null,
+      "latency_ms": 93.86
+    },
+    {
+      "id": "d049",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq690i6jc73dgo770 run as / have?",
+      "gold_record_ids": [
+        36909
+      ],
+      "gold_source_identities": [
+        "a4f06e274067e5830dd0b0f06af02fd7b3843ade335579db4bb38cd950a40bed"
+      ],
+      "retrieved_top5": [
+        379,
+        378,
+        24320,
+        25304,
+        25008
+      ],
+      "retrieved_source_identities_top5": [
+        "bddb1df3f42f46b69ee4dc01d32bdd8f178cc86ad499d35599d70095dc4c1fde",
+        "385ab55bf79422421579ee3b4d6ccabac9e9331eef14288a92aea3a9b48952e4",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "7e707eef388b18045b665ee112a9160ecb7c736c5ddf04618db2cf22beb946e8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [379]: source_project: somnath-import, source_artifact_id: d4mfq690i6jc73dgo770, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq690i6jc73dgo770-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 379, 378, 24320",
+      "cited_ids": [
+        379,
+        378,
+        24320,
+        25304,
+        25008
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 72.68
+    },
+    {
+      "id": "d050",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq690i6jc73dgo770 run as / have?",
+      "gold_record_ids": [
+        36909
+      ],
+      "gold_source_identities": [
+        "a4f06e274067e5830dd0b0f06af02fd7b3843ade335579db4bb38cd950a40bed"
+      ],
+      "retrieved_top5": [
+        379,
+        378
+      ],
+      "retrieved_source_identities_top5": [
+        "bddb1df3f42f46b69ee4dc01d32bdd8f178cc86ad499d35599d70095dc4c1fde",
+        "385ab55bf79422421579ee3b4d6ccabac9e9331eef14288a92aea3a9b48952e4"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [379]: source_project: somnath-import, source_artifact_id: d4mfq690i6jc73dgo770, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq690i6jc73dgo770-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 379, 378",
+      "cited_ids": [
+        379,
+        378
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 77.91
+    },
+    {
+      "id": "d051",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq690i6jc73dgo770 run as / have?",
+      "gold_record_ids": [
+        36909
+      ],
+      "gold_source_identities": [
+        "a4f06e274067e5830dd0b0f06af02fd7b3843ade335579db4bb38cd950a40bed"
+      ],
+      "retrieved_top5": [
+        379,
+        378
+      ],
+      "retrieved_source_identities_top5": [
+        "bddb1df3f42f46b69ee4dc01d32bdd8f178cc86ad499d35599d70095dc4c1fde",
+        "385ab55bf79422421579ee3b4d6ccabac9e9331eef14288a92aea3a9b48952e4"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [379]: source_project: somnath-import, source_artifact_id: d4mfq690i6jc73dgo770, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq690i6jc73dgo770-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 379, 378",
+      "cited_ids": [
+        379,
+        378
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 72.7
+    },
+    {
+      "id": "d052",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq7c3tdfc73dqdpk0 run as / have?",
+      "gold_record_ids": [
+        36910
+      ],
+      "gold_source_identities": [
+        "520e45d3e7309f795b02e5a867b51d3d2535c69ec8b4820508cd75c599d35cd3"
+      ],
+      "retrieved_top5": [
+        27606,
+        23499,
+        24320,
+        25304,
+        23498
+      ],
+      "retrieved_source_identities_top5": [
+        "b93418d53225c676a5b7d20b109018989d59dd334de8b0137b547ef2e39fdefe",
+        "dab0f11c2e4b7ffb5983c5832a385637663f417ae085291c99bba416f986dd60",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4",
+        "6b192281ee2b4d8bf786d99a8cf494ccf2e6564b8af92834d53441b129ede3bb"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27606]: job_id: d4mfq7c3tdfc73dqdpk0, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq7c3tdfc73dqdpk0', 'sampler')>>\nCitations: 27606, 23499, 24320",
+      "cited_ids": [
+        27606,
+        23499,
+        24320,
+        25304,
+        23498
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 90.2
+    },
+    {
+      "id": "d053",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq7c3tdfc73dqdpk0 run as / have?",
+      "gold_record_ids": [
+        36910
+      ],
+      "gold_source_identities": [
+        "520e45d3e7309f795b02e5a867b51d3d2535c69ec8b4820508cd75c599d35cd3"
+      ],
+      "retrieved_top5": [
+        27606,
+        23499
+      ],
+      "retrieved_source_identities_top5": [
+        "b93418d53225c676a5b7d20b109018989d59dd334de8b0137b547ef2e39fdefe",
+        "dab0f11c2e4b7ffb5983c5832a385637663f417ae085291c99bba416f986dd60"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27606]: job_id: d4mfq7c3tdfc73dqdpk0, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq7c3tdfc73dqdpk0', 'sampler')>>\nCitations: 27606, 23499",
+      "cited_ids": [
+        27606,
+        23499
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 71.5
+    },
+    {
+      "id": "d054",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq7c3tdfc73dqdpk0 run as / have?",
+      "gold_record_ids": [
+        36910
+      ],
+      "gold_source_identities": [
+        "520e45d3e7309f795b02e5a867b51d3d2535c69ec8b4820508cd75c599d35cd3"
+      ],
+      "retrieved_top5": [
+        23499,
+        27606
+      ],
+      "retrieved_source_identities_top5": [
+        "dab0f11c2e4b7ffb5983c5832a385637663f417ae085291c99bba416f986dd60",
+        "b93418d53225c676a5b7d20b109018989d59dd334de8b0137b547ef2e39fdefe"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [23499]: source_project: somnath-import, source_artifact_id: d4mfq7c3tdfc73dqdpk0, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq7c3tdfc73dqdpk0-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 23499, 27606",
+      "cited_ids": [
+        23499,
+        27606
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 70.62
+    },
+    {
+      "id": "d055",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq810i6jc73dgo790 run as / have?",
+      "gold_record_ids": [
+        36911
+      ],
+      "gold_source_identities": [
+        "6e3380798db85c4ab76cd4fceb21bf99ddd224ffede83a330a1e050e59ff0be5"
+      ],
+      "retrieved_top5": [
+        27608,
+        381,
+        380,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "0c7a54d0de63233c21b3a74db807d265bd99fa40b121b84c3af16cb15992cab8",
+        "accb8e672f94d913850b64d23626fd1d64e6e8db9fd036f00fa2835ceab384e8",
+        "c701a1512df8674bbfb816f535d96775dee364b611b22cac2ef85fa4db46f53a",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27608]: job_id: d4mfq810i6jc73dgo790, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq810i6jc73dgo790', 'sampler')>>\nCitations: 27608, 381, 380",
+      "cited_ids": [
+        27608,
+        381,
+        380,
+        24320,
+        25304
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 81.47
+    },
+    {
+      "id": "d056",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq810i6jc73dgo790 run as / have?",
+      "gold_record_ids": [
+        36911
+      ],
+      "gold_source_identities": [
+        "6e3380798db85c4ab76cd4fceb21bf99ddd224ffede83a330a1e050e59ff0be5"
+      ],
+      "retrieved_top5": [
+        27608,
+        381,
+        380
+      ],
+      "retrieved_source_identities_top5": [
+        "0c7a54d0de63233c21b3a74db807d265bd99fa40b121b84c3af16cb15992cab8",
+        "accb8e672f94d913850b64d23626fd1d64e6e8db9fd036f00fa2835ceab384e8",
+        "c701a1512df8674bbfb816f535d96775dee364b611b22cac2ef85fa4db46f53a"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27608]: job_id: d4mfq810i6jc73dgo790, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq810i6jc73dgo790', 'sampler')>>\nCitations: 27608, 381, 380",
+      "cited_ids": [
+        27608,
+        381,
+        380
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 79.45
+    },
+    {
+      "id": "d057",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq810i6jc73dgo790 run as / have?",
+      "gold_record_ids": [
+        36911
+      ],
+      "gold_source_identities": [
+        "6e3380798db85c4ab76cd4fceb21bf99ddd224ffede83a330a1e050e59ff0be5"
+      ],
+      "retrieved_top5": [
+        381,
+        380,
+        27608
+      ],
+      "retrieved_source_identities_top5": [
+        "accb8e672f94d913850b64d23626fd1d64e6e8db9fd036f00fa2835ceab384e8",
+        "c701a1512df8674bbfb816f535d96775dee364b611b22cac2ef85fa4db46f53a",
+        "0c7a54d0de63233c21b3a74db807d265bd99fa40b121b84c3af16cb15992cab8"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [381]: source_project: somnath-import, source_artifact_id: d4mfq810i6jc73dgo790, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq810i6jc73dgo790-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 381, 380, 27608",
+      "cited_ids": [
+        381,
+        380,
+        27608
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 92.05
+    },
+    {
+      "id": "d058",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq8qv0j9c73e697r0 run as / have?",
+      "gold_record_ids": [
+        36912
+      ],
+      "gold_source_identities": [
+        "2cab02ee27ae742bef59aee26ecc1ffe15e33f999a461bf62a49570a0999881e"
+      ],
+      "retrieved_top5": [
+        27610,
+        383,
+        382,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "cbc10f265db93b6551ae002caad842d679360fd233f61d7bd3399b84ae1acde1",
+        "026134df21187ebc5e2882aecdbf64b6d86140d322286addf96c25bbb1c75322",
+        "d01da4000ab08f0517760da4a01c428b1f782107c1f53cf3bd918a01076e8287",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015,
+        0.015,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27610]: job_id: d4mfq8qv0j9c73e697r0, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq8qv0j9c73e697r0', 'sampler')>>\nCitations: 27610, 383, 382",
+      "cited_ids": [
+        27610,
+        383,
+        382,
+        24320,
+        25304
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "ibm_fez",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 90.36
+    },
+    {
+      "id": "d059",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq8qv0j9c73e697r0 run as / have?",
+      "gold_record_ids": [
+        36912
+      ],
+      "gold_source_identities": [
+        "2cab02ee27ae742bef59aee26ecc1ffe15e33f999a461bf62a49570a0999881e"
+      ],
+      "retrieved_top5": [
+        27610,
+        383,
+        382
+      ],
+      "retrieved_source_identities_top5": [
+        "cbc10f265db93b6551ae002caad842d679360fd233f61d7bd3399b84ae1acde1",
+        "026134df21187ebc5e2882aecdbf64b6d86140d322286addf96c25bbb1c75322",
+        "d01da4000ab08f0517760da4a01c428b1f782107c1f53cf3bd918a01076e8287"
+      ],
+      "scores_top5": [
+        0.016,
+        0.016,
+        0.015
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [27610]: job_id: d4mfq8qv0j9c73e697r0, status: DONE, backend: <bound method RuntimeJobV2.backend of <RuntimeJobV2('d4mfq8qv0j9c73e697r0', 'sampler')>>\nCitations: 27610, 383, 382",
+      "cited_ids": [
+        27610,
+        383,
+        382
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "Completed",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 82.01
+    },
+    {
+      "id": "d060",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq8qv0j9c73e697r0 run as / have?",
+      "gold_record_ids": [
+        36912
+      ],
+      "gold_source_identities": [
+        "2cab02ee27ae742bef59aee26ecc1ffe15e33f999a461bf62a49570a0999881e"
+      ],
+      "retrieved_top5": [
+        383,
+        382,
+        27610
+      ],
+      "retrieved_source_identities_top5": [
+        "026134df21187ebc5e2882aecdbf64b6d86140d322286addf96c25bbb1c75322",
+        "d01da4000ab08f0517760da4a01c428b1f782107c1f53cf3bd918a01076e8287",
+        "cbc10f265db93b6551ae002caad842d679360fd233f61d7bd3399b84ae1acde1"
+      ],
+      "scores_top5": [
+        0.016,
+        0.015,
+        0.014
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "mrr": 0.0,
+      "citation_precision@5": 0.0,
+      "si_recall@1": 0.0,
+      "si_recall@5": 0.0,
+      "si_mrr": 0.0,
+      "expected_abstention": false,
+      "decision": "answered",
+      "route": "retrieval",
+      "answer": "Top evidence [383]: source_project: somnath-import, source_artifact_id: d4mfq8qv0j9c73e697r0, source_path: E:\\AGI model\\data\\consolidated\\job-d4mfq8qv0j9c73e697r0-info.json, source_commit: , source_date: 2025-12-01, back\nCitations: 383, 382, 27610",
+      "cited_ids": [
+        383,
+        382,
+        27610
+      ],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": "sampler",
+      "correct": false,
+      "abstention_correct": null,
+      "latency_ms": 94.93
+    }
+  ]
+}
