@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS training_data (
     domain            TEXT    NOT NULL,
     quality_score     REAL    NOT NULL,
     used_in_training  INTEGER NOT NULL DEFAULT 0,
+    split            TEXT    NOT NULL DEFAULT 'train',
     created_at        TEXT    NOT NULL
 );
 
@@ -42,6 +43,7 @@ CREATE TABLE IF NOT EXISTS model_checkpoints (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     step        INTEGER,
     loss        REAL,
+    val_loss    REAL,
     file_path   TEXT    NOT NULL,
     is_active   INTEGER NOT NULL DEFAULT 0,
     created_at  TEXT    NOT NULL
@@ -91,10 +93,13 @@ def init_db(path: str) -> None:
 # ── training_data ───────────────────────────────────────────────────────────
 
 def add_texts(path: str, texts: Iterable[str], domain: str,
-              quality_threshold: float) -> tuple[int, int]:
+              quality_threshold: float, split: str = "train") -> tuple[int, int]:
     """
     Score each text with quality.score_quality and insert those whose score
     is >= quality_threshold. Returns (added, rejected).
+
+    ``split`` is either 'train' or 'val'; only 'train' rows are used by
+    fetch_training_rows by default.
 
     ``quality`` is imported lazily so this module can be imported before
     quality.py exists; only add_texts actually needs the scorer.
@@ -116,9 +121,9 @@ def add_texts(path: str, texts: Iterable[str], domain: str,
                 continue
             conn.execute(
                 "INSERT INTO training_data "
-                "(text, domain, quality_score, used_in_training, created_at) "
-                "VALUES (?, ?, ?, 0, ?)",
-                (text, domain, score, _now()),
+                "(text, domain, quality_score, used_in_training, split, created_at) "
+                "VALUES (?, ?, ?, 0, ?, ?)",
+                (text, domain, score, split, _now()),
             )
             added += 1
         conn.commit()
@@ -128,11 +133,13 @@ def add_texts(path: str, texts: Iterable[str], domain: str,
 
 
 def fetch_training_rows(path: str, domain: str, min_quality: float,
-                        limit: int, used: bool = False) -> list[dict]:
+                        limit: int, used: bool = False,
+                        split: str = "train") -> list[dict]:
     """
     Return up to ``limit`` training rows for ``domain`` with quality_score >=
     min_quality. ``used`` selects rows already used in training (default
-    False = fetch unused rows for a fresh training run).
+    False = fetch unused rows for a fresh training run). ``split``
+    filters by data split ('train' or 'val').
     """
     conn = _connect(path)
     try:
@@ -140,8 +147,9 @@ def fetch_training_rows(path: str, domain: str, min_quality: float,
             "SELECT id, text, domain, quality_score, used_in_training, created_at "
             "FROM training_data "
             "WHERE domain = ? AND quality_score >= ? AND used_in_training = ? "
+            "AND split = ? "
             "ORDER BY quality_score DESC, id ASC LIMIT ?",
-            (domain, min_quality, 1 if used else 0, int(limit)),
+            (domain, min_quality, 1 if used else 0, split, int(limit)),
         )
         rows = [dict(r) for r in cur.fetchall()]
     finally:
@@ -213,11 +221,11 @@ def stats(path: str) -> dict:
 # ── model_checkpoints ───────────────────────────────────────────────────────
 
 def save_checkpoint(path: str, step: int, loss: float, file_path: str,
-                     is_active: bool = True) -> int:
+                     is_active: bool = True, val_loss: Optional[float] = None) -> int:
     """
     Insert a model_checkpoints row. When is_active=True (default), clear the
     prior active row first so at most one row has is_active=1. Returns the new
-    row id.
+    row id. ``val_loss`` stores the held-out validation CE for overfit detection.
     """
     conn = _connect(path)
     try:
@@ -225,9 +233,10 @@ def save_checkpoint(path: str, step: int, loss: float, file_path: str,
             conn.execute("UPDATE model_checkpoints SET is_active = 0")
         cur = conn.execute(
             "INSERT INTO model_checkpoints "
-            "(step, loss, file_path, is_active, created_at) "
-            "VALUES (?, ?, ?, ?, ?)",
-            (int(step), float(loss), file_path, 1 if is_active else 0, _now()),
+            "(step, loss, val_loss, file_path, is_active, created_at) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (int(step), float(loss), float(val_loss) if val_loss is not None else None,
+             file_path, 1 if is_active else 0, _now()),
         )
         conn.commit()
         return int(cur.lastrowid)
@@ -240,7 +249,7 @@ def get_active_checkpoint(path: str) -> Optional[dict]:
     conn = _connect(path)
     try:
         row = conn.execute(
-            "SELECT id, step, loss, file_path, is_active, created_at "
+            "SELECT id, step, loss, val_loss, file_path, is_active, created_at "
             "FROM model_checkpoints WHERE is_active = 1 LIMIT 1"
         ).fetchone()
     finally:
