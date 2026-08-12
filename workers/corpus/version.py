@@ -13,6 +13,8 @@ Output MANIFEST.json contains:
   - Aggregate corpus hash
   - Split hashes
   - Subdomain distribution
+  - split_policy, split_seed
+  - source_counts, source_overlap, text_overlap (computed from frozen files)
   - Creation timestamp
 
 Usage:
@@ -47,9 +49,30 @@ def _normalize(text: str) -> str:
     return re.sub(r'[^a-z0-9 ]', '', text.lower())
 
 
+def _source_of(row: dict) -> str:
+    """Source identifier for a row (matches workers.corpus.split._src)."""
+    return row.get("source", row.get("domain", "unknown"))
+
+
+# Split file stem → partition name used in the manifest's overlap/counts dicts.
+_SPLIT_NAMES = {"train": "train", "val": "val", "hard_dev": "hard_dev"}
+
+
+def _load_split_meta(corpus_dir: Path) -> dict:
+    """Read split_meta.json written by the split worker, if present."""
+    meta_path = corpus_dir / "split_meta.json"
+    if meta_path.exists():
+        try:
+            return json.loads(open(meta_path, encoding="utf-8").read())
+        except Exception:
+            return {}
+    return {}
+
+
 def build_manifest(corpus_dir: Path) -> dict:
     """Build a manifest from a corpus directory with split JSONL files."""
     splits = {}
+    split_rows: dict[str, list[dict]] = {}
     all_rows = []
 
     for f in sorted(corpus_dir.glob("*.jsonl")):
@@ -59,6 +82,9 @@ def build_manifest(corpus_dir: Path) -> dict:
             "sha256": _hash_file(f),
         }
         all_rows.extend(rows)
+        stem = f.stem
+        if stem in _SPLIT_NAMES:
+            split_rows[_SPLIT_NAMES[stem]] = rows
 
     # Aggregate corpus hash
     corp_h = hashlib.sha256()
@@ -75,12 +101,45 @@ def build_manifest(corpus_dir: Path) -> dict:
         sd = r.get("subdomain", "unknown")
         subdomains[sd] = subdomains.get(sd, 0) + 1
 
+    # Source/text disjointness metrics, computed directly from the frozen split
+    # files (independent verification of the split worker's claims).
+    train_sources = {_source_of(r) for r in split_rows.get("train", [])}
+    val_sources = {_source_of(r) for r in split_rows.get("val", [])}
+    hard_sources = {_source_of(r) for r in split_rows.get("hard_dev", [])}
+    train_texts = {r.get("text", "") for r in split_rows.get("train", [])}
+    val_texts = {r.get("text", "") for r in split_rows.get("val", [])}
+    hard_texts = {r.get("text", "") for r in split_rows.get("hard_dev", [])}
+
+    source_counts = {
+        "train": len(train_sources),
+        "val": len(val_sources),
+        "hard_dev": len(hard_sources),
+    }
+    source_overlap = {
+        "train_val": len(train_sources & val_sources),
+        "train_hard_dev": len(train_sources & hard_sources),
+        "val_hard_dev": len(val_sources & hard_sources),
+    }
+    text_overlap = {
+        "train_val": len(train_texts & val_texts),
+        "train_hard_dev": len(train_texts & hard_texts),
+        "val_hard_dev": len(val_texts & hard_texts),
+    }
+
+    # Split policy + seed come from split_meta.json (written by the split worker).
+    meta = _load_split_meta(corpus_dir)
+
     return {
         "corpus_hash": corpus_hash,
         "splits": splits,
         "total_rows": len(all_rows),
         "unique_normalized": len(norms),
         "subdomains": subdomains,
+        "split_policy": meta.get("split_policy", "source_disjoint_v1"),
+        "split_seed": meta.get("split_seed", 42),
+        "source_counts": source_counts,
+        "source_overlap": source_overlap,
+        "text_overlap": text_overlap,
     }
 
 
@@ -116,6 +175,10 @@ def run(config: dict) -> dict:
             "total_rows": manifest["total_rows"],
             "unique_normalized": manifest["unique_normalized"],
             "splits": list(manifest["splits"].keys()),
+            "split_policy": manifest["split_policy"],
+            "split_seed": manifest["split_seed"],
+            "source_overlap_total": sum(manifest["source_overlap"].values()),
+            "text_overlap_total": sum(manifest["text_overlap"].values()),
         },
         "started_at": started_at,
         "ended_at": manifest["ended_at"],

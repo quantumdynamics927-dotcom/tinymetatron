@@ -3,9 +3,14 @@ workers/corpus/split.py
 ====================
 Source-disjoint 80/10/10 split → train.jsonl / val.jsonl / hard_dev.jsonl.
 
+Every source group is assigned wholly to exactly one partition; no source is
+sliced across train/val/hard_dev. This is what makes the split source-disjoint
+(as opposed to merely row/text-disjoint within a source).
+
 Contract:
     Reads: config['corpus_dir']/deduped.jsonl (from dedupe stage)
-    Writes: config['output_dir']/train.jsonl, val.jsonl, hard_dev.jsonl
+    Writes: config['output_dir']/train.jsonl, val.jsonl, hard_dev.jsonl,
+            config['output_dir']/split_meta.json
 
 Output schema:
 {
@@ -21,7 +26,12 @@ Output schema:
     "val_pct": float,
     "hard_dev_pct": float,
     "seed": int,
-    "source_distribution": {source: count}
+    "split_policy": "source_disjoint_v1",
+    "n_source_groups": int,
+    "source_counts": {"train": int, "val": int, "hard_dev": int},
+    "source_overlap": {"train_val": int, "train_hard_dev": int, "val_hard_dev": int},
+    "text_overlap": {"train_val": int, "train_hard_dev": int, "val_hard_dev": int},
+    "source_distribution": {"train": {source: count}, ...}
   }
 }
 
@@ -47,6 +57,13 @@ WORKER_VERSION = 1
 
 # Fixed seed for deterministic splits
 DEFAULT_SEED = 42
+
+# Split policy identifier recorded in split_meta.json and MANIFEST.json.
+# v1 = whole source groups assigned to exactly one partition.
+SPLIT_POLICY = "source_disjoint_v1"
+
+# A meaningful 3-way source-disjoint split needs at least this many groups.
+MIN_SOURCE_GROUPS = 3
 
 
 def run(config: dict) -> dict:
@@ -77,50 +94,125 @@ def run(config: dict) -> dict:
 
     total = len(rows)
 
-    # Group by source for source-disjoint split
+    # Group rows by source. Each whole group is assigned to exactly one split.
     by_source: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
         source = row.get("source", row.get("domain", "unknown"))
         by_source[source].append(row)
 
-    # Shuffle within each source group with fixed seed
+    n_groups = len(by_source)
+
+    # A meaningful source-disjoint 3-way split requires enough independent
+    # source groups. With fewer than 3 we refuse rather than slice a tiny
+    # source across all three partitions to make ratios look correct.
+    if n_groups < MIN_SOURCE_GROUPS:
+        ended_at = datetime.now(timezone.utc).isoformat()
+        err = {
+            "worker": "workers.corpus.split",
+            "version": WORKER_VERSION,
+            "status": "error",
+            "error": (
+                f"source-disjoint split requires >={MIN_SOURCE_GROUPS} independent "
+                f"source groups, got {n_groups}. Refusing to slice sources across "
+                f"partitions — real corpus freezing must fail when groups are too "
+                f"few for a meaningful split."
+            ),
+            "metrics": {"total_rows": total, "n_source_groups": n_groups},
+            "started_at": started_at,
+            "ended_at": ended_at,
+        }
+        result_path = Path(config.get("result", "")) if config.get("result") else output_dir.parent / "split_result.json"
+        if str(result_path) == ".":
+            result_path = output_dir.parent / "split_result.json"
+        result_path = Path(result_path)
+        result_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(result_path, "w", encoding="utf-8") as f:
+            json.dump(err, f, indent=2)
+        return err
+
+    # Deterministic ordering: shuffle the group keys, then rows within each
+    # group, both driven by the fixed seed.
     rng = random.Random(seed)
-    for source in by_source:
-        rng.shuffle(by_source[source])
+    group_keys = list(by_source.keys())
+    rng.shuffle(group_keys)
+    for k in group_keys:
+        rng.shuffle(by_source[k])
 
-    # Assign rows to splits respecting source-disjoint constraint
-    train_rows = []
-    val_rows = []
-    hard_dev_rows = []
+    # Whole-group allocation. The ratio target applies to groups/sources, not
+    # necessarily individual rows, so resulting partitions may have uneven sample
+    # counts (permitted). We walk the shuffled groups filling train, then val,
+    # then hard_dev, always reserving enough remaining groups to keep every
+    # partition non-empty.
+    target_train = train_pct * total
+    target_val = val_pct * total
 
-    for source, source_rows in by_source.items():
-        n = len(source_rows)
-        n_train = max(1, round(n * train_pct))
-        n_val = max(1, round(n * val_pct))
-        # Hard dev gets the rest from each source
+    train_rows: list[dict] = []
+    val_rows: list[dict] = []
+    hard_dev_rows: list[dict] = []
 
-        train_rows.extend(source_rows[:n_train])
-        val_rows.extend(source_rows[n_train:n_train + n_val])
-        hard_dev_rows.extend(source_rows[n_train + n_val:])
+    i = 0
+    acc_train = 0
+    while i < n_groups and acc_train < target_train and (n_groups - i) > 2:
+        g = group_keys[i]
+        train_rows.extend(by_source[g])
+        acc_train += len(by_source[g])
+        i += 1
 
-    # Verify disjointness
-    train_ids = set(id(r) for r in train_rows)
-    val_ids = set(id(r) for r in val_rows)
-    hard_ids = set(id(r) for r in hard_dev_rows)
-    assert not train_ids & val_ids, "train/val overlap!"
-    assert not train_ids & hard_ids, "train/hard_dev overlap!"
-    assert not val_ids & hard_ids, "val/hard_dev overlap!"
+    acc_val = 0
+    while i < n_groups and acc_val < target_val and (n_groups - i) > 1:
+        g = group_keys[i]
+        val_rows.extend(by_source[g])
+        acc_val += len(by_source[g])
+        i += 1
 
-    # Source distribution
-    train_sources = defaultdict(int)
-    val_sources = defaultdict(int)
-    hard_sources = defaultdict(int)
+    for j in range(i, n_groups):
+        g = group_keys[j]
+        hard_dev_rows.extend(by_source[g])
+
+    # Verify the source-disjoint + text-disjoint invariants.
+    def _src(r: dict) -> str:
+        return r.get("source", r.get("domain", "unknown"))
+
+    train_sources = {_src(r) for r in train_rows}
+    val_sources = {_src(r) for r in val_rows}
+    hard_sources = {_src(r) for r in hard_dev_rows}
+    train_texts = {r.get("text", "") for r in train_rows}
+    val_texts = {r.get("text", "") for r in val_rows}
+    hard_texts = {r.get("text", "") for r in hard_dev_rows}
+
+    assert train_sources.isdisjoint(val_sources), "train/val source overlap!"
+    assert train_sources.isdisjoint(hard_sources), "train/hard_dev source overlap!"
+    assert val_sources.isdisjoint(hard_sources), "val/hard_dev source overlap!"
+    assert train_texts.isdisjoint(val_texts), "train/val text overlap!"
+    assert train_texts.isdisjoint(hard_texts), "train/hard_dev text overlap!"
+    assert val_texts.isdisjoint(hard_texts), "val/hard_dev text overlap!"
+
+    source_counts = {
+        "train": len(train_sources),
+        "val": len(val_sources),
+        "hard_dev": len(hard_sources),
+    }
+    source_overlap = {
+        "train_val": len(train_sources & val_sources),
+        "train_hard_dev": len(train_sources & hard_sources),
+        "val_hard_dev": len(val_sources & hard_sources),
+    }
+    text_overlap = {
+        "train_val": len(train_texts & val_texts),
+        "train_hard_dev": len(train_texts & hard_texts),
+        "val_hard_dev": len(val_texts & hard_texts),
+    }
+
+    # Per-split source → row counts (informational).
+    train_src_counts: dict[str, int] = defaultdict(int)
+    val_src_counts: dict[str, int] = defaultdict(int)
+    hard_src_counts: dict[str, int] = defaultdict(int)
     for r in train_rows:
-        train_sources[r.get("source", r.get("domain", "unknown"))] += 1
+        train_src_counts[_src(r)] += 1
     for r in val_rows:
-        val_sources[r.get("source", r.get("domain", "unknown"))] += 1
+        val_src_counts[_src(r)] += 1
     for r in hard_dev_rows:
-        hard_sources[r.get("source", r.get("domain", "unknown"))] += 1
+        hard_src_counts[_src(r)] += 1
 
     def write_split(path: Path, rows: list) -> int:
         with open(path, "w", encoding="utf-8") as f:
@@ -132,13 +224,24 @@ def run(config: dict) -> dict:
     n_val = write_split(output_dir / "val.jsonl", val_rows)
     n_hard = write_split(output_dir / "hard_dev.jsonl", hard_dev_rows)
 
+    # Persist split metadata alongside the split files so version.py can record
+    # the policy + seed in MANIFEST.json without coupling to this worker's result.
+    split_meta = {
+        "split_policy": SPLIT_POLICY,
+        "split_seed": seed,
+        "source_counts": source_counts,
+        "source_overlap": source_overlap,
+        "text_overlap": text_overlap,
+    }
+    with open(output_dir / "split_meta.json", "w", encoding="utf-8") as f:
+        json.dump(split_meta, f, indent=2)
+
     ended_at = datetime.now(timezone.utc).isoformat()
 
     h_in = hashlib.sha256()
     h_in.update(str(total).encode())
     input_hash = "sha256:" + h_in.hexdigest()[:16]
 
-    all_out = train_rows + val_rows + hard_dev_rows
     h_out = hashlib.sha256()
     h_out.update(json.dumps({"train": n_train, "val": n_val, "hard": n_hard}, sort_keys=True).encode())
     output_hash = "sha256:" + h_out.hexdigest()[:16]
@@ -153,6 +256,7 @@ def run(config: dict) -> dict:
             str(output_dir / "train.jsonl"),
             str(output_dir / "val.jsonl"),
             str(output_dir / "hard_dev.jsonl"),
+            str(output_dir / "split_meta.json"),
         ],
         "metrics": {
             "total_rows": total,
@@ -163,10 +267,15 @@ def run(config: dict) -> dict:
             "val_pct": round(n_val / total, 4) if total else 0,
             "hard_dev_pct": round(n_hard / total, 4) if total else 0,
             "seed": seed,
+            "split_policy": SPLIT_POLICY,
+            "n_source_groups": n_groups,
+            "source_counts": source_counts,
+            "source_overlap": source_overlap,
+            "text_overlap": text_overlap,
             "source_distribution": {
-                "train": dict(train_sources),
-                "val": dict(val_sources),
-                "hard_dev": dict(hard_sources),
+                "train": dict(train_src_counts),
+                "val": dict(val_src_counts),
+                "hard_dev": dict(hard_src_counts),
             },
         },
         "started_at": started_at,

@@ -72,6 +72,115 @@ def _run_worker(argv: list[str], artifact_dir: Path, timeout_seconds: int = 300)
     return result
 
 
+# ── Corpus gate ──────────────────────────────────────────────────────────────
+
+def _load_gate(gate_name: str) -> dict:
+    gate_path = _ROOT / "state" / "gates" / f"{gate_name}.json"
+    if not gate_path.exists():
+        raise FileNotFoundError(f"Gate not found: {gate_path}")
+    return json.loads(open(gate_path).read())
+
+
+def _interpolate_argv(argv: list, manifest_path: str) -> list:
+    return [arg.replace("{manifest_path}", manifest_path) for arg in argv]
+
+
+def _eval_condition(metric_value, operator: str, threshold) -> bool:
+    if operator == "<":
+        return metric_value < threshold
+    elif operator == "<=":
+        return metric_value <= threshold
+    elif operator == ">":
+        return metric_value > threshold
+    elif operator == ">=":
+        return metric_value >= threshold
+    elif operator == "==":
+        return metric_value == threshold
+    else:
+        raise ValueError(f"Unknown operator: {operator}")
+
+
+def run_corpus_gate(exp_id: str, gate_name: str, manifest_path: Path,
+                    artifact_dir: Path) -> dict:
+    """
+    Run a single corpus gate: interpolate {manifest_path}, run the gate worker,
+    evaluate pass_condition. Mirrors generalize_loop.run_gate but is
+    experiment-scoped (no run_id, no checkpoint).
+
+    On failure: records a CORPUS_GATE_FAILED loop_event with the gate result as
+    payload, then raises RuntimeError so FROZEN_CORPUS is never reached.
+    On success: returns the gate result dict.
+    """
+    gate = _load_gate(gate_name)
+    started_at = datetime.now(timezone.utc).isoformat()
+
+    argv = _interpolate_argv(gate["argv"], str(manifest_path))
+    gate_artifact_dir = artifact_dir / "gates" / gate_name
+
+    try:
+        result = _run_worker(argv, gate_artifact_dir,
+                             gate.get("timeout_seconds", 60))
+
+        metric = gate["pass_condition"]["metric"]
+        operator = gate["pass_condition"]["operator"]
+        threshold = gate["pass_condition"]["value"]
+        actual_value = result["metrics"].get(metric)
+
+        if actual_value is None:
+            raise ValueError(
+                f"Gate metric '{metric}' not found in worker result metrics: "
+                f"{list(result['metrics'].keys())}"
+            )
+
+        passed = _eval_condition(actual_value, operator, threshold)
+
+        gate_result = {
+            "gate_name": gate_name,
+            "passed": passed,
+            "actual_value": actual_value,
+            "threshold": threshold,
+            "operator": operator,
+            "worker_result": result,
+        }
+        print(
+            f"[{exp_id}] Corpus gate {'PASS' if passed else 'FAIL'} "
+            f"{gate_name}: {metric}={actual_value} ({operator} {threshold})"
+        )
+
+    except Exception as exc:
+        gate_result = {
+            "gate_name": gate_name,
+            "passed": False,
+            "actual_value": None,
+            "threshold": gate["pass_condition"]["value"],
+            "operator": gate["pass_condition"]["operator"],
+            "error": str(exc),
+        }
+        print(f"[{exp_id}] Corpus gate ERROR {gate_name}: {exc}")
+
+    ended_at = datetime.now(timezone.utc).isoformat()
+
+    if not gate_result["passed"]:
+        update_loop_experiment_state(
+            exp_id, "CORPUS_GATE_FAILED", "corpus_gate_failed",
+            payload={
+                "gate_name": gate_name,
+                "gate_result": gate_result,
+                "manifest_path": str(manifest_path),
+                "started_at": started_at,
+                "ended_at": ended_at,
+            },
+        )
+        raise RuntimeError(
+            f"Corpus gate '{gate_name}' FAILED for {exp_id}: "
+            f"{gate['pass_condition']['metric']}={gate_result['actual_value']} "
+            f"(expected {gate_result['operator']} {gate_result['threshold']}). "
+            f"Experiment left in CORPUS_GATE_FAILED; not frozen."
+        )
+
+    return gate_result
+
+
 def run_corpus_pipeline(config: dict) -> dict:
     """
     Full corpus pipeline:
@@ -127,12 +236,16 @@ def run_corpus_pipeline(config: dict) -> dict:
     # Stage 3: Split — reads from dedupe stage output
     print(f"[{exp_id}] Stage 3: Splitting corpus")
     split_artifact_dir = output_dir / "split"
+    split_argv = [
+        "python", "-m", "workers.corpus.split",
+        "--corpus-dir", str(dedupe_artifact_dir),
+        "--output-dir", str(output_dir / "corpus"),
+        "--seed", str(config.get("seed", 42)),
+        "--train-pct", str(config.get("train_pct", 0.80)),
+        "--val-pct", str(config.get("val_pct", 0.10)),
+    ]
     split_result = _run_worker(
-        argv=[
-            "python", "-m", "workers.corpus.split",
-            "--corpus-dir", str(dedupe_artifact_dir),
-            "--output-dir", str(output_dir / "corpus"),
-        ],
+        argv=split_argv,
         artifact_dir=split_artifact_dir,
         timeout_seconds=300,
     )
@@ -151,6 +264,17 @@ def run_corpus_pipeline(config: dict) -> dict:
         timeout_seconds=60,
     )
     pipeline_stages.append({"stage": "version", "result": version_result})
+
+    # Stage 5: Corpus gate — verify the frozen split is source-disjoint.
+    print(f"[{exp_id}] Stage 5: Running corpus gate")
+    manifest_path = output_dir / "MANIFEST.json"
+    gate_result = run_corpus_gate(
+        exp_id=exp_id,
+        gate_name="corpus_source_disjoint_gate",
+        manifest_path=manifest_path,
+        artifact_dir=version_artifact_dir,
+    )
+    pipeline_stages.append({"stage": "gate", "result": gate_result})
 
     ended_at = datetime.now(timezone.utc).isoformat()
 
@@ -202,6 +326,12 @@ def main():
                        help="Directory containing raw corpus JSONL files")
     p_run.add_argument("--output", "--output-dir", dest="output_dir", required=True,
                        help="Output directory for processed corpus and manifests")
+    p_run.add_argument("--seed", type=int, default=42,
+                       help="Deterministic split seed (default 42)")
+    p_run.add_argument("--train-pct", type=float, default=0.80,
+                       help="Target train fraction of rows (default 0.80)")
+    p_run.add_argument("--val-pct", type=float, default=0.10,
+                       help="Target val fraction of rows (default 0.10)")
 
     p_status = sub.add_parser("status", help="Show corpus experiment status")
     p_status.add_argument("--exp-id", required=True)

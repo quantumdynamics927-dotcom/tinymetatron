@@ -213,7 +213,17 @@ def run_generalization(config: dict) -> dict:
         update_loop_run_status(run_id, "EVALUATING", "generalization_start",
                                {"checkpoint_step": step})
 
-    gate_names = [p.stem for p in sorted((_ROOT / "state" / "gates").glob("*.json"))]
+    # Only run generalization-scoped gates. Gates may carry a "scope" field
+    # (e.g. "corpus") to opt into a different loop; absent scope means
+    # generalization (backward compatible with existing CE gates).
+    gate_names = []
+    for p in sorted((_ROOT / "state" / "gates").glob("*.json")):
+        try:
+            scope = json.loads(open(p, encoding="utf-8").read()).get("scope", "generalization")
+        except Exception:
+            scope = "generalization"
+        if scope == "generalization":
+            gate_names.append(p.stem)
 
     print(f"[{run_id}] Running generalization gates ({len(gate_names)} gates)")
 
