@@ -27,7 +27,7 @@ from db import (
     set_db_path,
 )
 
-_REGISTRY = str(Path(__file__).resolve().parents[2] / "state" / "registry.db")
+_REGISTRY = str(Path(__file__).resolve().parents[1] / "state" / "registry.db")
 set_db_path(_REGISTRY)
 
 

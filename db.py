@@ -489,7 +489,7 @@ def end_session(path: Optional[str], session_id: int, total_steps: int,
 
 # ── loop_experiments ──────────────────────────────────────────────────────────────
 
-def create_loop_experiment(path: Optional[str], exp_id: str,
+def create_loop_experiment(exp_id: str, *, path: Optional[str] = None,
                           hypothesis: str = "") -> None:
     """Create a new loop_experiments row. Raises if exp_id already exists."""
     conn = get_db(path)
@@ -504,8 +504,9 @@ def create_loop_experiment(path: Optional[str], exp_id: str,
         conn.close()
 
 
-def update_loop_experiment_state(path: Optional[str], exp_id: str, state: str,
+def update_loop_experiment_state(exp_id: str, state: str,
                                reason_code: str = "",
+                               *, path: Optional[str] = None,
                                payload: dict = None) -> None:
     """
     Update the state of a loop experiment. Sets ended_at if terminal.
@@ -528,7 +529,7 @@ def update_loop_experiment_state(path: Optional[str], exp_id: str, state: str,
         conn.close()
 
 
-def get_loop_experiment(path: Optional[str], exp_id: str) -> Optional[dict]:
+def get_loop_experiment(exp_id: str, *, path: Optional[str] = None) -> Optional[dict]:
     """Return a loop experiment row, or None."""
     conn = get_db(path)
     try:
@@ -542,11 +543,12 @@ def get_loop_experiment(path: Optional[str], exp_id: str) -> Optional[dict]:
 
 # ── loop_runs ─────────────────────────────────────────────────────────────────
 
-def create_loop_run(path: Optional[str], run_id: str, exp_id: str,
-                    corpus_hash: str, split_hash: str,
-                    tokenizer_hash: str, model_config_hash: str,
-                    seed: int, seq_len: int,
-                    parent_run: Optional[str] = None) -> None:
+def create_loop_run(run_id: str, exp_id: str,
+                   corpus_hash: str, split_hash: str,
+                   tokenizer_hash: str, model_config_hash: str,
+                   seed: int, seq_len: int,
+                   parent_run: Optional[str] = None,
+                   *, path: Optional[str] = None) -> None:
     """Create a new loop_runs row."""
     conn = get_db(path)
     try:
@@ -564,8 +566,9 @@ def create_loop_run(path: Optional[str], run_id: str, exp_id: str,
         conn.close()
 
 
-def update_loop_run_status(path: Optional[str], run_id: str, status: str,
-                          reason_code: str, payload: dict) -> None:
+def update_loop_run_status(run_id: str, status: str,
+                         reason_code: str, payload: dict,
+                         *, path: Optional[str] = None) -> None:
     """Transition a loop run's status and record a loop_events entry."""
     conn = get_db(path)
     try:
@@ -591,7 +594,7 @@ def update_loop_run_status(path: Optional[str], run_id: str, status: str,
         conn.close()
 
 
-def set_promotion(path: Optional[str], run_id: str, promotion: str) -> None:
+def set_promotion(run_id: str, promotion: str, *, path: Optional[str] = None) -> None:
     """Set the promotion field on a loop run."""
     conn = get_db(path)
     try:
@@ -615,7 +618,7 @@ def get_loop_run(run_id: str, *, path: Optional[str] = None) -> Optional[dict]:
     return dict(row) if row else None
 
 
-def get_loop_runs_for_experiment(path: Optional[str], exp_id: str) -> list[dict]:
+def get_loop_runs_for_experiment(exp_id: str, *, path: Optional[str] = None) -> list[dict]:
     """Return all loop_runs for an experiment."""
     conn = get_db(path)
     try:
@@ -651,7 +654,7 @@ def save_loop_checkpoint(path: Optional[str], run_id: str, step: int,
         conn.close()
 
 
-def get_best_loop_checkpoint(path: Optional[str], run_id: str) -> Optional[dict]:
+def get_best_loop_checkpoint(run_id: str, *, path: Optional[str] = None) -> Optional[dict]:
     """Return the is_best=True checkpoint for a run, or None."""
     conn = get_db(path)
     try:
@@ -663,7 +666,7 @@ def get_best_loop_checkpoint(path: Optional[str], run_id: str) -> Optional[dict]
     return dict(row) if row else None
 
 
-def get_loop_checkpoints(path: Optional[str], run_id: str) -> list[dict]:
+def get_loop_checkpoints(run_id: str, *, path: Optional[str] = None) -> list[dict]:
     """Return all checkpoints for a run, ordered by step."""
     conn = get_db(path)
     try:
@@ -677,9 +680,9 @@ def get_loop_checkpoints(path: Optional[str], run_id: str) -> list[dict]:
 
 # ── evaluations ────────────────────────────────────────────────────────────────
 
-def save_evaluation(path: Optional[str], run_id: str, step: int,
-                    eval_set: str, ce: float, ppl: float,
-                    total_tokens: int) -> int:
+def save_evaluation(run_id: str, step: int, eval_set: str,
+                    ce: float, ppl: float, total_tokens: int,
+                    *, path: Optional[str] = None) -> int:
     """Save an evaluation result."""
     conn = get_db(path)
     try:
@@ -695,8 +698,9 @@ def save_evaluation(path: Optional[str], run_id: str, step: int,
         conn.close()
 
 
-def get_evaluations(path: Optional[str], run_id: str,
-                    eval_set: Optional[str] = None) -> list[dict]:
+def get_evaluations(run_id: str,
+                    eval_set: Optional[str] = None,
+                    *, path: Optional[str] = None) -> list[dict]:
     """Return evaluations for a run, optionally filtered by eval_set."""
     conn = get_db(path)
     try:
@@ -715,9 +719,10 @@ def get_evaluations(path: Optional[str], run_id: str,
 
 # ── gate_results ─────────────────────────────────────────────────────────────
 
-def save_gate_result(path: Optional[str], run_id: str, gate_name: str,
-                     passed: bool, duration_s: float,
-                     stdout_path: str, stderr_path: str) -> int:
+def save_gate_result(run_id: str, gate_name: str,
+                    passed: bool, duration_s: float,
+                    stdout_path: str, stderr_path: str,
+                    *, path: Optional[str] = None) -> int:
     """Save a gate result. Overwrites prior result for same gate/run."""
     conn = get_db(path)
     try:
@@ -737,7 +742,7 @@ def save_gate_result(path: Optional[str], run_id: str, gate_name: str,
         conn.close()
 
 
-def get_gate_results(path: Optional[str], run_id: str) -> list[dict]:
+def get_gate_results(run_id: str, *, path: Optional[str] = None) -> list[dict]:
     """Return all gate results for a run."""
     conn = get_db(path)
     try:
@@ -750,8 +755,9 @@ def get_gate_results(path: Optional[str], run_id: str) -> list[dict]:
 
 # ── artifact_refs ─────────────────────────────────────────────────────────────
 
-def save_artifact_ref(path: Optional[str], run_id: str, artifact_type: str,
-                      file_path: str, sha256: str) -> None:
+def save_artifact_ref(run_id: str, artifact_type: str,
+                     file_path: str, sha256: str,
+                     *, path: Optional[str] = None) -> None:
     """Save an artifact reference. Idempotent (UNIQUE constraint)."""
     conn = get_db(path)
     try:
@@ -768,9 +774,9 @@ def save_artifact_ref(path: Optional[str], run_id: str, artifact_type: str,
 
 # ── final_test_consumed ───────────────────────────────────────────────────────
 
-def try_consume_final_test(path: Optional[str], candidate_sha256: str,
-                          test_manifest_sha: str, run_id: str,
-                          ce: float, ppl: float) -> tuple[bool, Optional[dict]]:
+def try_consume_final_test(candidate_sha256: str, test_manifest_sha: str,
+                         run_id: str, ce: float, ppl: float,
+                         *, path: Optional[str] = None) -> tuple[bool, Optional[dict]]:
     """
     Attempt to record final-test consumption.
 
