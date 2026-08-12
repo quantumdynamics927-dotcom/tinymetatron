@@ -117,7 +117,7 @@ def test_corpus_smoke_source_disjoint(clean_registry, corpus_dir, tmp_path) -> N
 
     # MANIFEST.json records the split policy invariants.
     man = json.loads((out / "MANIFEST.json").read_text(encoding="utf-8"))
-    assert man["split_policy"] == "source_disjoint_v1"
+    assert man["split_policy"] == "source_disjoint_capped_v1"
     assert man["split_seed"] == 42
     assert man["source_counts"] == {
         "train": len(tr_s), "val": len(va_s), "hard_dev": len(ha_s),

@@ -73,6 +73,7 @@ def run(config: dict) -> dict:
     source_overlap = manifest.get("source_overlap", {})
     text_overlap = manifest.get("text_overlap", {})
     source_counts = manifest.get("source_counts", {})
+    max_share = manifest.get("max_source_row_share", {})
 
     # Coerce to ints (manifest values may be missing on a malformed freeze).
     def _sum(d: dict) -> int:
@@ -83,6 +84,9 @@ def run(config: dict) -> dict:
     # In a source-disjoint split, sources are partitioned, so the total number
     # of distinct source groups is the sum of per-split source counts.
     n_source_groups = _sum(source_counts)
+    # Largest single source's share of any primary partition. A partition whose
+    # rows come mostly from one source is not a representative held-out set.
+    max_source_row_share = max(max_share.values()) if max_share else None
 
     ended_at = datetime.now(timezone.utc).isoformat()
 
@@ -96,6 +100,7 @@ def run(config: dict) -> dict:
             "n_source_groups": n_source_groups,
             "source_overlap": source_overlap,
             "text_overlap": text_overlap,
+            "max_source_row_share": max_source_row_share,
             "split_policy": manifest.get("split_policy", "unknown"),
             "split_seed": manifest.get("split_seed"),
         },

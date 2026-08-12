@@ -33,6 +33,7 @@ import hashlib
 import json
 import re
 import sys
+import zlib
 from datetime import datetime, timezone
 from pathlib import Path
 from collections import defaultdict
@@ -62,6 +63,37 @@ def _jaccard(a: set, b: set) -> float:
 
 MIN_NGRAM_JACCARD = 0.85
 MIN_DUP_LEN = 50  # Only near-dedup texts longer than this
+
+# MinHash + LSH parameters for scalable near-duplicate detection.
+# The O(n^2) full-scan near-dup pass is infeasible for real corpora (100k+
+# rows), so we prefilter candidates with a MinHash signature split into LSH
+# bands. Candidates sharing any band are verified with the exact Jaccard test,
+# so there are no false positives — only bounded false negatives.
+_MINHASH_K = 128          # signature length
+_LSH_BANDS = 16           # bands (each of _MINHASH_K // _LSH_BANDS hashes)
+
+
+def _fast_hash(s: str) -> int:
+    """Deterministic fast hash for n-grams (crc32 — stable within a run)."""
+    return zlib.crc32(s.encode("utf-8", "replace"))
+
+
+def _minhash(text: str, k: int = _MINHASH_K) -> list[int]:
+    """MinHash signature: the k smallest crc32 hashes of the 5-gram set."""
+    ngrams = _ngrams(text)
+    if not ngrams:
+        return [0] * k
+    hashes = sorted(_fast_hash(g) for g in ngrams)
+    sig = hashes[:k]
+    if len(sig) < k:
+        sig = sig + [sig[-1]] * (k - len(sig))
+    return sig
+
+
+def _lsh_bands(sig: list[int], bands: int = _LSH_BANDS) -> list[tuple]:
+    """Split a MinHash signature into bands for LSH candidate generation."""
+    r = len(sig) // bands
+    return [tuple(sig[i * r:(i + 1) * r]) for i in range(bands)]
 
 
 def run(config: dict) -> dict:
@@ -119,7 +151,22 @@ def run(config: dict) -> dict:
         norm_seen[norm].append(len(final_rows))
         final_rows.append(row)
 
-    # Pass 3: near-duplicate detection (on remaining rows)
+    # Pass 3: near-duplicate detection (on remaining rows) via MinHash + LSH.
+    # Build band → row-index candidates once, then verify each candidate with
+    # the exact Jaccard test. Scales to 100k+ rows where the old O(n^2) scan
+    # was infeasible.
+    band_map: dict[tuple, list[int]] = defaultdict(list)
+    sigs: list[list[int] | None] = []
+    for i, row in enumerate(final_rows):
+        text = row.get("text", "")
+        if len(text) < MIN_DUP_LEN:
+            sigs.append(None)
+            continue
+        sig = _minhash(text)
+        sigs.append(sig)
+        for band in _lsh_bands(sig):
+            band_map[band].append(i)
+
     output_rows = []
     skip_indices = set()
     for i, row in enumerate(final_rows):
@@ -132,8 +179,11 @@ def run(config: dict) -> dict:
 
         row_ngrams = _ngrams(text)
         is_near_dup = False
-        for j in range(i + 1, len(final_rows)):
-            if j in skip_indices:
+        candidates = set()
+        for band in _lsh_bands(sigs[i]):
+            candidates.update(band_map[band])
+        for j in candidates:
+            if j <= i or j in skip_indices:
                 continue
             other_text = final_rows[j].get("text", "")
             if len(other_text) < MIN_DUP_LEN:

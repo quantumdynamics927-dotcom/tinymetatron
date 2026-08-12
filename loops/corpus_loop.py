@@ -101,11 +101,14 @@ def _eval_condition(metric_value, operator: str, threshold) -> bool:
 
 
 def run_corpus_gate(exp_id: str, gate_name: str, manifest_path: Path,
-                    artifact_dir: Path) -> dict:
+                    artifact_dir: Path, threshold_override: float | None = None) -> dict:
     """
     Run a single corpus gate: interpolate {manifest_path}, run the gate worker,
     evaluate pass_condition. Mirrors generalize_loop.run_gate but is
     experiment-scoped (no run_id, no checkpoint).
+
+    threshold_override: when set, replaces the gate definition's pass_condition
+    value (used to make a gate's threshold configurable per run).
 
     On failure: records a CORPUS_GATE_FAILED loop_event with the gate result as
     payload, then raises RuntimeError so FROZEN_CORPUS is never reached.
@@ -117,13 +120,15 @@ def run_corpus_gate(exp_id: str, gate_name: str, manifest_path: Path,
     argv = _interpolate_argv(gate["argv"], str(manifest_path))
     gate_artifact_dir = artifact_dir / "gates" / gate_name
 
+    metric = gate["pass_condition"]["metric"]
+    operator = gate["pass_condition"]["operator"]
+    threshold = (threshold_override if threshold_override is not None
+                 else gate["pass_condition"]["value"])
+
     try:
         result = _run_worker(argv, gate_artifact_dir,
                              gate.get("timeout_seconds", 60))
 
-        metric = gate["pass_condition"]["metric"]
-        operator = gate["pass_condition"]["operator"]
-        threshold = gate["pass_condition"]["value"]
         actual_value = result["metrics"].get(metric)
 
         if actual_value is None:
@@ -152,8 +157,8 @@ def run_corpus_gate(exp_id: str, gate_name: str, manifest_path: Path,
             "gate_name": gate_name,
             "passed": False,
             "actual_value": None,
-            "threshold": gate["pass_condition"]["value"],
-            "operator": gate["pass_condition"]["operator"],
+            "threshold": threshold,
+            "operator": operator,
             "error": str(exc),
         }
         print(f"[{exp_id}] Corpus gate ERROR {gate_name}: {exc}")
@@ -244,6 +249,8 @@ def run_corpus_pipeline(config: dict) -> dict:
         "--train-pct", str(config.get("train_pct", 0.80)),
         "--val-pct", str(config.get("val_pct", 0.10)),
     ]
+    if config.get("max_rows_per_source"):
+        split_argv += ["--max-rows-per-source", str(config["max_rows_per_source"])]
     split_result = _run_worker(
         argv=split_argv,
         artifact_dir=split_artifact_dir,
@@ -254,19 +261,23 @@ def run_corpus_pipeline(config: dict) -> dict:
     # Stage 4: Version
     print(f"[{exp_id}] Stage 4: Versioning and freezing manifest")
     version_artifact_dir = output_dir / "version"
+    version_argv = [
+        "python", "-m", "workers.corpus.version",
+        "--corpus-dir", str(output_dir / "corpus"),
+        "--output-dir", str(output_dir),
+    ]
+    if config.get("scope"):
+        version_argv += ["--scope", str(config["scope"])]
     version_result = _run_worker(
-        argv=[
-            "python", "-m", "workers.corpus.version",
-            "--corpus-dir", str(output_dir / "corpus"),
-            "--output-dir", str(output_dir),
-        ],
+        argv=version_argv,
         artifact_dir=version_artifact_dir,
         timeout_seconds=60,
     )
     pipeline_stages.append({"stage": "version", "result": version_result})
 
-    # Stage 5: Corpus gate — verify the frozen split is source-disjoint.
-    print(f"[{exp_id}] Stage 5: Running corpus gate")
+    # Stage 5: Corpus gates — verify the frozen split is source-disjoint and
+    # that no single source dominates a primary partition.
+    print(f"[{exp_id}] Stage 5: Running corpus gates")
     manifest_path = output_dir / "MANIFEST.json"
     gate_result = run_corpus_gate(
         exp_id=exp_id,
@@ -275,6 +286,20 @@ def run_corpus_pipeline(config: dict) -> dict:
         artifact_dir=version_artifact_dir,
     )
     pipeline_stages.append({"stage": "gate", "result": gate_result})
+
+    # The max-source-share gate is opt-in: it rejects a partition dominated by
+    # one source (e.g. the 68% single-source val share that motivated it), but
+    # a tiny synthetic corpus (smoke fixture) cannot satisfy it by construction.
+    # Pass --max-source-share <threshold> to enforce it on a real corpus.
+    if config.get("max_source_share"):
+        share_gate_result = run_corpus_gate(
+            exp_id=exp_id,
+            gate_name="corpus_max_source_share_gate",
+            manifest_path=manifest_path,
+            artifact_dir=version_artifact_dir,
+            threshold_override=float(config["max_source_share"]),
+        )
+        pipeline_stages.append({"stage": "gate_max_source_share", "result": share_gate_result})
 
     ended_at = datetime.now(timezone.utc).isoformat()
 
@@ -332,6 +357,13 @@ def main():
                        help="Target train fraction of rows (default 0.80)")
     p_run.add_argument("--val-pct", type=float, default=0.10,
                        help="Target val fraction of rows (default 0.10)")
+    p_run.add_argument("--max-rows-per-source", type=int, default=500,
+                       help="Cap rows per source group before splitting (default 500)")
+    p_run.add_argument("--max-source-share", type=float, default=None,
+                       help="Enforce the max-source-share gate with this threshold "
+                            "(e.g. 0.30). Omit to skip the gate (smoke/synthetic corpora).")
+    p_run.add_argument("--scope", default=None,
+                       help="Experiment scope written into MANIFEST.json")
 
     p_status = sub.add_parser("status", help="Show corpus experiment status")
     p_status.add_argument("--exp-id", required=True)

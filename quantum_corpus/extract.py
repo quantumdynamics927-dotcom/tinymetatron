@@ -111,13 +111,20 @@ def extract_repo(root: str, project: str, license: str, sensitivity: str,
     counts: Dict[str, int] = {}
     skipped = 0
     for dirpath, dirnames, filenames in os.walk(root):
-        # prune noise dirs in-place
-        dirnames[:] = [d for d in dirnames if d not in {
+        # prune noise dirs in-place. Exact-name matches plus prefix matches for
+        # venv variants (quantum-env, quantum-env-windows, ...) — a checked-in
+        # virtualenv would otherwise flood the corpus with vendored third-party
+        # library code (numpy/scipy/pip internals), not the project's own work.
+        _NOISE_DIRS = {
             ".git", "node_modules", "__pycache__", ".venv", "venv", "egg-info",
             "dist", "build", "site", ".next", ".ruff_cache", ".pytest_cache",
             ".mypy_cache", ".cache", "quantum-env", ".huggingface", "coverage",
-            "__results__", ".ipynb_checkpoints",
-        }]
+            "__results__", ".ipynb_checkpoints", ".claude", ".github", ".vscode",
+        }
+        dirnames[:] = [
+            d for d in dirnames
+            if d not in _NOISE_DIRS and not d.startswith("quantum-env")
+        ]
         for fn in filenames:
             rel = os.path.relpath(os.path.join(dirpath, fn), root)
             if should_skip_file(rel) or not is_text_file(rel):

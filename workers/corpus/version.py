@@ -51,7 +51,7 @@ def _normalize(text: str) -> str:
 
 def _source_of(row: dict) -> str:
     """Source identifier for a row (matches workers.corpus.split._src)."""
-    return row.get("source", row.get("domain", "unknown"))
+    return row.get("source_id", row.get("source", row.get("domain", "unknown")))
 
 
 # Split file stem → partition name used in the manifest's overlap/counts dicts.
@@ -76,7 +76,13 @@ def build_manifest(corpus_dir: Path) -> dict:
     all_rows = []
 
     for f in sorted(corpus_dir.glob("*.jsonl")):
-        rows = [json.loads(l) for l in open(f)]
+        # Only the three primary splits are part of the frozen corpus.
+        # excluded_by_cap.jsonl (rows dropped by the per-source cap) is an
+        # audit artifact, not a split, and must not enter the corpus hash or
+        # the unique/subdomain tallies.
+        if f.stem not in _SPLIT_NAMES:
+            continue
+        rows = [json.loads(l) for l in open(f, encoding="utf-8")]
         splits[f.name] = {
             "rows": len(rows),
             "sha256": _hash_file(f),
@@ -89,6 +95,8 @@ def build_manifest(corpus_dir: Path) -> dict:
     # Aggregate corpus hash
     corp_h = hashlib.sha256()
     for f in sorted(corpus_dir.glob("*.jsonl")):
+        if f.stem not in _SPLIT_NAMES:
+            continue
         corp_h.update(_hash_file(f).encode())
     corpus_hash = corp_h.hexdigest()[:16]
 
@@ -126,7 +134,37 @@ def build_manifest(corpus_dir: Path) -> dict:
         "val_hard_dev": len(val_texts & hard_texts),
     }
 
-    # Split policy + seed come from split_meta.json (written by the split worker).
+    # Largest single source's share of each partition's rows, computed directly
+    # from the frozen split files (independent verification of the split
+    # worker's claim). A partition dominated by one source is not a
+    # representative held-out set, so this is gated at freeze time.
+    from collections import Counter
+    train_src_counts = Counter(_source_of(r) for r in split_rows.get("train", []))
+    val_src_counts = Counter(_source_of(r) for r in split_rows.get("val", []))
+    hard_src_counts = Counter(_source_of(r) for r in split_rows.get("hard_dev", []))
+
+    def _max_share(counts, n_rows: int) -> float:
+        return round(max(counts.values()) / n_rows, 4) if counts and n_rows else 0.0
+
+    max_source_row_share = {
+        "train": _max_share(train_src_counts, len(split_rows.get("train", []))),
+        "val": _max_share(val_src_counts, len(split_rows.get("val", []))),
+        "hard_dev": _max_share(hard_src_counts, len(split_rows.get("hard_dev", []))),
+    }
+
+    # Rows excluded by the per-source cap are preserved (not deleted) for audit
+    # and optional long-tail eval segments. Record their location + hash.
+    excluded_path = corpus_dir / "excluded_by_cap.jsonl"
+    excluded_by_cap = None
+    if excluded_path.exists():
+        excluded_by_cap = {
+            "path": str(excluded_path.resolve()),
+            "rows": sum(1 for _ in open(excluded_path, encoding="utf-8")),
+            "sha256": _hash_file(excluded_path),
+        }
+
+    # Split policy + seed + cap come from split_meta.json (written by the split
+    # worker).
     meta = _load_split_meta(corpus_dir)
 
     return {
@@ -135,8 +173,14 @@ def build_manifest(corpus_dir: Path) -> dict:
         "total_rows": len(all_rows),
         "unique_normalized": len(norms),
         "subdomains": subdomains,
-        "split_policy": meta.get("split_policy", "source_disjoint_v1"),
+        "split_policy": meta.get("split_policy", "source_disjoint_capped_v1"),
         "split_seed": meta.get("split_seed", 42),
+        "max_rows_per_source": meta.get("max_rows_per_source"),
+        "pre_cap_rows": meta.get("pre_cap_rows"),
+        "post_cap_rows": meta.get("post_cap_rows"),
+        "capped_sources": meta.get("capped_sources", []),
+        "max_source_row_share": max_source_row_share,
+        "excluded_by_cap": excluded_by_cap,
         "source_counts": source_counts,
         "source_overlap": source_overlap,
         "text_overlap": text_overlap,
@@ -158,9 +202,13 @@ def run(config: dict) -> dict:
         "created_at": started_at,
         "ended_at": datetime.now(timezone.utc).isoformat(),
     })
+    # Experiment scope (e.g. "quantum technical domain") is written explicitly
+    # into the manifest so the corpus's intended domain is never ambiguous.
+    if config.get("scope"):
+        manifest["scope"] = config["scope"]
 
     manifest_path = output_dir / "MANIFEST.json"
-    with open(manifest_path, "w") as f:
+    with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2)
 
     return {
@@ -177,6 +225,11 @@ def run(config: dict) -> dict:
             "splits": list(manifest["splits"].keys()),
             "split_policy": manifest["split_policy"],
             "split_seed": manifest["split_seed"],
+            "max_rows_per_source": manifest.get("max_rows_per_source"),
+            "pre_cap_rows": manifest.get("pre_cap_rows"),
+            "post_cap_rows": manifest.get("post_cap_rows"),
+            "max_source_row_share": manifest.get("max_source_row_share"),
+            "max_source_row_share_total": max(manifest.get("max_source_row_share", {}).values()) if manifest.get("max_source_row_share") else None,
             "source_overlap_total": sum(manifest["source_overlap"].values()),
             "text_overlap_total": sum(manifest["text_overlap"].values()),
         },
@@ -189,6 +242,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus-dir", required=True)
     parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--scope", default=None,
+                       help="Experiment scope written into MANIFEST.json")
     parser.add_argument("--result", default=None)
     args = parser.parse_args()
 
@@ -197,7 +252,7 @@ def main():
 
     out_path = Path(args.result) if args.result else \
         Path(args.output_dir) / "MANIFEST.json"
-    with open(out_path, "w") as f:
+    with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2)
 
     print(json.dumps(result["metrics"], indent=2))
