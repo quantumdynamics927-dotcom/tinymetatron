@@ -23,12 +23,17 @@ sys.path.insert(0, str(_ROOT))
 from db import (
     create_loop_experiment,
     get_loop_experiment,
+    init_db,
     update_loop_experiment_state,
     set_db_path,
 )
 
 _REGISTRY = str(Path(__file__).resolve().parents[1] / "state" / "registry.db")
-set_db_path(_REGISTRY)
+# Respect TINYMETATRON_DB env if set; otherwise use default production path
+import os as _os
+if not _os.environ.get("TINYMETATRON_DB"):
+    set_db_path(_REGISTRY)
+init_db(None)  # Idempotent: initializes the active DB (respects TINYMETATRON_DB env)
 
 
 _PROTECTED_PATHS = [Path("experiments/exp-003").resolve()]
@@ -84,12 +89,10 @@ def run_corpus_pipeline(config: dict) -> dict:
     started_at = datetime.now(timezone.utc).isoformat()
 
     # Ensure experiment exists
-    try:
-        get_loop_experiment(exp_id)
-    except KeyError:
+    exp = get_loop_experiment(exp_id)
+    if exp is None:
         create_loop_experiment(
             exp_id=exp_id,
-            state="ACTIVE",
             hypothesis=f"exp-{exp_id} corpus pipeline",
         )
 
@@ -108,26 +111,26 @@ def run_corpus_pipeline(config: dict) -> dict:
     )
     pipeline_stages.append({"stage": "validate", "result": val_result})
 
-    # Stage 2: Dedupe
+    # Stage 2: Dedupe — reads from validate stage output
     print(f"[{exp_id}] Stage 2: Deduplicating")
     dedupe_artifact_dir = output_dir / "dedupe"
     dedupe_result = _run_worker(
         argv=[
             "python", "-m", "workers.corpus.dedupe",
-            "--corpus-dir", str(corpus_dir),
+            "--corpus-dir", str(val_artifact_dir),
         ],
         artifact_dir=dedupe_artifact_dir,
         timeout_seconds=300,
     )
     pipeline_stages.append({"stage": "dedupe", "result": dedupe_result})
 
-    # Stage 3: Split
+    # Stage 3: Split — reads from dedupe stage output
     print(f"[{exp_id}] Stage 3: Splitting corpus")
     split_artifact_dir = output_dir / "split"
     split_result = _run_worker(
         argv=[
             "python", "-m", "workers.corpus.split",
-            "--corpus-dir", str(corpus_dir),
+            "--corpus-dir", str(dedupe_artifact_dir),
             "--output-dir", str(output_dir / "corpus"),
         ],
         artifact_dir=split_artifact_dir,
@@ -151,9 +154,10 @@ def run_corpus_pipeline(config: dict) -> dict:
 
     ended_at = datetime.now(timezone.utc).isoformat()
 
-    update_loop_experiment_state(exp_id, "FROZEN_CORPUS", "corpus_pipeline_complete", {
-        "corpus_hash": version_result["metrics"]["corpus_hash"],
-    })
+    update_loop_experiment_state(exp_id, "FROZEN_CORPUS", "corpus_pipeline_complete",
+                               payload={
+                                   "corpus_hash": version_result["metrics"]["corpus_hash"],
+                               })
 
     summary = {
         "exp_id": exp_id,

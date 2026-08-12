@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS gate_results (
 
 CREATE TABLE IF NOT EXISTS loop_events (
     id            INTEGER PRIMARY KEY AUTOINCREMENT,
-    run_id        TEXT REFERENCES loop_runs(run_id),
+    run_id        TEXT,
     from_state    TEXT,
     to_state      TEXT NOT NULL,
     reason_code   TEXT NOT NULL,
@@ -217,7 +217,7 @@ CREATE INDEX IF NOT EXISTS idx_loop_events_run ON loop_events(run_id);
 CREATE INDEX IF NOT EXISTS idx_artifact_refs_run ON artifact_refs(run_id);
 """
 
-_CURRENT_LOOP_VERSION = 1
+_CURRENT_LOOP_VERSION = 2
 
 
 def _apply_migrations(conn: sqlite3.Connection) -> None:
@@ -229,23 +229,70 @@ def _apply_migrations(conn: sqlite3.Connection) -> None:
     """)
     applied = {r[0] for r in conn.execute(
         "SELECT version FROM loop_schema_version").fetchall()}
-    if _CURRENT_LOOP_VERSION not in applied:
+
+    if 1 not in applied:
         conn.executescript(_LOOP_SCHEMA_SQL)
         conn.execute(
             "INSERT INTO loop_schema_version (version, applied_at) VALUES (?, ?)",
-            (_CURRENT_LOOP_VERSION, _now()),
+            (1, _now()),
+        )
+
+    if 2 not in applied:
+        # Migration 2: fix loop_events — old schema had FK on run_id referencing
+        # loop_runs which prevents NULL (experiment-level events). Recreate without FK.
+        try:
+            cols = {r[1] for r in conn.execute("PRAGMA table_info(loop_events)")}
+        except Exception:
+            cols = set()
+        has_fk = conn.execute(
+            "SELECT COUNT(*) FROM sqlite_master WHERE type='trigger' AND name LIKE 'fk_loop_events%'"
+        ).fetchone()[0] > 0
+
+        if "run_id" in cols:
+            try:
+                # Check if run_id is NOT NULL (old broken schema)
+                info = conn.execute("PRAGMA table_info(loop_events)").fetchall()
+                run_id_col = next((dict(r) for r in info if r[1] == "run_id"), None)
+                if run_id_col and run_id_col.get('notnull') == 1:
+                    # Old schema with NOT NULL on run_id — recreate table
+                    conn.execute("DROP TABLE IF EXISTS loop_events_tmp")
+                    conn.execute("""
+                        CREATE TABLE loop_events_tmp (
+                            id            INTEGER PRIMARY KEY AUTOINCREMENT,
+                            run_id        TEXT,
+                            from_state    TEXT,
+                            to_state      TEXT NOT NULL,
+                            reason_code   TEXT NOT NULL,
+                            payload_json  TEXT NOT NULL,
+                            created_at    TEXT NOT NULL
+                        )
+                    """)
+                    conn.execute("""
+                        INSERT INTO loop_events_tmp (id, run_id, from_state, to_state, reason_code, payload_json, created_at)
+                        SELECT id, run_id, from_state, to_state, reason_code, payload_json, created_at FROM loop_events
+                    """)
+                    conn.execute("DROP TABLE loop_events")
+                    conn.execute("ALTER TABLE loop_events_tmp RENAME TO loop_events")
+                    conn.execute("DROP INDEX IF EXISTS idx_loop_events_run")
+                    conn.commit()
+            except Exception:
+                conn.rollback()
+                raise
+        conn.execute(
+            "INSERT INTO loop_schema_version (version, applied_at) VALUES (?, ?)",
+            (2, _now()),
         )
         conn.commit()
 
 
-def init_db(path: str) -> None:
+def init_db(path: Optional[str] = None) -> None:
     """
     Create the three original tables + indexes if they do not already exist.
     Also runs live schema migrations (ALTER TABLE ADD COLUMN) for new columns
     added after initial deployment so existing .db files stay current.
     Also applies loop schema migrations (versioned, transactional).
     """
-    conn = _connect(path)
+    conn = _connect(path) if path else _connect(_DB_PATH)
     try:
         conn.executescript(_SCHEMA)
         cols = {r[1] for r in conn.execute(
