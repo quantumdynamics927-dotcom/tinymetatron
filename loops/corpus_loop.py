@@ -192,10 +192,11 @@ def main():
     sub = parser.add_subparsers(dest="cmd")
 
     p_run = sub.add_parser("run", help="Run full corpus pipeline")
-    p_run.add_argument("--exp-id", required=True)
-    p_run.add_argument("--corpus-dir", required=True,
+    p_run.add_argument("--experiment", "--exp-id", dest="exp_id", required=True,
+                       help="Experiment ID (e.g. exp-004)")
+    p_run.add_argument("--input", "--corpus-dir", dest="corpus_dir", required=True,
                        help="Directory containing raw corpus JSONL files")
-    p_run.add_argument("--output-dir", required=True,
+    p_run.add_argument("--output", "--output-dir", dest="output_dir", required=True,
                        help="Output directory for processed corpus and manifests")
 
     p_status = sub.add_parser("status", help="Show corpus experiment status")
