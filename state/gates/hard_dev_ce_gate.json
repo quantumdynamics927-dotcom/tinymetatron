@@ -1,0 +1,18 @@
+{
+  "name": "hard_dev_ce_below_4.0",
+  "version": 1,
+  "description": "Best checkpoint must achieve hard_dev CE below 4.0",
+  "worker": "workers.evaluate.compute_ce",
+  "argv": [
+    "python", "-m", "workers.evaluate.compute_ce",
+    "--run-id", "{run_id}",
+    "--eval-set", "hard_dev",
+    "--best-only"
+  ],
+  "timeout_seconds": 120,
+  "pass_condition": {
+    "metric": "ce",
+    "operator": "<",
+    "value": 4.0
+  }
+}
