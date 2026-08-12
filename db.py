@@ -217,10 +217,111 @@ CREATE INDEX IF NOT EXISTS idx_loop_events_run ON loop_events(run_id);
 CREATE INDEX IF NOT EXISTS idx_artifact_refs_run ON artifact_refs(run_id);
 """
 
-_CURRENT_LOOP_VERSION = 2
+_CURRENT_LOOP_VERSION = 3
+
+# Canonical loop_events table (no FK on run_id). Experiment-level events store
+# exp_id in run_id, so run_id must NOT reference loop_runs. Used by migration v3
+# to rebuild a stale table that still carries the old foreign key.
+_LOOP_EVENTS_REBUILD_SQL = """
+    CREATE TABLE loop_events_tmp (
+        id            INTEGER PRIMARY KEY AUTOINCREMENT,
+        run_id        TEXT,
+        from_state    TEXT,
+        to_state      TEXT NOT NULL,
+        reason_code   TEXT NOT NULL,
+        payload_json  TEXT NOT NULL,
+        created_at    TEXT NOT NULL
+    )
+"""
 
 
-def _apply_migrations(conn: sqlite3.Connection) -> None:
+def _backup_db(conn: sqlite3.Connection, db_path: Optional[str]) -> Path:
+    """
+    Create a timestamped backup of the database before a migration mutates it.
+
+    Uses the SQLite online backup API so the snapshot is consistent even in WAL
+    mode. Returns the backup file path. Raises (and mutates nothing) if the copy
+    cannot be written — migrations fail closed.
+    """
+    src = Path(db_path) if db_path else Path(
+        conn.execute("PRAGMA database_list").fetchone()[2])
+    backup_path = src.with_name(
+        f"{src.name}.bak-{_now().replace(':', '').replace('+', 'Z')}"
+    )
+    target = sqlite3.connect(str(backup_path))
+    try:
+        conn.backup(target)
+    finally:
+        target.close()
+    return backup_path
+
+
+def _apply_migration_v3(conn: sqlite3.Connection, db_path: Optional[str]) -> None:
+    """
+    Migration 3: remove any stale foreign key on loop_events.run_id.
+
+    Old schemas created loop_events with ``run_id TEXT REFERENCES loop_runs(run_id)``
+    (sometimes NOT NULL). Experiment-level events store exp_id in run_id, which
+    violates that FK. Migration 2 only fixed the NOT NULL variant and — worse —
+    detected FKs via trigger names, so this DB's nullable-FK was never removed.
+    This migration detects the actual constraint with PRAGMA foreign_key_list and
+    rebuilds loop_events without the FK, preserving every row byte-for-byte.
+
+    Idempotent: when no stale FK is present this is a no-op (no backup, no rebuild).
+    """
+    fks = conn.execute("PRAGMA foreign_key_list(loop_events)").fetchall()
+    # Row shape: (id, seq, table, from, to, on_update, on_delete, match)
+    stale_fk = any(fk[2] == "loop_runs" and fk[3] == "run_id" for fk in fks)
+    if not stale_fk:
+        return  # already correct — no mutation, no backup
+
+    _backup_db(conn, db_path)  # timestamped backup BEFORE any mutation
+
+    # Preserve any triggers on loop_events so they can be recreated after rebuild.
+    triggers = conn.execute(
+        "SELECT sql FROM sqlite_master "
+        "WHERE type='trigger' AND tbl_name='loop_events' AND sql IS NOT NULL"
+    ).fetchall()
+
+    conn.execute("PRAGMA foreign_keys=OFF")
+    try:
+        conn.execute("BEGIN")
+        conn.execute("DROP TABLE IF EXISTS loop_events_tmp")
+        conn.execute(_LOOP_EVENTS_REBUILD_SQL)
+        conn.execute("""
+            INSERT INTO loop_events_tmp
+                (id, run_id, from_state, to_state, reason_code, payload_json, created_at)
+            SELECT id, run_id, from_state, to_state, reason_code, payload_json, created_at
+            FROM loop_events
+        """)
+        before = conn.execute("SELECT COUNT(*) FROM loop_events").fetchone()[0]
+        copied = conn.execute("SELECT COUNT(*) FROM loop_events_tmp").fetchone()[0]
+        if before != copied:
+            raise RuntimeError(f"migration v3 row copy mismatch: {before} != {copied}")
+        conn.execute("DROP INDEX IF EXISTS idx_loop_events_run")
+        conn.execute("DROP TABLE loop_events")
+        conn.execute("ALTER TABLE loop_events_tmp RENAME TO loop_events")
+        conn.execute("CREATE INDEX idx_loop_events_run ON loop_events(run_id)")
+        for (sql,) in triggers:
+            conn.execute(sql)
+
+        # Integrity checks must pass BEFORE the rebuild is committed.
+        integ = conn.execute("PRAGMA integrity_check").fetchone()[0]
+        if integ != "ok":
+            raise RuntimeError(f"migration v3 integrity_check failed: {integ}")
+        remaining_fks = conn.execute("PRAGMA foreign_key_list(loop_events)").fetchall()
+        if any(fk[2] == "loop_runs" and fk[3] == "run_id" for fk in remaining_fks):
+            raise RuntimeError("migration v3 failed to remove stale loop_events FK")
+        conn.execute("COMMIT")
+    except Exception:
+        conn.execute("ROLLBACK")
+        raise
+    finally:
+        conn.execute("PRAGMA foreign_keys=ON")
+
+
+def _apply_migrations(conn: sqlite3.Connection,
+                      db_path: Optional[str] = None) -> None:
     """Apply any unapplied loop schema migrations."""
     conn.execute("""
         CREATE TABLE IF NOT EXISTS loop_schema_version (
@@ -284,6 +385,17 @@ def _apply_migrations(conn: sqlite3.Connection) -> None:
         )
         conn.commit()
 
+    if 3 not in applied:
+        # Migration 3: drop any stale FK on loop_events.run_id (detected via
+        # PRAGMA foreign_key_list, not migration-version state). Ledger entry is
+        # written only after the rebuild + integrity checks pass.
+        _apply_migration_v3(conn, db_path)
+        conn.execute(
+            "INSERT INTO loop_schema_version (version, applied_at) VALUES (?, ?)",
+            (3, _now()),
+        )
+        conn.commit()
+
 
 def init_db(path: Optional[str] = None) -> None:
     """
@@ -306,7 +418,7 @@ def init_db(path: Optional[str] = None) -> None:
             conn.execute(
                 "ALTER TABLE model_checkpoints ADD COLUMN val_loss REAL")
         conn.commit()
-        _apply_migrations(conn)
+        _apply_migrations(conn, path)
     finally:
         conn.close()
 

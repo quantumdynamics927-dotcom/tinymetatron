@@ -12,6 +12,7 @@
 *.db
 *.sqlite
 *.sqlite3
+state/registry.db.*
 E:/Temp/qcorpus/
 E:/Temp/eval/
 embeddings/
