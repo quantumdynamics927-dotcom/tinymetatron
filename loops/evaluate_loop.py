@@ -17,14 +17,18 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-_ROOT = Path(__file__).resolve().parents[2]
+_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT))
 
 from db import (
     get_loop_run,
     get_loop_checkpoints,
     save_evaluation,
+    set_db_path,
 )
+
+_REGISTRY = str(Path(__file__).resolve().parents[1] / "state" / "registry.db")
+set_db_path(_REGISTRY)
 
 
 _PROTECTED_PATHS = [Path("experiments/exp-003").resolve()]

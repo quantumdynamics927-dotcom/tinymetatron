@@ -27,7 +27,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-_ROOT = Path(__file__).resolve().parents[2]
+_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT))
 
 from db import (
@@ -37,7 +37,11 @@ from db import (
     save_evaluation,
     try_consume_final_test,
     set_promotion,
+    set_db_path,
 )
+
+_REGISTRY = str(Path(__file__).resolve().parents[1] / "state" / "registry.db")
+set_db_path(_REGISTRY)
 
 
 _PROTECTED_PATHS = [Path("experiments/exp-003").resolve()]
@@ -171,7 +175,6 @@ def cmd_run(run_id: str, artifact_dir: Path, corpus_dir: Path,
     ce, ppl = metrics["ce"], metrics["ppl"]
 
     # Record the consumption with actual CE
-    from db import get_db
     conn = get_db()
     conn.execute(
         """

@@ -28,7 +28,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-_ROOT = Path(__file__).resolve().parents[2]
+_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT))
 
 from db import (
@@ -42,7 +42,12 @@ from db import (
     save_loop_checkpoint,
     get_best_loop_checkpoint,
     set_promotion,
+    set_db_path,
 )
+
+# Registry path for this loop
+_REGISTRY = str(Path(__file__).resolve().parents[1] / "state" / "registry.db")
+set_db_path(_REGISTRY)
 
 
 # ── Path safety ────────────────────────────────────────────────────────────────

@@ -43,9 +43,13 @@ _DB_PATH = os.environ.get(
 )
 
 
-def get_db() -> sqlite3.Connection:
-    """Return a connection to the default registry DB (WAL + FK enforcement on)."""
-    return _connect(_DB_PATH)
+def get_db(path: Optional[str] = None) -> sqlite3.Connection:
+    """Return a connection to the registry DB (WAL + FK enforcement on).
+
+    Uses ``path`` if provided and non-empty, otherwise falls back to the
+    module-level ``_DB_PATH`` (set via ``set_db_path`` or ``TINYMETATRON_DB``).
+    """
+    return _connect(path) if path else _connect(_DB_PATH)
 
 
 def set_db_path(path: str) -> None:
@@ -262,7 +266,7 @@ def init_db(path: str) -> None:
 
 # ── training_data ───────────────────────────────────────────────────────────
 
-def add_texts(path: str, texts: Iterable[str], domain: str,
+def add_texts(path: Optional[str], texts: Iterable[str], domain: str,
               quality_threshold: float, split: str = "train") -> tuple[int, int]:
     """
     Score each text with quality.score_quality and insert those whose score
@@ -276,7 +280,7 @@ def add_texts(path: str, texts: Iterable[str], domain: str,
     """
     from quality import score_quality  # T2 sibling; built in parallel
 
-    conn = _connect(path)
+    conn = get_db(path)
     added = rejected = 0
     try:
         for text in texts:
@@ -301,7 +305,7 @@ def add_texts(path: str, texts: Iterable[str], domain: str,
     return added, rejected
 
 
-def fetch_training_rows(path: str, domain: str, min_quality: float,
+def fetch_training_rows(path: Optional[str], domain: str, min_quality: float,
                        limit: int, used: bool = False,
                        split: str = "train") -> list[dict]:
     """
@@ -310,7 +314,7 @@ def fetch_training_rows(path: str, domain: str, min_quality: float,
     False = fetch unused rows for a fresh training run). ``split``
     filters by data split ('train' or 'val').
     """
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         cur = conn.execute(
             "SELECT id, text, domain, quality_score, used_in_training, created_at "
@@ -326,13 +330,13 @@ def fetch_training_rows(path: str, domain: str, min_quality: float,
     return rows
 
 
-def mark_used(path: str, ids: Iterable[int]) -> int:
+def mark_used(path: Optional[str], ids: Iterable[int]) -> int:
     """Mark the given row ids as used_in_training=1. Returns count updated."""
     ids = [int(i) for i in ids]
     if not ids:
         return 0
     placeholders = ",".join("?" for _ in ids)
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         cur = conn.execute(
             f"UPDATE training_data SET used_in_training = 1 "
@@ -345,9 +349,9 @@ def mark_used(path: str, ids: Iterable[int]) -> int:
         conn.close()
 
 
-def delete_low_quality(path: str, min_quality: float) -> int:
+def delete_low_quality(path: Optional[str], min_quality: float) -> int:
     """Delete training_data rows with quality_score < min_quality. Returns count."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         cur = conn.execute(
             "DELETE FROM training_data WHERE quality_score < ?",
@@ -359,11 +363,11 @@ def delete_low_quality(path: str, min_quality: float) -> int:
         conn.close()
 
 
-def stats(path: str) -> dict:
+def stats(path: Optional[str] = None) -> dict:
     """
     Return {total, by_domain, avg_quality, used_in_training} for training_data.
     """
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         total = conn.execute(
             "SELECT COUNT(*) AS n FROM training_data"
@@ -389,14 +393,14 @@ def stats(path: str) -> dict:
 
 # ── model_checkpoints ───────────────────────────────────────────────────────
 
-def save_checkpoint(path: str, step: int, loss: float, file_path: str,
+def save_checkpoint(path: Optional[str], step: int, loss: float, file_path: str,
                     is_active: bool = True, val_loss: Optional[float] = None) -> int:
     """
     Insert a model_checkpoints row. When is_active=True (default), clear the
     prior active row first so at most one row has is_active=1. Returns the new
     row id. ``val_loss`` stores the held-out validation CE for overfit detection.
     """
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         if is_active:
             conn.execute("UPDATE model_checkpoints SET is_active = 0")
@@ -413,9 +417,9 @@ def save_checkpoint(path: str, step: int, loss: float, file_path: str,
         conn.close()
 
 
-def get_active_checkpoint(path: str) -> Optional[dict]:
+def get_active_checkpoint(path: Optional[str]) -> Optional[dict]:
     """Return the active checkpoint row as a dict, or None."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         row = conn.execute(
             "SELECT id, step, loss, val_loss, file_path, is_active, created_at "
@@ -426,12 +430,12 @@ def get_active_checkpoint(path: str) -> Optional[dict]:
     return dict(row) if row is not None else None
 
 
-def set_active_checkpoint(path: str, file_path: str) -> None:
+def set_active_checkpoint(path: Optional[str], file_path: str) -> None:
     """
     Mark the checkpoint with the given file_path active and deactivate all
     others. No-op if no row matches file_path.
     """
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         row = conn.execute(
             "SELECT id FROM model_checkpoints WHERE file_path = ? LIMIT 1",
@@ -451,10 +455,10 @@ def set_active_checkpoint(path: str, file_path: str) -> None:
 
 # ── training_sessions ───────────────────────────────────────────────────────
 
-def start_session(path: str, domain_filter: Optional[str] = None,
+def start_session(path: Optional[str] = None, domain_filter: Optional[str] = None,
                   min_quality: Optional[float] = None) -> int:
     """Insert a training_sessions row with start_time=now, return its id."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         cur = conn.execute(
             "INSERT INTO training_sessions "
@@ -467,10 +471,10 @@ def start_session(path: str, domain_filter: Optional[str] = None,
         conn.close()
 
 
-def end_session(path: str, session_id: int, total_steps: int,
+def end_session(path: Optional[str], session_id: int, total_steps: int,
                 final_loss: float) -> None:
     """Set end_time, total_steps, final_loss on the given session row."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         conn.execute(
             "UPDATE training_sessions "
@@ -485,10 +489,10 @@ def end_session(path: str, session_id: int, total_steps: int,
 
 # ── loop_experiments ──────────────────────────────────────────────────────────────
 
-def create_loop_experiment(path: str, exp_id: str,
+def create_loop_experiment(path: Optional[str], exp_id: str,
                           hypothesis: str = "") -> None:
     """Create a new loop_experiments row. Raises if exp_id already exists."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         conn.execute(
             "INSERT INTO loop_experiments (exp_id, hypothesis, created_at) "
@@ -500,14 +504,14 @@ def create_loop_experiment(path: str, exp_id: str,
         conn.close()
 
 
-def update_loop_experiment_state(path: str, exp_id: str, state: str,
+def update_loop_experiment_state(path: Optional[str], exp_id: str, state: str,
                                reason_code: str = "",
                                payload: dict = None) -> None:
     """
     Update the state of a loop experiment. Sets ended_at if terminal.
     Records a loop_event for the experiment.
     """
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         conn.execute(
             "UPDATE loop_experiments SET state=?, ended_at=? WHERE exp_id=?",
@@ -524,9 +528,9 @@ def update_loop_experiment_state(path: str, exp_id: str, state: str,
         conn.close()
 
 
-def get_loop_experiment(path: str, exp_id: str) -> Optional[dict]:
+def get_loop_experiment(path: Optional[str], exp_id: str) -> Optional[dict]:
     """Return a loop experiment row, or None."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         row = conn.execute(
             "SELECT * FROM loop_experiments WHERE exp_id=?", (exp_id,)
@@ -538,13 +542,13 @@ def get_loop_experiment(path: str, exp_id: str) -> Optional[dict]:
 
 # ── loop_runs ─────────────────────────────────────────────────────────────────
 
-def create_loop_run(path: str, run_id: str, exp_id: str,
+def create_loop_run(path: Optional[str], run_id: str, exp_id: str,
                     corpus_hash: str, split_hash: str,
                     tokenizer_hash: str, model_config_hash: str,
                     seed: int, seq_len: int,
                     parent_run: Optional[str] = None) -> None:
     """Create a new loop_runs row."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         conn.execute(
             "INSERT INTO loop_runs "
@@ -560,10 +564,10 @@ def create_loop_run(path: str, run_id: str, exp_id: str,
         conn.close()
 
 
-def update_loop_run_status(path: str, run_id: str, status: str,
+def update_loop_run_status(path: Optional[str], run_id: str, status: str,
                           reason_code: str, payload: dict) -> None:
     """Transition a loop run's status and record a loop_events entry."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         old = conn.execute(
             "SELECT status FROM loop_runs WHERE run_id=?", (run_id,)
@@ -587,9 +591,9 @@ def update_loop_run_status(path: str, run_id: str, status: str,
         conn.close()
 
 
-def set_promotion(path: str, run_id: str, promotion: str) -> None:
+def set_promotion(path: Optional[str], run_id: str, promotion: str) -> None:
     """Set the promotion field on a loop run."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         conn.execute(
             "UPDATE loop_runs SET promotion=? WHERE run_id=?",
@@ -599,9 +603,9 @@ def set_promotion(path: str, run_id: str, promotion: str) -> None:
         conn.close()
 
 
-def get_loop_run(path: str, run_id: str) -> Optional[dict]:
+def get_loop_run(run_id: str, *, path: Optional[str] = None) -> Optional[dict]:
     """Return a loop run row, or None."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         row = conn.execute(
             "SELECT * FROM loop_runs WHERE run_id=?", (run_id,)
@@ -611,9 +615,9 @@ def get_loop_run(path: str, run_id: str) -> Optional[dict]:
     return dict(row) if row else None
 
 
-def get_loop_runs_for_experiment(path: str, exp_id: str) -> list[dict]:
+def get_loop_runs_for_experiment(path: Optional[str], exp_id: str) -> list[dict]:
     """Return all loop_runs for an experiment."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         rows = conn.execute(
             "SELECT * FROM loop_runs WHERE exp_id=? ORDER BY created_at",
@@ -625,11 +629,11 @@ def get_loop_runs_for_experiment(path: str, exp_id: str) -> list[dict]:
 
 # ── loop_checkpoints ──────────────────────────────────────────────────────────
 
-def save_loop_checkpoint(path: str, run_id: str, step: int,
+def save_loop_checkpoint(path: Optional[str], run_id: str, step: int,
                         file_path: str, val_ce: float,
                         train_ce: float, is_best: bool = False) -> int:
     """Save a checkpoint record. Clears is_best on prior best."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         if is_best:
             conn.execute(
@@ -647,9 +651,9 @@ def save_loop_checkpoint(path: str, run_id: str, step: int,
         conn.close()
 
 
-def get_best_loop_checkpoint(path: str, run_id: str) -> Optional[dict]:
+def get_best_loop_checkpoint(path: Optional[str], run_id: str) -> Optional[dict]:
     """Return the is_best=True checkpoint for a run, or None."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         row = conn.execute(
             "SELECT * FROM loop_checkpoints WHERE run_id=? AND is_best=1 LIMIT 1",
@@ -659,9 +663,9 @@ def get_best_loop_checkpoint(path: str, run_id: str) -> Optional[dict]:
     return dict(row) if row else None
 
 
-def get_loop_checkpoints(path: str, run_id: str) -> list[dict]:
+def get_loop_checkpoints(path: Optional[str], run_id: str) -> list[dict]:
     """Return all checkpoints for a run, ordered by step."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         rows = conn.execute(
             "SELECT * FROM loop_checkpoints WHERE run_id=? ORDER BY step",
@@ -673,11 +677,11 @@ def get_loop_checkpoints(path: str, run_id: str) -> list[dict]:
 
 # ── evaluations ────────────────────────────────────────────────────────────────
 
-def save_evaluation(path: str, run_id: str, step: int,
+def save_evaluation(path: Optional[str], run_id: str, step: int,
                     eval_set: str, ce: float, ppl: float,
                     total_tokens: int) -> int:
     """Save an evaluation result."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         cur = conn.execute(
             "INSERT INTO evaluations "
@@ -691,10 +695,10 @@ def save_evaluation(path: str, run_id: str, step: int,
         conn.close()
 
 
-def get_evaluations(path: str, run_id: str,
+def get_evaluations(path: Optional[str], run_id: str,
                     eval_set: Optional[str] = None) -> list[dict]:
     """Return evaluations for a run, optionally filtered by eval_set."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         if eval_set:
             rows = conn.execute(
@@ -711,11 +715,11 @@ def get_evaluations(path: str, run_id: str,
 
 # ── gate_results ─────────────────────────────────────────────────────────────
 
-def save_gate_result(path: str, run_id: str, gate_name: str,
+def save_gate_result(path: Optional[str], run_id: str, gate_name: str,
                      passed: bool, duration_s: float,
                      stdout_path: str, stderr_path: str) -> int:
     """Save a gate result. Overwrites prior result for same gate/run."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         conn.execute(
             "DELETE FROM gate_results WHERE run_id=? AND gate_name=?",
@@ -733,9 +737,9 @@ def save_gate_result(path: str, run_id: str, gate_name: str,
         conn.close()
 
 
-def get_gate_results(path: str, run_id: str) -> list[dict]:
+def get_gate_results(path: Optional[str], run_id: str) -> list[dict]:
     """Return all gate results for a run."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         rows = conn.execute(
             "SELECT * FROM gate_results WHERE run_id=?", (run_id,)).fetchall()
@@ -746,10 +750,10 @@ def get_gate_results(path: str, run_id: str) -> list[dict]:
 
 # ── artifact_refs ─────────────────────────────────────────────────────────────
 
-def save_artifact_ref(path: str, run_id: str, artifact_type: str,
+def save_artifact_ref(path: Optional[str], run_id: str, artifact_type: str,
                       file_path: str, sha256: str) -> None:
     """Save an artifact reference. Idempotent (UNIQUE constraint)."""
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         conn.execute(
             "INSERT OR IGNORE INTO artifact_refs "
@@ -764,7 +768,7 @@ def save_artifact_ref(path: str, run_id: str, artifact_type: str,
 
 # ── final_test_consumed ───────────────────────────────────────────────────────
 
-def try_consume_final_test(path: str, candidate_sha256: str,
+def try_consume_final_test(path: Optional[str], candidate_sha256: str,
                           test_manifest_sha: str, run_id: str,
                           ce: float, ppl: float) -> tuple[bool, Optional[dict]]:
     """
@@ -775,7 +779,7 @@ def try_consume_final_test(path: str, candidate_sha256: str,
 
     This is the database-enforced "evaluate exactly once" gate.
     """
-    conn = _connect(path)
+    conn = get_db(path)
     try:
         existing = conn.execute(
             "SELECT * FROM final_test_consumed "
