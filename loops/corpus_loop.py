@@ -268,6 +268,10 @@ def run_corpus_pipeline(config: dict) -> dict:
     ]
     if config.get("scope"):
         version_argv += ["--scope", str(config["scope"])]
+    if config.get("revision") is not None:
+        version_argv += ["--revision", str(config["revision"])]
+    if config.get("max_source_share") is not None:
+        version_argv += ["--max-source-share", str(config["max_source_share"])]
     version_result = _run_worker(
         argv=version_argv,
         artifact_dir=version_artifact_dir,
@@ -361,7 +365,10 @@ def main():
                        help="Cap rows per source group before splitting (default 500)")
     p_run.add_argument("--max-source-share", type=float, default=None,
                        help="Enforce the max-source-share gate with this threshold "
-                            "(e.g. 0.30). Omit to skip the gate (smoke/synthetic corpora).")
+                            "(e.g. 0.25). Omit to skip the gate (smoke/synthetic corpora).")
+    p_run.add_argument("--revision", type=int, default=None,
+                       help="Corpus revision number written into MANIFEST.json "
+                            "(re-freezing a corpus is a new revision, not a rewrite)")
     p_run.add_argument("--scope", default=None,
                        help="Experiment scope written into MANIFEST.json")
 

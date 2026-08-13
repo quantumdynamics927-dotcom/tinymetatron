@@ -207,6 +207,14 @@ def run(config: dict) -> dict:
     if config.get("scope"):
         manifest["scope"] = config["scope"]
 
+    # Corpus revision + enforced gate threshold make the frozen manifest
+    # self-describing: a re-freeze with a different cap/gate is a NEW revision,
+    # never a silent rewrite of the previous one.
+    if config.get("revision") is not None:
+        manifest["corpus_revision"] = int(config["revision"])
+    if config.get("max_source_share") is not None:
+        manifest["max_source_share_gate_threshold"] = float(config["max_source_share"])
+
     manifest_path = output_dir / "MANIFEST.json"
     with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2)
@@ -244,6 +252,10 @@ def main():
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--scope", default=None,
                        help="Experiment scope written into MANIFEST.json")
+    parser.add_argument("--revision", type=int, default=None,
+                       help="Corpus revision number written into MANIFEST.json")
+    parser.add_argument("--max-source-share", type=float, default=None,
+                       help="Enforced max-source-share gate threshold written into MANIFEST.json")
     parser.add_argument("--result", default=None)
     args = parser.parse_args()
 
