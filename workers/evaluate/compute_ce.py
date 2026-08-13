@@ -65,21 +65,29 @@ def _hash_file(path: Path) -> str:
     return h.hexdigest()
 
 
+# Named eval sets resolve relative to corpus_dir, except gre_longtail which
+# lives in the experiment's eval_segments/ dir (sibling of corpus/). hard_dev
+# is hard_dev.jsonl (exp-004 naming); exp-003's test_final.jsonl-as-hard_dev
+# was the protocol violation this pipeline corrects.
 EVAL_SETS = {
     "val": "val.jsonl",
-    "hard_dev": "test_final.jsonl",
+    "hard_dev": "hard_dev.jsonl",
     "novel_eval": "novel_eval.jsonl",
     "test_final": "test_final.jsonl",
+    "gre_longtail": "eval_segments/gre_runtime_jobdata_longtail.jsonl",
 }
 
 
-def load_eval_rows(eval_set: str, corpus_dir: Path) -> list[dict]:
-    """Load rows for a named evaluation set."""
-    filename = EVAL_SETS.get(eval_set, eval_set + ".jsonl")
-    path = corpus_dir / filename
+def load_eval_rows(eval_set: str, corpus_dir: Path, eval_path: str | None = None) -> list[dict]:
+    """Load rows for a named evaluation set, or from an explicit path override."""
+    if eval_path:
+        path = Path(eval_path)
+    else:
+        filename = EVAL_SETS.get(eval_set, eval_set + ".jsonl")
+        path = corpus_dir / filename
     if not path.exists():
         raise FileNotFoundError(f"Eval set not found: {path}")
-    return [json.loads(l) for l in open(path)]
+    return [json.loads(l) for l in open(path, encoding="utf-8")]
 
 
 def compute_ce(
@@ -131,6 +139,7 @@ def run(config: dict) -> dict:
 
     eval_set = config["eval_set"]
     corpus_dir = Path(config["corpus_dir"])
+    eval_path = config.get("eval_path")
     checkpoint_path = config["checkpoint_path"]
     tokenizer_path = config.get("tokenizer_path", str(_ROOT / "vocab.json"))
     seq_len = config.get("seq_len", CONFIG["seq_len"])
@@ -147,7 +156,7 @@ def run(config: dict) -> dict:
     input_hash = f"sha256:{ckpt_hash[:8]}_{tok_hash[:8]}"
 
     try:
-        eval_rows = load_eval_rows(eval_set, corpus_dir)
+        eval_rows = load_eval_rows(eval_set, corpus_dir, eval_path)
         ce, ppl, total_tokens = compute_ce(
             checkpoint_path, eval_rows, tokenizer_path,
             seq_len, pad_id, vocab_size, batch_size)
@@ -189,10 +198,12 @@ def main():
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--step", type=int, required=True)
     parser.add_argument("--eval-set", required=True,
-                        choices=["val", "hard_dev", "novel_eval", "test_final"])
+                        choices=["val", "hard_dev", "novel_eval", "test_final", "gre_longtail"])
+    parser.add_argument("--eval-path", default=None,
+                        help="Explicit file path override for the eval set")
     parser.add_argument("--checkpoint-path", required=True)
     parser.add_argument("--corpus-dir",
-                        default=str(_ROOT / "experiments/exp-003/corpus"))
+                        default=str(_ROOT / "experiments/exp-004/corpus"))
     parser.add_argument("--tokenizer-path", default=str(_ROOT / "vocab.json"))
     parser.add_argument("--artifact-dir", default=".")
     parser.add_argument("--result", default=None,

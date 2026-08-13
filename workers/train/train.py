@@ -139,7 +139,7 @@ def compute_val_ce(model, val_rows, tokenizer, seq_len, pad_id, vocab_size,
 def load_config(path: str | None, args: argparse.Namespace) -> dict:
     """Load config from JSON file or build from CLI args."""
     if path and Path(path).exists():
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
     # Build from CLI args
     return {
@@ -192,8 +192,8 @@ def run(config: dict) -> dict:
 
     # Load corpus
     corpus_dir = Path(config.get("corpus_dir", str(_ROOT / "experiments/exp-003/corpus")))
-    train_rows = [json.loads(l) for l in open(corpus_dir / "train.jsonl")]
-    val_rows = [json.loads(l) for l in open(corpus_dir / "val.jsonl")]
+    train_rows = [json.loads(l) for l in open(corpus_dir / "train.jsonl", encoding="utf-8")]
+    val_rows = [json.loads(l) for l in open(corpus_dir / "val.jsonl", encoding="utf-8")]
 
     # Hash corpus inputs
     h = hashlib.sha256()
