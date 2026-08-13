@@ -154,6 +154,42 @@ python manage_data.py stats
 python manage_data.py clean --min_quality 0.5
 ```
 
+## Corpus freeze policy (exp-004)
+
+The frozen exp-004 corpus (revision 2) uses the `source_disjoint_capped_v1`
+split policy, exposed through the `quantum-corpus` package:
+
+- **Source-disjoint**: every source group is assigned wholly to exactly one of
+  train / val / hard_dev; no source is sliced across partitions.
+- **Per-source cap before split**: each source is deterministically capped at
+  `max_rows_per_source` (400 for exp-004) *before* allocation, so retained rows
+  don't depend on which split a source lands in. Rows beyond the cap are
+  preserved in `excluded_by_cap.jsonl` (recorded, not deleted) for audit and
+  optional long-tail eval segments.
+- **Manifest provenance**: `MANIFEST.json` records `corpus_revision`,
+  `max_source_share_gate_threshold`, `max_rows_per_source`, `capped_sources`,
+  `excluded_by_cap` (path/rows/sha256), and per-split `max_source_row_share`.
+- **Opt-in dominance gate**: `max_source_row_share <= 0.25` is enforced only
+  when `--max-source-share` is passed (tiny synthetic corpora can't satisfy it
+  by construction).
+
+Reproduce the exp-004 revision-2 freeze from a deduped corpus:
+
+```bash
+quantum-corpus-freeze --corpus-dir <deduped> --output-dir <out> \
+    --seed 42 --max-rows-per-source 400 --max-source-share 0.25 --revision 2
+quantum-corpus-validate --manifest <out>/MANIFEST.json --corpus-dir <out>
+```
+
+The reference revision-2 manifest ships as package data at
+`quantum_corpus/data/exp-004-rev2-MANIFEST.json` (corpus hash
+`2d18de1f33b28105`).
+
+> **GRE long-tail eval segment is NOT part of the primary corpus.** The
+> `eval_segments/gre_runtime_jobdata_longtail.jsonl` segment (19,964 rows) is a
+> separate challenge metric for long-tail GRE runtime job data. It is excluded
+> from the frozen train / val / hard_dev corpus and is evaluated independently.
+
 ## Docker
 
 A `Dockerfile` (Python 3.11-slim, CPU torch) and a `docker-compose.yml` are

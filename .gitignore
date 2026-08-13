@@ -33,6 +33,9 @@ qsg_layer3_validation.py
 ckpt/
 data/
 models/
+# ...but the shipped reference manifest is package data and must be tracked.
+!quantum_corpus/data/
+!quantum_corpus/data/*.json
 *.pt
 *.pth
 *.bin
