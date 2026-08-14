@@ -1,0 +1,22 @@
+{
+  "worker": "workers.corpus.validate",
+  "version": 1,
+  "status": "success",
+  "input_hash": "sha256:99432a0f223164bb",
+  "output_hash": "sha256:4d54cb698452805f",
+  "artifact_paths": [
+    "experiments\\exp-005\\corpus-rev2\\validate\\validated.jsonl"
+  ],
+  "metrics": {
+    "total_files": 4,
+    "total_rows": 82557,
+    "valid_rows": 82557,
+    "rejected_empty": 0,
+    "rejected_too_short": 0,
+    "rejected_too_long": 0,
+    "rejected_no_text": 0,
+    "rejected_invalid_json": 0
+  },
+  "started_at": "2026-08-14T23:18:03.163331+00:00",
+  "ended_at": "2026-08-14T23:18:04.482617+00:00"
+}

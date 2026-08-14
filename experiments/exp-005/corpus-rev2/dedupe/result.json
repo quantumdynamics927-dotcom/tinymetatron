@@ -1,0 +1,21 @@
+{
+  "worker": "workers.corpus.dedupe",
+  "version": 1,
+  "status": "success",
+  "input_hash": "sha256:b92a2c7dbd0c1578",
+  "output_hash": "sha256:bcfb5fb8d4e07ce1",
+  "artifact_paths": [
+    "experiments\\exp-005\\corpus-rev2\\dedupe\\deduped.jsonl"
+  ],
+  "metrics": {
+    "input_rows": 82557,
+    "exact_duplicates": 10689,
+    "normalized_duplicates": 274,
+    "near_duplicates": 2807,
+    "duplicate_pairs_found": 2807,
+    "output_rows": 67356,
+    "dedup_rate": 0.8159
+  },
+  "started_at": "2026-08-14T23:18:04.683009+00:00",
+  "ended_at": "2026-08-14T23:18:36.016958+00:00"
+}

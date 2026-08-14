@@ -1,0 +1,112 @@
+{
+  "worker": "experiments.exp-005.corpus-rev2.scripts.stage_sources",
+  "version": 2,
+  "status": "success",
+  "started_at": "2026-08-14T23:17:50.498753+00:00",
+  "ended_at": "2026-08-14T23:17:53.245834+00:00",
+  "total_rows": 82557,
+  "summary": {
+    "quantum_domain_technical": {
+      "rows": 14191,
+      "source_groups": 1536,
+      "provenance": {
+        "source": "exp-004 frozen corpus (train + val + hard_dev)",
+        "license": "mixed (see exp-004 MANIFEST.json)",
+        "provenance": "D:\\TinyMetatron\\experiments\\exp-004\\corpus",
+        "exp004_split_counts": {
+          "train.jsonl": 11137,
+          "val.jsonl": 1893,
+          "hard_dev.jsonl": 1161
+        },
+        "rows_staged": 14191
+      },
+      "share": 0.1719
+    },
+    "quantum_code": {
+      "rows": 55404,
+      "source_groups": 948,
+      "provenance": {
+        "source": "qiskit-tutorials + pennylane + qiskit-textbook + own snippets",
+        "license": "Apache-2.0 for public repos; N/A for own snippets",
+        "provenance": {
+          "qiskit_tutorials": "https://github.com/Qiskit/qiskit-tutorials",
+          "pennylane": "https://github.com/PennyLaneAI/pennylane",
+          "qiskit_textbook": "https://github.com/qiskit-community/qiskit-textbook"
+        },
+        "qiskit_tutorials": {
+          "notebooks": 26,
+          "notebook_rows": 481,
+          "py_files": 1,
+          "py_rows": 22,
+          "rows_staged": 503
+        },
+        "pennylane": {
+          "notebooks": 0,
+          "notebook_rows": 0,
+          "py_files": 677,
+          "py_rows": 49374,
+          "rows_staged": 49374
+        },
+        "qiskit_textbook": {
+          "notebooks": 143,
+          "notebook_rows": 2432,
+          "py_files": 14,
+          "py_rows": 241,
+          "rows_staged": 2673
+        },
+        "own_rows": 2854,
+        "rows_staged": 55404
+      },
+      "share": 0.6711
+    },
+    "tool_traces": {
+      "rows": 6000,
+      "source_groups": 10,
+      "provenance": {
+        "source": "synthetic",
+        "license": "N/A",
+        "provenance": "synthetic quantum tool signatures derived from Qiskit/IBM Runtime/PennyLane/TinyMetatron CLI",
+        "rows_staged": 6000,
+        "by_tool": {
+          "qiskit.circuit.QuantumCircuit": 600,
+          "qiskit.circuit.library.GroverOperator": 600,
+          "qiskit.transpiler.preset_passmanagers.generate_preset_pass_manager": 600,
+          "qiskit_ibm_runtime.SamplerV2.run": 600,
+          "qiskit_ibm_runtime.EstimatorV2.run": 600,
+          "pennylane.qnode": 600,
+          "pennylane.ExpvalCost": 600,
+          "tmt.compute_ce": 600,
+          "tmt.quantum_corpus_freeze": 600,
+          "tmt.quantum_corpus_validate": 600
+        }
+      },
+      "share": 0.0727
+    },
+    "general_english": {
+      "rows": 6962,
+      "source_groups": 7,
+      "provenance": {
+        "source": "Project Gutenberg (multiple public-domain texts)",
+        "license": "public-domain-US",
+        "provenance": "https://www.gutenberg.org/",
+        "books": {
+          "gutenberg:1342": 1185,
+          "gutenberg:84": 622,
+          "gutenberg:11": 285,
+          "gutenberg:1661": 999,
+          "gutenberg:174": 765,
+          "gutenberg:2701": 1724,
+          "gutenberg:98": 1382
+        },
+        "rows_staged": 6962
+      },
+      "share": 0.0843
+    }
+  },
+  "raw_files": {
+    "quantum_domain_technical.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev2\\raw\\quantum_domain_technical.jsonl",
+    "quantum_code.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev2\\raw\\quantum_code.jsonl",
+    "tool_traces.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev2\\raw\\tool_traces.jsonl",
+    "general_english.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev2\\raw\\general_english.jsonl"
+  }
+}
