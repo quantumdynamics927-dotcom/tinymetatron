@@ -1,9 +1,9 @@
 {
   "sample_files": [
-    "experiments/exp-005/tokenizer_probe/general_english.txt",
-    "experiments/exp-005/tokenizer_probe/quantum_domain.txt",
-    "experiments/exp-005/tokenizer_probe/code_sample.txt",
-    "experiments/exp-005/tokenizer_probe/tool_traces.txt"
+    "experiments/exp-005/tokenizer_probe/quantum_domain_weighted.txt",
+    "experiments/exp-005/tokenizer_probe/quantum_code_weighted.txt",
+    "experiments/exp-005/tokenizer_probe/general_english_weighted.txt",
+    "experiments/exp-005/tokenizer_probe/quantum_tool_traces_weighted.txt"
   ],
   "vocab_sizes_tested": [
     8000,
@@ -12,41 +12,41 @@
     32000
   ],
   "eval_holdout_fraction": 0.2,
-  "eval_text_chars": 282941,
+  "eval_text_chars": 282942,
   "results": [
     {
       "vocab_size": 8000,
-      "train_seconds": 0.645,
-      "num_words_eval": 26731,
-      "num_tokens_eval": 99020,
-      "tokens_per_word": 3.7043,
+      "train_seconds": 0.674,
+      "num_words_eval": 33681,
+      "num_tokens_eval": 97357,
+      "tokens_per_word": 2.8906,
       "unk_count": 0,
       "unk_rate": 0.0
     },
     {
       "vocab_size": 16000,
-      "train_seconds": 0.747,
-      "num_words_eval": 26731,
-      "num_tokens_eval": 94125,
-      "tokens_per_word": 3.5212,
+      "train_seconds": 0.739,
+      "num_words_eval": 33681,
+      "num_tokens_eval": 90728,
+      "tokens_per_word": 2.6937,
       "unk_count": 0,
       "unk_rate": 0.0
     },
     {
       "vocab_size": 24000,
-      "train_seconds": 0.803,
-      "num_words_eval": 26731,
-      "num_tokens_eval": 92728,
-      "tokens_per_word": 3.4689,
+      "train_seconds": 0.861,
+      "num_words_eval": 33681,
+      "num_tokens_eval": 88792,
+      "tokens_per_word": 2.6363,
       "unk_count": 0,
       "unk_rate": 0.0
     },
     {
       "vocab_size": 32000,
-      "train_seconds": 0.928,
-      "num_words_eval": 26731,
-      "num_tokens_eval": 91925,
-      "tokens_per_word": 3.4389,
+      "train_seconds": 1.015,
+      "num_words_eval": 33681,
+      "num_tokens_eval": 88334,
+      "tokens_per_word": 2.6227,
       "unk_count": 0,
       "unk_rate": 0.0
     }

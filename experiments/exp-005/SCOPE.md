@@ -10,71 +10,74 @@
 
 **Explicitly out of scope for exp-005:** general instruction-following / chat-style compliance. Revisit in a later experiment.
 
-## Tokenizer Decision (Step 1 — complete, byte-fallback probe done)
+## Tokenizer Decision (Step 1 — complete, byte-fallback probes done)
 
 ### Sample sourcing provenance
 
 | Sample | Source | How obtained | License |
 |---|---|---|---|
 | General English | Project Gutenberg: *Pride and Prejudice* by Jane Austen | Fetched as plain text from Project Gutenberg (`https://www.gutenberg.org/files/1342/1342-0.txt`) | Public domain in the US |
-| Quantum-domain | `experiments/exp-004/dedupe/deduped.jsonl` | Read-only random sample of 1,500 rows (seed 42) from `text` field | Same as exp-004 corpus (already frozen, internal) |
-| Code | TinyMetatron's own `.py` files under `workers/`, `loops/`, `tests/`, `tools/` | Read-only concatenation of 42 source files | N/A — own codebase |
-| Tool-use traces | Synthetic | 350 trace blocks generated from real CLI/function signatures in this repo (`compute_ce`, `quantum_corpus_freeze`, `quantum_corpus_validate`, corpus workers) | N/A — own codebase |
+| Quantum-domain technical | `experiments/exp-004/dedupe/deduped.jsonl` | Read-only weighted sample (seed 42) matching target share from `text` field | Same as exp-004 corpus (already frozen, internal) |
+| Quantum-specific code | `qiskit/qiskit-tutorials` | Code cells extracted from official tutorial notebooks + any `.py` files | Apache-2.0 for Qiskit tutorials |
+| Tool-use traces | Synthetic, quantum-tool-specific | 1,200 trace blocks generated from Qiskit / IBM Quantum / TinyMetatron CLI and function signatures | N/A — own codebase |
 
-### Plain BPE probe results (combined eval holdout = 20%, 282,941 chars, 26,731 words)
+### Byte-level BPE probe A — initial broad mix (for reference)
 
-| Vocab size | Train time (s) | Tokens/word | UNK count | UNK rate |
-|---|---|---|---|---|
-| 8,000 | 0.454 | 2.9385 | 19 | 0.000242 |
-| 16,000 | 0.568 | 2.7643 | 19 | 0.000257 |
-| 24,000 | 0.682 | 2.7158 | 19 | 0.000262 |
-| 32,000 | 0.735 | 2.6945 | 19 | 0.000264 |
+Sample mix roughly equal by available raw size: general English heavy. Eval holdout = 20%, 282,941 chars.
 
-### Byte-level BPE probe results (same eval holdout)
+| Vocab size | Train time (s) | Tokens/word | UNK rate |
+|---|---|---|---|
+| 8,000 | 0.645 | 3.7043 | 0 (by construction) |
+| 16,000 | 0.747 | 3.5212 | 0 |
+| 24,000 | 0.803 | 3.4689 | 0 |
+| 32,000 | 0.928 | 3.4389 | 0 |
 
-Byte-level pre-tokenizer (GPT-2/RoBERTa style) — UNK rate is zero by construction.
+### Byte-level BPE probe B — quantum-focused mix (decisive)
 
-| Vocab size | Train time (s) | Tokens/word |
-|---|---|---|
-| 8,000 | 0.645 | 3.7043 |
-| 16,000 | 0.747 | 3.5212 |
-| 24,000 | 0.803 | 3.4689 |
-| 32,000 | 0.928 | 3.4389 |
+Sample mix weighted to match the proposed corpus composition: 45% quantum-domain, 30% Qiskit code, 13% general English, 12% tool traces. Eval holdout = 20%, 282,942 chars, 33,681 words.
+
+| Vocab size | Train time (s) | Tokens/word | UNK rate |
+|---|---|---|---|
+| 8,000 | 0.674 | 2.8906 | 0 (by construction) |
+| 16,000 | 0.739 | 2.6937 | 0 |
+| 24,000 | 0.861 | 2.6363 | 0 |
+| 32,000 | 1.015 | 2.6227 | 0 |
 
 ### Recommendation
 
-**Recommended vocab size: 16,000.**
+**Recommended vocab size: 16,000 with byte-level BPE.**
 
-Both probes show a sharp compression gain from 8k to 16k, then diminishing returns:
-- Plain BPE: 2.94 → 2.76 tokens/word (–6.0%), then only 2.72/2.69.
-- Byte-level BPE: 3.70 → 3.52 tokens/word (–4.9%), then only 3.47/3.44.
+The quantum-focused probe shows the same pattern as the broad mix: a sharp compression gain from 8k to 16k, then diminishing returns. Specifically:
+- Quantum-focused: 2.89 → 2.69 tokens/word (–6.8%), then only 2.64/2.62.
 
-The 16k point captures most of the benefit while keeping embedding lookup fast and model memory small. The final tokenizer will use **byte-level BPE** to guarantee zero UNK on arbitrary Unicode/code symbols.
+16k captures most of the benefit while keeping embedding lookup fast for a 10M–20M parameter CPU-trained model. Larger vocabs add training time and memory for marginal compression gains.
 
 ## Corpus Composition Plan (Step 2 — proposal, awaiting approval)
 
-Based on the tools/skills definition (code capability primary, function-calling layered on top, general instruction-following out of scope).
+### Strategic rationale: niche depth over broad shallow competition
+
+exp-005 keeps the same small compute budget as exp-004 (CPU-only, few days). It cannot compete with general-purpose models on breadth, and it should not try. The pivot is to **deepen the model's usefulness in the quantum-software niche**: quantum-domain text, Qiskit/quantum SDK code, and tool-use traces for quantum job submission and circuit building. A 13% general-English slice preserves basic fluency without diluting the niche signal.
 
 ### Compute constraint
 
 - **CPU-only on current machine, few days maximum wall-clock** for a full training run.
 - No GPU access assumed unless explicitly stated later.
 - Target total corpus: **20,000–60,000 rows**.
-- Target architecture: **10M–20M parameters** (not the earlier 20M–60M hypothesis, which assumed more compute).
+- Target architecture: **10M–20M parameters**.
 
 ### Row-count targets by category (against 20k–60k total)
 
-| Category | Target share | Row target range | Description | Source approach |
+| Category | Share | Row target range | Description | Source approach |
 |---|---|---|---|---|
-| Code — general + own-domain | 50–60% | 10,000–36,000 rows | Python, TypeScript, PowerShell, Bash | Public permissive-only (MIT / Apache-2.0 / BSD) code subsets; **exclude GPL/AGPL entirely**. If using The Stack / CodeParrot / similar, filter to their permissive-license subsets and record the exact filter in the manifest. TinyMetatron own code (`workers/`, `loops/`, `tests/`, `tools/`) is a **flavor/domain-alignment signal**, not a volume driver — keep it as a minority within this category. |
-| Quantum-domain technical | 20–30% | 4,000–18,000 rows | Quantum computing, IBM Quantum, Qiskit, error correction, hardware docs | Reuse exp-004 source corpus under its existing provenance; supplement with new source-disjoint IBM/Qiskit docs. |
-| Function-calling / tool-use traces | 10–20% | 2,000–12,000 rows | Structured JSON invocations and results | Synthetic/templated from actual CLI and function signatures in this repo. |
-| General English | 5–10% | 1,000–6,000 rows | Prose coverage only; not instruction-following | Public-domain texts (Project Gutenberg), clean web archives, or own writing. |
+| Quantum-domain technical | 45% | 9,000–27,000 rows | Quantum computing concepts, IBM Quantum docs, Qiskit, error correction, hardware docs | Reuse exp-004 source corpus under its existing provenance; supplement with new source-disjoint IBM/Qiskit docs |
+| Quantum-specific code | 30% | 6,000–18,000 rows | Qiskit, Cirq, and other quantum SDK code | `qiskit/qiskit-tutorials` (Apache-2.0) as primary source; TinyMetatron own Qiskit snippets as flavor signal only |
+| Function-calling / tool-use traces | 12% | 2,400–7,200 rows | Structured invocations for quantum tools: circuit builders, job submission, result parsers | Synthetic/templated from real Qiskit/IBM Quantum/TinyMetatron CLI and function signatures |
+| General English | 13% | 2,600–7,800 rows | Prose coverage only; preserves fluency, not instruction-following | Public-domain texts (Project Gutenberg), clean web archives, or own writing |
 
 ### License and sourcing rules
 
-- **Permissive only:** MIT, Apache-2.0, BSD. No GPL/AGPL in the code corpus.
-- **Filtered public corpora only:** no wholesale unfiltered The Stack / CodeParrot; record exact license filter in `MANIFEST.json`.
+- **Permissive only for public code:** MIT, Apache-2.0, BSD. **No GPL/AGPL** in the code corpus.
+- **Filtered public corpora only:** no wholesale unfiltered The Stack / CodeParrot. If used, filter to permissive-license subsets and record exact filter in `MANIFEST.json`.
 - **No AGI-model content or imports.**
 - **No instruction-following/chat data** for this experiment.
 - **Provenance per source:** source URL/identifier, license, retrieval date, content hash — same discipline as exp-004.
@@ -86,7 +89,7 @@ Structured JSON only:
 ```json
 {"tool": "name", "args": {...}, "result": {...}}
 ```
-Not natural-language phrasing. Derived from real function/CLI signatures in the repo.
+Not natural-language phrasing. Derived from real Qiskit/IBM Quantum/function signatures in the repo.
 
 ## Target Architecture Size (proposed, not final)
 
@@ -95,6 +98,6 @@ Under CPU-only / few-days constraint: **10M–20M parameters** as the realistic 
 ## Open Questions for Human Review
 
 1. **Approve 16k vocab size with byte-level BPE?**
-2. **Approve 20k–60k total rows and the per-category row targets above?**
+2. **Approve the quantum-focused 45/30/12/13 composition shares and row targets?**
 3. **Confirm CPU-only / few-days compute budget?** (If you have GPU access, say so — it changes the scale.)
-4. **Approve permissive-only code sourcing rule?** Any preferred public code dataset (e.g., a specific permissive subset of The Stack) or domain emphasis?
+4. **Approve permissive-only code sourcing rule?** Any preferred public code dataset or domain emphasis?
