@@ -109,6 +109,46 @@ def build_manifest(corpus_dir: Path) -> dict:
         sd = r.get("subdomain", "unknown")
         subdomains[sd] = subdomains.get(sd, 0) + 1
 
+    # Corpus-category distribution (e.g. quantum_domain_technical, quantum_code,
+    # tool_traces, general_english). Recorded so the manifest states the real
+    # achieved shares, not just the target ranges.
+    categories: dict[str, int] = {}
+    for r in all_rows:
+        cat = r.get("corpus_category", "unknown")
+        categories[cat] = categories.get(cat, 0) + 1
+
+    # Source list with license/provenance/category/row counts. This makes the
+    # manifest a self-describing acquisition record, not just a split summary.
+    from collections import defaultdict
+    src_meta: dict[str, dict] = defaultdict(lambda: {
+        "rows": 0,
+        "license": "unknown",
+        "provenance": "",
+        "category": "unknown",
+    })
+    for r in all_rows:
+        sid = _source_of(r)
+        src_meta[sid]["rows"] += 1
+        # License/provenance/category are assumed constant per source_id; take the
+        # first non-empty value encountered.
+        if src_meta[sid]["license"] == "unknown" and r.get("license"):
+            src_meta[sid]["license"] = r["license"]
+        if not src_meta[sid]["provenance"] and r.get("provenance"):
+            src_meta[sid]["provenance"] = r["provenance"]
+        if src_meta[sid]["category"] == "unknown" and r.get("corpus_category"):
+            src_meta[sid]["category"] = r["corpus_category"]
+
+    sources = [
+        {
+            "source_id": sid,
+            "rows": meta["rows"],
+            "license": meta["license"],
+            "provenance": meta["provenance"],
+            "corpus_category": meta["category"],
+        }
+        for sid, meta in sorted(src_meta.items())
+    ]
+
     # Source/text disjointness metrics, computed directly from the frozen split
     # files (independent verification of the split worker's claims).
     train_sources = {_source_of(r) for r in split_rows.get("train", [])}
@@ -173,6 +213,8 @@ def build_manifest(corpus_dir: Path) -> dict:
         "total_rows": len(all_rows),
         "unique_normalized": len(norms),
         "subdomains": subdomains,
+        "categories": categories,
+        "sources": sources,
         "split_policy": meta.get("split_policy", "source_disjoint_capped_v1"),
         "split_seed": meta.get("split_seed", 42),
         "max_rows_per_source": meta.get("max_rows_per_source"),
@@ -240,6 +282,8 @@ def run(config: dict) -> dict:
             "max_source_row_share_total": max(manifest.get("max_source_row_share", {}).values()) if manifest.get("max_source_row_share") else None,
             "source_overlap_total": sum(manifest["source_overlap"].values()),
             "text_overlap_total": sum(manifest["text_overlap"].values()),
+            "categories": manifest.get("categories"),
+            "n_sources": len(manifest.get("sources", [])),
         },
         "started_at": started_at,
         "ended_at": manifest["ended_at"],

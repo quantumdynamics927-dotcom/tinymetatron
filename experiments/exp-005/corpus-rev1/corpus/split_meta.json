@@ -1,0 +1,35 @@
+{
+  "split_policy": "source_disjoint_capped_v1",
+  "split_seed": 42,
+  "max_rows_per_source": 800,
+  "pre_cap_rows": 19992,
+  "post_cap_rows": 19607,
+  "capped_sources": [
+    {
+      "source_id": "gutenberg:1342",
+      "original_rows": 1185,
+      "retained_rows": 800,
+      "excluded_rows": 385
+    }
+  ],
+  "max_source_row_share": {
+    "train": 0.0536,
+    "val": 0.2336,
+    "hard_dev": 0.1515
+  },
+  "source_counts": {
+    "train": 1312,
+    "val": 164,
+    "hard_dev": 164
+  },
+  "source_overlap": {
+    "train_val": 0,
+    "train_hard_dev": 0,
+    "val_hard_dev": 0
+  },
+  "text_overlap": {
+    "train_val": 0,
+    "train_hard_dev": 0,
+    "val_hard_dev": 0
+  }
+}
