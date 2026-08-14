@@ -1,0 +1,55 @@
+{
+  "sample_files": [
+    "experiments/exp-005/tokenizer_probe/general_english.txt",
+    "experiments/exp-005/tokenizer_probe/quantum_domain.txt",
+    "experiments/exp-005/tokenizer_probe/code_sample.txt",
+    "experiments/exp-005/tokenizer_probe/tool_traces.txt"
+  ],
+  "vocab_sizes_tested": [
+    8000,
+    16000,
+    24000,
+    32000
+  ],
+  "eval_holdout_fraction": 0.2,
+  "eval_text_chars": 282941,
+  "results": [
+    {
+      "vocab_size": 8000,
+      "train_seconds": 0.645,
+      "num_words_eval": 26731,
+      "num_tokens_eval": 99020,
+      "tokens_per_word": 3.7043,
+      "unk_count": 0,
+      "unk_rate": 0.0
+    },
+    {
+      "vocab_size": 16000,
+      "train_seconds": 0.747,
+      "num_words_eval": 26731,
+      "num_tokens_eval": 94125,
+      "tokens_per_word": 3.5212,
+      "unk_count": 0,
+      "unk_rate": 0.0
+    },
+    {
+      "vocab_size": 24000,
+      "train_seconds": 0.803,
+      "num_words_eval": 26731,
+      "num_tokens_eval": 92728,
+      "tokens_per_word": 3.4689,
+      "unk_count": 0,
+      "unk_rate": 0.0
+    },
+    {
+      "vocab_size": 32000,
+      "train_seconds": 0.928,
+      "num_words_eval": 26731,
+      "num_tokens_eval": 91925,
+      "tokens_per_word": 3.4389,
+      "unk_count": 0,
+      "unk_rate": 0.0
+    }
+  ],
+  "note": "byte-fallback enabled; UNK rate is zero by construction"
+}
