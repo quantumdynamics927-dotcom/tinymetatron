@@ -6,8 +6,7 @@
   "argv": [
     "python", "-m", "workers.evaluate.compute_ce",
     "--run-id", "{run_id}",
-    "--eval-set", "val",
-    "--best-only"
+    "--eval-set", "val"
   ],
   "timeout_seconds": 300,
   "pass_condition": {

@@ -7,8 +7,7 @@
     "python", "-m", "workers.evaluate.compute_ce",
     "--run-id", "{run_id}",
     "--eval-set", "gre_longtail",
-    "--eval-path", "experiments/exp-004/eval_segments/gre_runtime_jobdata_longtail.jsonl",
-    "--best-only"
+    "--eval-path", "experiments/exp-004/eval_segments/gre_runtime_jobdata_longtail.jsonl"
   ],
   "timeout_seconds": 600,
   "pass_condition": {

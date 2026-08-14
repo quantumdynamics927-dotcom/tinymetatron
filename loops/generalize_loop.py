@@ -102,6 +102,7 @@ def run_gate(
     run_id: str,
     gate_name: str,
     checkpoint_path: str,
+    step: int,
     corpus_dir: Path,
     tokenizer_path: str,
     artifact_dir: Path,
@@ -117,6 +118,7 @@ def run_gate(
     # Inject checkpoint-path and corpus-dir if not in argv
     argv = argv + [
         "--checkpoint-path", checkpoint_path,
+        "--step", str(step),
         "--corpus-dir", str(corpus_dir),
         "--tokenizer-path", tokenizer_path,
     ]
@@ -235,6 +237,7 @@ def run_generalization(config: dict) -> dict:
             run_id=run_id,
             gate_name=gate_name,
             checkpoint_path=ckpt_path,
+            step=step,
             corpus_dir=corpus_dir,
             tokenizer_path=tokenizer_path,
             artifact_dir=artifact_dir,

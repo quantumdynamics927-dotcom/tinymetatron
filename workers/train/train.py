@@ -224,6 +224,7 @@ def run(config: dict) -> dict:
     best_val_ce = float("inf")
     best_step = 0
     patience_counter = 0
+    early_stopped = False
     val_every = config.get("val_every", 50)
     log_every = config.get("log_every", 25)
     patience = config.get("patience", 3)
@@ -236,7 +237,7 @@ def run(config: dict) -> dict:
     ended_at = started_at  # overwritten on success
 
     try:
-        while step < steps:
+        while step < steps and not early_stopped:
             rng = torch.Generator()
             rng.manual_seed(EPOCH_SEED + epoch_idx)
             perm = torch.randperm(n_train, generator=rng)
@@ -269,7 +270,7 @@ def run(config: dict) -> dict:
                         patience_counter += 1
 
                     if patience_counter >= patience and step >= min(steps, 200):
-                        step = steps
+                        early_stopped = True
                         break
 
                 if step >= steps:
@@ -305,6 +306,7 @@ def run(config: dict) -> dict:
             "best_val_ce": best_val_ce,
             "best_step": best_step,
             "total_steps": step,
+            "early_stopped": early_stopped,
             "elapsed_s": round(elapsed, 1),
             "seed": seed,
             "params": sum(p.numel() for p in model.parameters()),
