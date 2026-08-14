@@ -67,13 +67,3 @@ Hold until corpus size and compute budget are fixed. As a starting hypothesis on
 2. **Approve corpus composition shares?** Especially: what public code corpora are acceptable, and how much own-repo code vs. external code?
 3. **Target compute budget / acceptable training wall-clock?** This gates architecture size and whether GPU access is required.
 4. **What is the concrete definition of "tool-use traces"?** e.g., JSON-style `{"tool": "...", "args": {...}, "result": {...}}`, or natural-language `"Call X with Y"` format?
-
-## Target Architecture Size (proposed, not final)
-
-To be discussed after vocabulary and corpus plan are fixed.
-
-## Open Questions for Human Review
-
-1. What general-English sample should be used for the tokenizer probe? (clean public-domain or your-own text; a few MB is enough)
-2. What specific code/tool-use sources are acceptable? (licenses, own repos, public corpora)
-3. Target compute budget and acceptable training wall-clock time?
