@@ -1,0 +1,113 @@
+{
+  "split_policy": "source_disjoint_capped_v1",
+  "split_seed": 42,
+  "max_rows_per_source": 400,
+  "pre_cap_rows": 68110,
+  "post_cap_rows": 63093,
+  "capped_sources": [
+    {
+      "source_id": "gutenberg:2701",
+      "original_rows": 1200,
+      "retained_rows": 400,
+      "excluded_rows": 800
+    },
+    {
+      "source_id": "gutenberg:174",
+      "original_rows": 765,
+      "retained_rows": 400,
+      "excluded_rows": 365
+    },
+    {
+      "source_id": "synthetic:tool_traces:qiskit_ibm_runtime.EstimatorV2.run",
+      "original_rows": 600,
+      "retained_rows": 400,
+      "excluded_rows": 200
+    },
+    {
+      "source_id": "gutenberg:1342",
+      "original_rows": 1185,
+      "retained_rows": 400,
+      "excluded_rows": 785
+    },
+    {
+      "source_id": "pennylane:pennylane/estimator/templates/subroutines.py",
+      "original_rows": 455,
+      "retained_rows": 400,
+      "excluded_rows": 55
+    },
+    {
+      "source_id": "synthetic:tool_traces:qiskit.circuit.QuantumCircuit",
+      "original_rows": 600,
+      "retained_rows": 400,
+      "excluded_rows": 200
+    },
+    {
+      "source_id": "synthetic:tool_traces:qiskit.circuit.library.GroverOperator",
+      "original_rows": 596,
+      "retained_rows": 400,
+      "excluded_rows": 196
+    },
+    {
+      "source_id": "synthetic:tool_traces:qiskit.transpiler.preset_passmanagers.generate_preset_pass_manager",
+      "original_rows": 595,
+      "retained_rows": 400,
+      "excluded_rows": 195
+    },
+    {
+      "source_id": "gutenberg:98",
+      "original_rows": 1200,
+      "retained_rows": 400,
+      "excluded_rows": 800
+    },
+    {
+      "source_id": "synthetic:tool_traces:qiskit_ibm_runtime.SamplerV2.run",
+      "original_rows": 600,
+      "retained_rows": 400,
+      "excluded_rows": 200
+    },
+    {
+      "source_id": "gutenberg:1661",
+      "original_rows": 999,
+      "retained_rows": 400,
+      "excluded_rows": 599
+    },
+    {
+      "source_id": "gutenberg:84",
+      "original_rows": 622,
+      "retained_rows": 400,
+      "excluded_rows": 222
+    },
+    {
+      "source_id": "synthetic:tool_traces:pennylane.ExpvalCost",
+      "original_rows": 600,
+      "retained_rows": 400,
+      "excluded_rows": 200
+    },
+    {
+      "source_id": "synthetic:tool_traces:pennylane.qnode",
+      "original_rows": 600,
+      "retained_rows": 400,
+      "excluded_rows": 200
+    }
+  ],
+  "max_source_row_share": {
+    "train": 0.0082,
+    "val": 0.0488,
+    "hard_dev": 0.0629
+  },
+  "source_counts": {
+    "train": 2061,
+    "val": 258,
+    "hard_dev": 257
+  },
+  "source_overlap": {
+    "train_val": 0,
+    "train_hard_dev": 0,
+    "val_hard_dev": 0
+  },
+  "text_overlap": {
+    "train_val": 0,
+    "train_hard_dev": 0,
+    "val_hard_dev": 0
+  }
+}
