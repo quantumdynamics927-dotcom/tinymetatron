@@ -24,6 +24,16 @@ quantum_corpus/eval/private/
 # Local data directories
 data_v2/
 tokenizers/
+experiments/exp-003/
+experiments/exp-004/
+experiments/exp-005/corpus-rev1/raw/
+experiments/exp-005/corpus-rev1/dedupe/deduped.jsonl
+experiments/exp-005/corpus-rev1/validate/validated.jsonl
+experiments/exp-005/corpus-rev2/dedupe/deduped.jsonl
+experiments/exp-005/corpus-rev2/raw/
+experiments/exp-005/corpus-rev2/validate/validated.jsonl
+experiments/exp-005/corpus-rev3/validate/validated.jsonl
+experiments/exp-005/tokenizer_probe/*.txt
 
 # QSG/QRL cross-repo validation scripts (local only)
 qsg_static_posthoc_validation.py
@@ -55,8 +65,12 @@ build/
 # Build / packaging artifacts
 dist/
 
-# Malformed Windows-path experiment directories (transient local outputs)
+# Malformed Windows-path experiment directories / transient local outputs
 D:TinyMetatron*/
+TinyMetatron*
+result.json
+validated.jsonl
+*.jsonl
 
 # OS/editor
 .vscode/
@@ -83,4 +97,6 @@ TOKENIZER_PILOT.md
 
 # HuggingFace / model tokens
 hf_token*
+tools/entropy-validator/
+.claude/
 experiments/exp-005/corpus-rev4/repos/
