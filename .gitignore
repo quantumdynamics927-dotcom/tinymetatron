@@ -52,6 +52,12 @@ venv/
 *.egg-info/
 build/
 
+# Build / packaging artifacts
+dist/
+
+# Malformed Windows-path experiment directories (transient local outputs)
+D:TinyMetatron*/
+
 # OS/editor
 .vscode/
 .idea/
