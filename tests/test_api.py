@@ -191,3 +191,62 @@ def test_readonly_endpoints_ok_in_demo(demo_client: TestClient) -> None:
     assert demo_client.post("/generate", json={
         "prompt": "hi", "max_length": 4, "temperature": 0.7,
     }).status_code == 200
+
+# ── POST /ask -> contract shape {decision, route, evidence, answer} ───────────
+@pytest.fixture
+def ask_client(tmp_path, monkeypatch):
+    """Private-training client with a minimal quantum corpus DB for /ask."""
+    db_path = str(tmp_path / "api_test.db")
+    qdb_path = str(tmp_path / "quantum_corpus.db")
+    monkeypatch.setenv("TMT_DB_PATH", db_path)
+    monkeypatch.setenv("TMT_DEPLOY_MODE", "private-training")
+    monkeypatch.setenv("TMT_API_KEY", "testkey")
+    monkeypatch.setenv("TMT_QUANTUM_CORPUS_DB", qdb_path)
+
+    # Build a tiny corpus with train+val records so _get_ask_retriever succeeds.
+    from quantum_corpus import schema as _qschema
+    _qschema.init_db(qdb_path)
+    _qschema.write_records(qdb_path, [
+        _qschema.Record(
+            source_type="manifest", project="wormhole", doc_id="w:1",
+            text="Circuit 1: OTOC Lyapunov Exponent Measurement. "
+                 "Measures the out-of-time-ordered correlator on ibm_kingston.",
+            split="train", sensitivity="public",
+        ),
+        _qschema.Record(
+            source_type="ibm_job", project="ibm-quantum", doc_id="ibm:d5a6",
+            text="IBM Quantum job d5a6 on backend ibm_fez, status Completed, "
+                 "program sampler, 8192 samples.",
+            split="train", sensitivity="internal",
+        ),
+        _qschema.Record(
+            source_type="repo", project="GRE", doc_id="GRE:readme",
+            text="Sierpinski triangle quantum walk with golden silver bronze coin angles.",
+            split="val", sensitivity="public",
+        ),
+    ])
+
+    import api as api_mod
+    # Clear any cached retriever from a previous import in this process.
+    api_mod._ask_retriever_cache.update(retriever=None, db_path=None, mtime=None)
+    with TestClient(api_mod.app) as c:
+        yield c
+
+
+def test_ask_contract_shape(ask_client: TestClient) -> None:
+    r = ask_client.post("/ask", json={
+        "question": "what does the OTOC circuit measure?",
+        "top_k": 3,
+        "mode": "quantum-private",
+        "sensitivity": "internal",
+    }, headers=_ADMIN_HEADERS)
+    assert r.status_code == 200, f"status {r.status_code}: {r.text}"
+    body = r.json()
+    for k in ("decision", "route", "evidence", "answer"):
+        assert k in body, f"/ask response missing contract key {k}"
+    assert body["route"] in ("retrieval", "structured", "declined")
+    assert isinstance(body["evidence"], list)
+    assert isinstance(body["answer"], str)
+    # The user-facing answer must NOT come from the 32-token sampler; the
+    # contract response does not include a "generated" field produced by it.
+    assert "generated" not in body
