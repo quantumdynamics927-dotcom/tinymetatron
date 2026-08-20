@@ -130,6 +130,13 @@ class SemanticIndex:
             return []
         # cosine == dot product (both L2-normalized)
         sims = self.embeddings @ qv[0]
+        # Normalize to [0,1] over the corpus. The generic MiniLM model produces
+        # a compressed absolute cosine range on this narrow domain corpus;
+        # min-max rescaling restores full dynamic range for reported scores
+        # without changing the rank order (monotonic transform).
+        smin, smax = float(sims.min()), float(sims.max())
+        if smax > smin:
+            sims = (sims - smin) / (smax - smin + 1e-6)
         order = _np.argsort(-sims)[:k]
         out: List[dict] = []
         for i in order:

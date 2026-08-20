@@ -53,13 +53,14 @@ def _rank(record_id, hits: List[dict]) -> Optional[int]:
     return None
 
 
-# BM25-only fallback: semantic scores on the full 38k corpus are highly compressed
-# (cosine range ~0.55-0.61), causing non-gold near-duplicate records in the
-# semantic top-20 to receive RRF contributions that override BM25's discriminative
-# ranking of the true gold record. Until a discriminative semantic model is
-# available, hybrid fusion is set to pure BM25.
-BM25_W = 1.0
-SEM_W  = 0.0
+# Hybrid weights. The original failure mode was NOT raw score scale (RRF is
+# rank-based and scale-invariant); it was rank contamination from semantic-only
+# near-duplicate records that received RRF contributions and pushed the BM25
+# gold down. We therefore cap semantic contributions to records that ALSO appear
+# in the BM25 pool, so semantic acts as a re-ranker/reinforcer for BM25
+# candidates rather than an independent source of unrelated top ranks.
+BM25_W = 0.75
+SEM_W  = 0.25
 
 
 class HybridRetriever:
@@ -145,7 +146,13 @@ class HybridRetriever:
 
         if use_sem:
             sem_hits = self.semantic.query(text, pool)
+            # Restrict semantic contributions to records already in the BM25 pool.
+            # This prevents semantic-only near-duplicates from entering the fused
+            # ranking and overriding a strong BM25 gold that semantic missed.
+            bm25_ids = {h["id"] for h in bm25_hits}
             for h in sem_hits:
+                if h["id"] not in bm25_ids:
+                    continue
                 r = _rank(h["id"], sem_hits)
                 if r is None:
                     continue
@@ -155,7 +162,7 @@ class HybridRetriever:
                     fused[h["id"]]["sources"].add("semantic")
                 else:
                     fused[h["id"]] = {
-                        "score": contrib,
+                        "score": SEM_W * contrib,
                         "sources": {"semantic"},
                         "hit": h,
                     }
