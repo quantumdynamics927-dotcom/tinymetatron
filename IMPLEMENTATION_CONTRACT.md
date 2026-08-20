@@ -168,7 +168,7 @@ no package). Python 3.13, torch 2.13 CPU, pytest 9. Run code from repo root.
 | `tests/test_db.py` | T4b | schema create; insert/fetch; mark_used; active checkpoint swap; stats keys. |
 | `tests/test_api.py` | T4b | FastAPI TestClient: /data/add 200, /data/stats keys, /model/info config, /generate 200. |
 | `tests/test_train.py` | T4b | 2-step run on tiny DB: loss decreases; checkpoint row written; session end_time set; used_in_training flips. |
-| `Dockerfile` | T4c | python:3.11-slim, CPU torch wheel, fastapi/uvicorn/pydantic, /app, EXPOSE 8010, CMD uvicorn api:app. |
+| `Dockerfile` | T4c | python:3.13-slim, CPU torch wheel, fastapi/uvicorn/pydantic, /app, EXPOSE 8010, CMD uvicorn api:app. |
 | `docker-compose.yml` | T4c | `slm` service, image `metatron-slm-slm:latest` (verbatim), 3 volumes (./data ./ckpt ./metatron.db), port 8010, env PYTHONPATH/MODEL_PATH. |
 | `requirements.txt` | T4c | pinned: torch (cpu index url note), fastapi, uvicorn, pydantic, pytest. |
 | `README.md` | T4c | build/run/train/API/CLI instructions, endpoint list, vocab note, param count. |
