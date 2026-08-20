@@ -230,16 +230,26 @@ class TinyMetatron(nn.Module):
         Returns:
             LongTensor (B, L_in + k) where k <= max_length.  Generation stops
             early when every sequence in the batch has emitted EOS.
+
+        Note:
+            The sparse polyhedral mask is only defined for lengths up to
+            ``seq_len``.  The full growing sequence is kept for the caller, but
+            each forward pass sees only the last ``seq_len`` tokens — a research-
+            kernel sampler, not a product generator.
         """
         self.eval()
         device = input_ids.device
         cur = input_ids
         temp = max(float(temperature), 1e-4)
+        seq_len = self.seq_len_cfg
 
         finished = torch.zeros(cur.shape[0], dtype=torch.bool, device=device)
 
         for _ in range(max_length):
-            logits, _ = self.forward(cur)
+            # Truncate the forward context to seq_len; the mask and the model
+            # are only valid inside the trained context window.
+            ctx = cur if cur.shape[1] <= seq_len else cur[:, -seq_len:]
+            logits, _ = self.forward(ctx)
             next_logits = logits[:, -1, :] / temp          # (B, V)
             probs = F.softmax(next_logits, dim=-1)
             next_id = torch.multinomial(probs, num_samples=1).squeeze(-1)  # (B,)
