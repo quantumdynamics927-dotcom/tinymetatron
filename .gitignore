@@ -12,6 +12,7 @@
 *.db
 *.sqlite
 *.sqlite3
+state/registry.db.*
 E:/Temp/qcorpus/
 E:/Temp/eval/
 embeddings/
@@ -20,10 +21,31 @@ reports/private/
 quantum_corpus/eval/private/
 **/_val_hits.json
 
+# Local data directories
+data_v2/
+tokenizers/
+experiments/exp-003/
+experiments/exp-004/
+experiments/exp-005/corpus-rev1/raw/
+experiments/exp-005/corpus-rev1/dedupe/deduped.jsonl
+experiments/exp-005/corpus-rev1/validate/validated.jsonl
+experiments/exp-005/corpus-rev2/dedupe/deduped.jsonl
+experiments/exp-005/corpus-rev2/raw/
+experiments/exp-005/corpus-rev2/validate/validated.jsonl
+experiments/exp-005/corpus-rev3/validate/validated.jsonl
+experiments/exp-005/tokenizer_probe/*.txt
+
+# QSG/QRL cross-repo validation scripts (local only)
+qsg_static_posthoc_validation.py
+qsg_layer3_validation.py
+
 # Model artifacts and local data
 ckpt/
 data/
 models/
+# ...but the shipped reference manifest is package data and must be tracked.
+!quantum_corpus/data/
+!quantum_corpus/data/*.json
 *.pt
 *.pth
 *.bin
@@ -40,6 +62,16 @@ venv/
 *.egg-info/
 build/
 
+# Build / packaging artifacts
+dist/
+
+# Malformed Windows-path experiment directories / transient local outputs
+D:TinyMetatron*/
+TinyMetatron*
+result.json
+validated.jsonl
+*.jsonl
+
 # OS/editor
 .vscode/
 .idea/
@@ -51,8 +83,20 @@ Thumbs.db
 # Confidential documents (patent/work product — keep locally only)
 TMT_Patent_*.pdf
 TMT_Patent_*.zip
+TMT_Patent_Draft_*.md
+TMT_Patent_Dv*.md
 TMT_Enablement_Declaration*.pdf
 TMT_Claims_EP_US*.pdf
+TMT_Private/
+*.png
+*.docx
+*.pdf
+tiny_metatron_slm_kompletne_technicke_zhrnutie_sk_it_prof.md
+"Tiny Metatron Slm"*
+TOKENIZER_PILOT.md
 
 # HuggingFace / model tokens
 hf_token*
+tools/entropy-validator/
+.claude/
+experiments/exp-005/corpus-rev4/repos/

@@ -1,0 +1,62 @@
+{
+  "worker": "experiments.exp-005.corpus-rev4.scripts.stage_sources",
+  "version": 4,
+  "status": "success",
+  "started_at": "2026-08-16T00:51:24.543579+00:00",
+  "ended_at": "2026-08-16T00:51:30.969277+00:00",
+  "total_rows": 67358,
+  "summary": {
+    "quantum_domain_technical": {
+      "rows": 19917,
+      "source_groups": 1842,
+      "new_sources": {
+        "qiskit_docs": {
+          "source": "Qiskit main documentation (docs/ RST + MDX + Markdown)",
+          "license": "Apache-2.0",
+          "provenance": "https://github.com/Qiskit/qiskit",
+          "files_processed": 31,
+          "rows_staged": 193
+        },
+        "cirq_docs": {
+          "source": "Cirq documentation (notebooks + markdown)",
+          "license": "Apache-2.0",
+          "provenance": "https://github.com/quantumlib/Cirq",
+          "files_processed": 88,
+          "rows_staged": 1745
+        },
+        "qutip_docs": {
+          "source": "QuTiP documentation v5 (RST)",
+          "license": "BSD-3-Clause",
+          "provenance": "https://github.com/qutip/qutip",
+          "files_processed": 76,
+          "rows_staged": 2327
+        }
+      },
+      "share": 0.2957
+    },
+    "quantum_code": {
+      "rows": 41924,
+      "source_groups": 912,
+      "note": "frozen from rev3",
+      "share": 0.6224
+    },
+    "tool_traces": {
+      "rows": 2832,
+      "source_groups": 10,
+      "note": "frozen from rev3",
+      "share": 0.042
+    },
+    "general_english": {
+      "rows": 2685,
+      "source_groups": 7,
+      "note": "frozen from rev3",
+      "share": 0.0399
+    }
+  },
+  "raw_files": {
+    "quantum_domain_technical.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev4\\raw\\quantum_domain_technical.jsonl",
+    "quantum_code.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev4\\raw\\quantum_code.jsonl",
+    "tool_traces.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev4\\raw\\tool_traces.jsonl",
+    "general_english.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev4\\raw\\general_english.jsonl"
+  }
+}

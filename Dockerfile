@@ -1,6 +1,6 @@
 # Dockerfile for TinyMetatron SLM (CPU-only) — Hugging Face Docker Space.
-# Python 3.11-slim base per IMPLEMENTATION_CONTRACT.md section 2.
-FROM python:3.11-slim
+# Python 3.13-slim base per IMPLEMENTATION_CONTRACT.md section 2 / README.md.
+FROM python:3.13-slim
 
 WORKDIR /app
 

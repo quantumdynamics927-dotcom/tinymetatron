@@ -1,0 +1,1015 @@
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "quantum_corpus_freeze", "args": {"corpus_dir": "deduped", "output_dir": "frozen", "seed": 42, "max_rows_per_source": 400, "max_source_share": 0.25, "revision": 2}, "result": {"manifest_path": "frozen/MANIFEST.json", "total_rows": 14191}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "python -m workers.corpus.validate", "args": {"input": "raw_corpus", "output": "validated.jsonl"}, "result": {"valid_rows": 35762, "invalid_rows": 0}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumCircuit object>"}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "workers.evaluate.compute_ce", "args": {"run_id": "run-001", "step": 1300, "eval_set": "hard_dev", "checkpoint_path": "...", "corpus_dir": "...", "tokenizer_path": "..."}, "result": {"ce": 0.9607, "ppl": 2.61}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.primitives.StatevectorSampler.run", "args": {"pubs": "[(circuit, params)]", "default_shots": 10000}, "result": {"counts": {"00000": 5000, "11111": 5000}}}
+{"tool": "qiskit.circuit.library.GroverOperator", "args": {"oracle": "state_preparation", "num_qubits": 4}, "result": {"operator": "<GroverOperator object>"}}
+{"tool": "qiskit.quantum_info.Statevector.from_instruction", "args": {"instruction": "ghz_circuit"}, "result": {"statevector": "[0.707+0j, 0, 0, ..., 0.707+0j]"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit.visualization.plot_histogram", "args": {"data": {"00000": 512, "11111": 512}}, "result": {"figure": "<matplotlib.Figure>"}}
+{"tool": "qiskit.transpiler.transpile", "args": {"circuits": "ghz", "backend": "ibm_brisbane", "optimization_level": 3}, "result": {"transpiled_circuit": "<transpiled>", "layout": "physical_qubits"}}
+{"tool": "qiskit.result.get_counts", "args": {"result": "sampler_result", "experiment": 0}, "result": {"00000": 512, "11111": 512}}
+{"tool": "qiskit_ibm_runtime.SamplerV2.run", "args": {"pubs": "[(circuit, params)]", "shots": 1024}, "result": {"counts": {"00000": 512, "11111": 512}}}
+{"tool": "qiskit_ibm_runtime.EstimatorV2.run", "args": {"pubs": "[(observable, circuit)]"}, "result": {"evs": [0.707], "stds": [0.012]}}
+{"tool": "qiskit.QuantumCircuit", "args": {"num_qubits": 5, "name": "ghz"}, "result": {"circuit": "<QuantumC

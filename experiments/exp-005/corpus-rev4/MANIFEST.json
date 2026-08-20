@@ -1,0 +1,42 @@
+{
+  "worker": "workers.corpus.version",
+  "version": 1,
+  "status": "success",
+  "input_hash": "sha256:4f9d10d3dfc9ff45",
+  "output_hash": "sha256:f89958365a43528f59f5e2806cd7e0bddd509929b848daf889a617437d8bb97b",
+  "artifact_paths": [
+    "experiments\\exp-005\\corpus-rev4\\MANIFEST.json"
+  ],
+  "metrics": {
+    "corpus_hash": "4f9d10d3dfc9ff45",
+    "total_rows": 67145,
+    "unique_normalized": 67145,
+    "splits": [
+      "hard_dev.jsonl",
+      "train.jsonl",
+      "val.jsonl"
+    ],
+    "split_policy": "source_disjoint_capped_v1",
+    "split_seed": 42,
+    "max_rows_per_source": 400,
+    "pre_cap_rows": 67145,
+    "post_cap_rows": 67145,
+    "max_source_row_share": {
+      "train": 0.0075,
+      "val": 0.0689,
+      "hard_dev": 0.0515
+    },
+    "max_source_row_share_total": 0.0689,
+    "source_overlap_total": 0,
+    "text_overlap_total": 0,
+    "categories": {
+      "quantum_code": 41924,
+      "quantum_domain_technical": 19704,
+      "general_english": 2685,
+      "tool_traces": 2832
+    },
+    "n_sources": 2771
+  },
+  "started_at": "2026-08-16T00:52:59.777312+00:00",
+  "ended_at": "2026-08-16T00:53:01.050467+00:00"
+}

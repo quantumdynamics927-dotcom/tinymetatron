@@ -1,0 +1,21 @@
+{
+  "worker": "workers.corpus.dedupe",
+  "version": 1,
+  "status": "success",
+  "input_hash": "sha256:e77efa257db2f6cb",
+  "output_hash": "sha256:4b8e9311e1ba0568",
+  "artifact_paths": [
+    "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev3\\dedupe\\deduped.jsonl"
+  ],
+  "metrics": {
+    "input_rows": 68141,
+    "exact_duplicates": 10,
+    "normalized_duplicates": 1,
+    "near_duplicates": 10,
+    "duplicate_pairs_found": 10,
+    "output_rows": 68110,
+    "dedup_rate": 0.9995
+  },
+  "started_at": "2026-08-15T00:05:08.695086+00:00",
+  "ended_at": "2026-08-15T00:05:36.623744+00:00"
+}

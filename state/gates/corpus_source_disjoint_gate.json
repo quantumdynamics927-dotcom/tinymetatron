@@ -1,0 +1,17 @@
+{
+  "name": "corpus_source_disjoint",
+  "version": 1,
+  "scope": "corpus",
+  "description": "Corpus split must be source-disjoint: no source_id may appear in more than one of train/val/hard_dev. Fails if any pairwise source-overlap count is nonzero.",
+  "worker": "workers.corpus.corpus_gate",
+  "argv": [
+    "python", "-m", "workers.corpus.corpus_gate",
+    "--manifest", "{manifest_path}"
+  ],
+  "timeout_seconds": 60,
+  "pass_condition": {
+    "metric": "source_overlap_total",
+    "operator": "==",
+    "value": 0
+  }
+}

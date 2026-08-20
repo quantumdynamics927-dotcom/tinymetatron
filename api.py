@@ -613,12 +613,16 @@ def ask(req: AskRequest,
                           so no secret/injection span reaches the caller.
 
     A 32-token context model cannot ingest retrieved records, so evidence is
-    returned directly with a short templated synthesis; an optional tiny bounded
-    LM continuation is attached as ``generated`` when a checkpoint exists.
+    returned directly with a short templated synthesis.  The /ask endpoint
+    never attaches an LM-generated continuation to the response.
 
-    Returns {decision, answer, generated, abstained, citations, query_provenance,
-    build_id, build_sha256, index, mode, latency_ms}. No raw-record / bulk-export
-    / arbitrary doc-id lookup endpoint exists (intentionally denied).
+    Returns the contract shape {decision, route, evidence, answer} plus
+    useful metadata (abstained, query_provenance, build_id, build_sha256,
+    index, mode, latency_ms).  The 32-token TMT sampler is intentionally not
+    used to produce the answer; evidence is the list of citations and answer
+    is grounded synthesis from the retrieved records or the structured SQL path.
+    No raw-record / bulk-export / arbitrary doc-id lookup endpoint exists
+    (intentionally denied).
     """
     import time as _time
     if req.mode != "quantum-private":
@@ -627,7 +631,7 @@ def ask(req: AskRequest,
     if req.sensitivity not in _SENS_RANK:
         raise HTTPException(status_code=400,
                             detail="sensitivity must be public|internal|sensitive.")
-    from quantum_corpus import redact as _qredact, answer as _qanswer, secrets as _qsecrets
+    from quantum_corpus import redact as _qredact, answer as _qanswer
 
     t0 = _time.perf_counter()
 
@@ -652,17 +656,22 @@ def ask(req: AskRequest,
         gates=_ask_gates(), use_structured=True,
     )
 
-    # Optional bounded LM continuation for answered retrieval items only
-    # (exploratory; masked before attaching — the engine already masked the
-    # rest of the payload).
-    if res.get("decision") == "answered" and res.get("citations") and hits:
-        hint = _ask_lm_hint(req.question, hits)
-        if hint:
-            res["generated"] = _qsecrets.mask_response(hint)
+    # Enforce the /ask contract: {decision, route, evidence, answer}.
+    # The answer engine returns citations in "citations" and gate metadata in
+    # "evidence"; we expose citations as the primary "evidence" field and move
+    # the metadata to "evidence_gate" for callers that want details.
+    citations = res.pop("citations", [])
+    evidence_gate = res.pop("evidence", None)
+    res["evidence"] = citations
+    if evidence_gate is not None:
+        res["evidence_gate"] = evidence_gate
+    # Remove any "generated" key from the answer engine: the 32-token TMT sampler
+    # is intentionally NOT used to produce the user-facing /ask answer.
+    res.pop("generated", None)
 
     # Redact the question for telemetry logging (never log raw identifiers).
     red_q, _ = _qredact.redact_text(req.question)
-    top_id = res.get("citations", [{}])[0].get("id") if res.get("citations") else None
+    top_id = res["evidence"][0].get("id") if res["evidence"] else None
     top_score = float(hits[0]["score"]) if hits else 0.0
     _ask_log(red_q, top_id, top_score, bool(res.get("abstained")),
              str(res.get("decision")))
@@ -707,34 +716,6 @@ def _ask_synthesize(question: str, hits: list[dict]) -> str:
     if len(snip) > 200:
         snip = snip[:200] + "…"
     return f"Top evidence [{top['id']}]: {snip}\nCitations: {ids}"
-
-
-def _ask_lm_hint(question: str, hits: list[dict]) -> Optional[str]:
-    """Optional bounded LM continuation. The 32-token window cannot ingest the
-    retrieved records, so this feeds the model only a SHORT grounded prompt
-    (question + a 40-char hint from the top hit) and returns up to ~16 new
-    tokens. Returns None if no checkpoint / model unavailable. Exploratory."""
-    try:
-        hint = (hits[0]["snippet"][:40] if hits else "").replace("\n", " ")
-        prompt = f"{hint} {question}".strip()[:80]
-        tokenizer = default_tokenizer()
-        ids = tokenizer.encode(prompt)
-        if not ids:
-            return None
-        with _generate_sem:
-            model, step = _get_model()
-            if step == 0:
-                return None  # no trained checkpoint -> skip LM framing
-            device = next(model.parameters()).device
-            inp = torch.tensor([ids], dtype=torch.long, device=device)
-            with torch.no_grad():
-                out = model.generate(inp, max_length=16, temperature=0.7)
-        new = int(out.shape[1]) - len(ids)
-        if new <= 0:
-            return None
-        return tokenizer.decode(out[0].tolist())
-    except Exception:
-        return None
 
 
 def _ask_log(redacted_question: str, top_id, top_score: float,

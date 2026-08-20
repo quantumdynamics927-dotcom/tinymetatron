@@ -1,0 +1,17 @@
+{
+  "name": "novel_eval_ce_below_5.0",
+  "version": 1,
+  "description": "Best checkpoint must achieve novel_eval CE below 5.0",
+  "worker": "workers.evaluate.compute_ce",
+  "argv": [
+    "python", "-m", "workers.evaluate.compute_ce",
+    "--run-id", "{run_id}",
+    "--eval-set", "novel_eval"
+  ],
+  "timeout_seconds": 120,
+  "pass_condition": {
+    "metric": "ce",
+    "operator": "<",
+    "value": 5.0
+  }
+}

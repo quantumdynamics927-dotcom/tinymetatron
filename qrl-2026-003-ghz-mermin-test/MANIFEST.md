@@ -5,7 +5,7 @@
 - **title**: Mermin Inequality Violation on a Simulated 3-Qubit GHZ State
 - **date_proposed**: 2026-08-02
 - **circuit_family**: 3-qubit GHZ entangled state (|GHZ⟩ = (|000⟩+|111⟩)/√2)
-- **backend**: simulator (Qiskit Aer noise-free)
+- **backend**: simulator (Qiskit Aer noise-free); hardware-pending (no provider access)
 - **hypothesis**: A Mermin measurement on an ideal 3-qubit GHZ state, simulated noiselessly, will yield M = 4, violating the classical bound of |M| ≤ 2 and achieving the quantum maximum for this state.
 
 ## Physics Background
@@ -78,6 +78,51 @@ M = E(0,0,0) - E(0,π/2,π/2) - E(π/2,0,π/2) - E(π/2,π/2,0)
 - **violated_bound**: classical
 - **circuit_hash**: 15a10db68cac048b1ce1ad6d5129fc7b4876baf5e040c3eb66601b31090fc27a
 - **code_commit**: 1298c4e
+- **passes_minimum_bar**: true (M > 2 = quantum advantage)
+- **passes_target**: true (M >= 3.5 = near quantum max)
+- **shot_noise_verified**: false
+
+## Status
+- **simulator-validated**: YES — M=4.0 > 2, classical bound violated
+- **hardware-pending**: blocked — no IBM Quantum provider access (no API credentials, no active paid plan)
+- **next**: Re-run with realistic noise model using `qiskit_aer.noise.NoiseModel` to simulate hardware-like degradation. CHSH expected to remain above classical bound; Mermin/GHZ expected to show greater noise sensitivity (3-qubit entanglement is more fragile than 2-qubit).
+
+## Derivation Lessons
+
+Two critical errors were made during the formula derivation phase before the correct implementation was reached:
+
+**Error 1 — Wrong measurement operator:**
+The initial approach used A(θ) = cos(θ)·Z + sin(θ)·X as the measurement operator. This is incorrect for the GHZ Mermin test. The correct operator is **A(θ) = cos(θ)·X + sin(θ)·Y**. The RZ(-θ) + H gate sequence used in the correct implementation produces cos(θ)·X + sin(θ)·Y in the Z basis, not the Z+X mix initially assumed.
+
+**Error 2 — Wrong classical bound:**
+The initial manifest listed the classical bound as |M| ≤ 4, with a quantum bound of 4√2 ≈ 5.657. The correct classical bound for the 3-qubit Mermin inequality is **|M| ≤ 2**, and the quantum maximum is **|M| = 4**. This was identified and corrected after user intervention.
+
+**How the correct formula was found:**
+The correct correlator formula **E(θ_a, θ_b, θ_c) = cos(θ_a + θ_b + θ_c)** was provided by the user and verified via statevector computation before writing any shot-based code. Statevector verification confirmed:
+- E(0,0,0) = +1, E(0,π/2,π/2) = -1, E(π/2,0,π/2) = -1, E(π/2,π/2,0) = -1
+- M = 1 − (−1) − (−1) − (−1) = 4.0 exactly
+
+**Rule established:** Always verify the formula against a statevector before writing shot-based simulation code.
+
+
+## Results
+
+- **date_run**: 2026-08-03T21:13:43.277148+00:00
+- **result_value**: 4.000000
+- **violated_bound**: classical
+- **circuit_hash**: 69051e620494d6b4ebaf02c40a36b540e3135cd7974ee98b149bc702090b03ac
+- **code_commit**: 152b474
+- **passes_minimum_bar**: true (M > 2 = quantum advantage)
+- **passes_target**: true (M >= 3.5 = near quantum max)
+- **shot_noise_verified**: false
+
+## Results
+
+- **date_run**: 2026-08-03T22:17:02.474717+00:00
+- **result_value**: 4.000000
+- **violated_bound**: classical
+- **circuit_hash**: 69051e620494d6b4ebaf02c40a36b540e3135cd7974ee98b149bc702090b03ac
+- **code_commit**: dad8e05
 - **passes_minimum_bar**: true (M > 2 = quantum advantage)
 - **passes_target**: true (M >= 3.5 = near quantum max)
 - **shot_noise_verified**: false

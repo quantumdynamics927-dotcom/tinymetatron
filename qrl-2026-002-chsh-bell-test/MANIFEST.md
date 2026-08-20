@@ -5,7 +5,7 @@
 - **title**: CHSH Bell Inequality Violation on a Simulated 2-Qubit Bell State
 - **date_proposed**: 2026-08-02
 - **circuit_family**: 2-qubit entangled Bell state (|Φ+⟩ = (|00⟩ + |11⟩)/√2)
-- **backend**: simulator (Qiskit Aer noise-free)
+- **backend**: simulator (Qiskit Aer noise-free); hardware-pending (no provider access)
 - **hypothesis**: A CHSH measurement on an ideal 2-qubit Bell state, simulated noiselessly, will yield S ≥ 2.7, violating the classical bound of 2 and approaching the theoretical quantum maximum of 2√2 ≈ 2.828.
 
 ## Physics Background
@@ -66,3 +66,29 @@ This configuration is the standard optimal CHSH strategy for the |Φ+⟩ state.
 - **shot_noise_verified**: true (S converged to 2.828120 at 100k shots, within 0.0003 of theoretical 2.828427)
 - **note**: Original 1024-shot result (S=2.830078) exceeded Tsirelson bound due to shot noise. Re-run at 100k shots confirmed S=2.828120.
 
+## Status
+- **simulator-validated**: YES — S=2.828 > 2, classical bound violated
+- **hardware-pending**: blocked — no IBM Quantum provider access (no API credentials, no active paid plan)
+- **next**: Re-run with realistic noise model using `qiskit_aer.noise.NoiseModel` to simulate hardware-like degradation. CHSH expected to remain above classical bound; Mermin/GHZ expected to show greater noise sensitivity.
+
+
+
+## Results
+
+- **date_run**: 2026-08-03T21:13:42.189848+00:00
+- **result_value**: 2.845703
+- **violated_bound**: classical
+- **circuit_hash**: a4eb7a2b9a1dec6bcd4dde85adf6a06f26d854868c05c2f43b9442f337ab1969
+- **code_commit**: 152b474
+- **passes_minimum_bar**: true (S > 2 = any quantum advantage)
+- **passes_target**: true (S >= 2.7 = near quantum maximum)
+
+## Results
+
+- **date_run**: 2026-08-03T22:17:01.426873+00:00
+- **result_value**: 2.894531
+- **violated_bound**: classical
+- **circuit_hash**: a4eb7a2b9a1dec6bcd4dde85adf6a06f26d854868c05c2f43b9442f337ab1969
+- **code_commit**: dad8e05
+- **passes_minimum_bar**: true (S > 2 = any quantum advantage)
+- **passes_target**: true (S >= 2.7 = near quantum maximum)

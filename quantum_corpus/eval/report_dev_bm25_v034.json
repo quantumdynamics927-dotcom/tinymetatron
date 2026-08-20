@@ -1,0 +1,2989 @@
+{
+  "summary": {
+    "n_items": 60,
+    "n_answerable": 60,
+    "recall@1": 0.3167,
+    "recall@3": 0.95,
+    "recall@5": 1.0,
+    "mrr": 0.6236,
+    "citation_precision@5": 0.2,
+    "si_recall@1": 0.3167,
+    "si_recall@5": 1.0,
+    "si_mrr": 0.6236,
+    "recall@5_by_category": {
+      "factual": 1.0,
+      "conceptual": null,
+      "cross_record": null,
+      "numeric": null
+    },
+    "n_abstention_expected": 0,
+    "n_answerable_for_abstention": 60,
+    "abstention_recall": null,
+    "abstention_precision": null,
+    "false_abstentions_on_answerable": 0,
+    "false_abstention_rate_on_answerable": NaN,
+    "false_answer_rate_on_unanswerable": null,
+    "false_answers_on_unanswerable": 0,
+    "leakage_rate": 0.0,
+    "leakage_count": 0,
+    "rubric_correctness": null,
+    "n_rubric_scored": 0,
+    "mean_latency_ms": 33.34,
+    "target": "dev",
+    "index": "train+val",
+    "mode": "bm25",
+    "retriever": "bm25",
+    "structured": false,
+    "gates": {
+      "score_floor_bm25": 3.0,
+      "score_floor_hybrid": 0.008,
+      "sep_ratio": 1.5,
+      "sep_band": 2.0,
+      "min_concepts": 1,
+      "grounding_sim_floor": 0.0
+    },
+    "n_index_docs": 38095
+  },
+  "items": [
+    {
+      "id": "d001",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4ua0b5eastc73ch00a0 run as / have?",
+      "gold_record_ids": [
+        36893
+      ],
+      "gold_source_identities": [
+        "ca4d2b02ac3cff9d95aa9f3f614e5712099de68b1e0aa85c66b5090dd679570c"
+      ],
+      "retrieved_top5": [
+        23517,
+        36893,
+        35537,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "22fa48dc75d9ef7a309fc448cff0d34cc71a6c9e6e9766481a826b8be762e6c2",
+        "ca4d2b02ac3cff9d95aa9f3f614e5712099de68b1e0aa85c66b5090dd679570c",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        19.443,
+        19.255,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 29.34
+    },
+    {
+      "id": "d002",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4ua0b5eastc73ch00a0 run as / have?",
+      "gold_record_ids": [
+        36893
+      ],
+      "gold_source_identities": [
+        "ca4d2b02ac3cff9d95aa9f3f614e5712099de68b1e0aa85c66b5090dd679570c"
+      ],
+      "retrieved_top5": [
+        36893,
+        23517,
+        35540,
+        35537,
+        35508
+      ],
+      "retrieved_source_identities_top5": [
+        "ca4d2b02ac3cff9d95aa9f3f614e5712099de68b1e0aa85c66b5090dd679570c",
+        "22fa48dc75d9ef7a309fc448cff0d34cc71a6c9e6e9766481a826b8be762e6c2",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "304caa74150572e17458df9ada16cbf7775e681fa1e3a6a844564926a7a80b7d"
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        14.973,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 34.21
+    },
+    {
+      "id": "d003",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4ua0b5eastc73ch00a0 run as / have?",
+      "gold_record_ids": [
+        36893
+      ],
+      "gold_source_identities": [
+        "ca4d2b02ac3cff9d95aa9f3f614e5712099de68b1e0aa85c66b5090dd679570c"
+      ],
+      "retrieved_top5": [
+        36893,
+        23517,
+        36932,
+        36934,
+        36948
+      ],
+      "retrieved_source_identities_top5": [
+        "ca4d2b02ac3cff9d95aa9f3f614e5712099de68b1e0aa85c66b5090dd679570c",
+        "22fa48dc75d9ef7a309fc448cff0d34cc71a6c9e6e9766481a826b8be762e6c2",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721",
+        "08439c2580f00b50972ce48c81e46bd7dc8e95898a1e29536358bba92fca7bd7"
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 28.25
+    },
+    {
+      "id": "d004",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4ald3a489vs73a2jl7g run as / have?",
+      "gold_record_ids": [
+        36894
+      ],
+      "gold_source_identities": [
+        "6e024cdfab2d8022c4fb6addc612becfa82483cc5c140f5ec80433f92ffc25df"
+      ],
+      "retrieved_top5": [
+        359,
+        36894,
+        358,
+        35537,
+        24320
+      ],
+      "retrieved_source_identities_top5": [
+        "bcea871d85e60803af61cd44dfedc1b806379b8a27b56acb452a1d44dae4c55c",
+        "6e024cdfab2d8022c4fb6addc612becfa82483cc5c140f5ec80433f92ffc25df",
+        "65dc63128de47b061f29e9008fc080bdc229eea593d4756a0ed515cd77ee7efa",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143"
+      ],
+      "scores_top5": [
+        19.443,
+        19.255,
+        17.636,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 29.23
+    },
+    {
+      "id": "d005",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4ald3a489vs73a2jl7g run as / have?",
+      "gold_record_ids": [
+        36894
+      ],
+      "gold_source_identities": [
+        "6e024cdfab2d8022c4fb6addc612becfa82483cc5c140f5ec80433f92ffc25df"
+      ],
+      "retrieved_top5": [
+        36894,
+        359,
+        358,
+        35540,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "6e024cdfab2d8022c4fb6addc612becfa82483cc5c140f5ec80433f92ffc25df",
+        "bcea871d85e60803af61cd44dfedc1b806379b8a27b56acb452a1d44dae4c55c",
+        "65dc63128de47b061f29e9008fc080bdc229eea593d4756a0ed515cd77ee7efa",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        15.068,
+        14.973,
+        14.715
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 28.92
+    },
+    {
+      "id": "d006",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4ald3a489vs73a2jl7g run as / have?",
+      "gold_record_ids": [
+        36894
+      ],
+      "gold_source_identities": [
+        "6e024cdfab2d8022c4fb6addc612becfa82483cc5c140f5ec80433f92ffc25df"
+      ],
+      "retrieved_top5": [
+        36894,
+        359,
+        358,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "6e024cdfab2d8022c4fb6addc612becfa82483cc5c140f5ec80433f92ffc25df",
+        "bcea871d85e60803af61cd44dfedc1b806379b8a27b56acb452a1d44dae4c55c",
+        "65dc63128de47b061f29e9008fc080bdc229eea593d4756a0ed515cd77ee7efa",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        15.068,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 29.87
+    },
+    {
+      "id": "d007",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4bu2gsi51bc738jfacg run as / have?",
+      "gold_record_ids": [
+        36895
+      ],
+      "gold_source_identities": [
+        "37704140472c1e6df4cf2743bd608448addfa91efbf3842c0436f36bcbefa9cf"
+      ],
+      "retrieved_top5": [
+        36895,
+        360,
+        35537,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "37704140472c1e6df4cf2743bd608448addfa91efbf3842c0436f36bcbefa9cf",
+        "9ca7e0a93706af2c92dff513fb615fbfd5ca0056aa51e67eb0b330a178762a5e",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        19.255,
+        17.636,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 28.73
+    },
+    {
+      "id": "d008",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4bu2gsi51bc738jfacg run as / have?",
+      "gold_record_ids": [
+        36895
+      ],
+      "gold_source_identities": [
+        "37704140472c1e6df4cf2743bd608448addfa91efbf3842c0436f36bcbefa9cf"
+      ],
+      "retrieved_top5": [
+        36895,
+        360,
+        35540,
+        35537,
+        35508
+      ],
+      "retrieved_source_identities_top5": [
+        "37704140472c1e6df4cf2743bd608448addfa91efbf3842c0436f36bcbefa9cf",
+        "9ca7e0a93706af2c92dff513fb615fbfd5ca0056aa51e67eb0b330a178762a5e",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "304caa74150572e17458df9ada16cbf7775e681fa1e3a6a844564926a7a80b7d"
+      ],
+      "scores_top5": [
+        19.924,
+        15.068,
+        14.973,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 28.2
+    },
+    {
+      "id": "d009",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4bu2gsi51bc738jfacg run as / have?",
+      "gold_record_ids": [
+        36895
+      ],
+      "gold_source_identities": [
+        "37704140472c1e6df4cf2743bd608448addfa91efbf3842c0436f36bcbefa9cf"
+      ],
+      "retrieved_top5": [
+        36895,
+        360,
+        36932,
+        36934,
+        36948
+      ],
+      "retrieved_source_identities_top5": [
+        "37704140472c1e6df4cf2743bd608448addfa91efbf3842c0436f36bcbefa9cf",
+        "9ca7e0a93706af2c92dff513fb615fbfd5ca0056aa51e67eb0b330a178762a5e",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721",
+        "08439c2580f00b50972ce48c81e46bd7dc8e95898a1e29536358bba92fca7bd7"
+      ],
+      "scores_top5": [
+        20.377,
+        15.068,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 27.97
+    },
+    {
+      "id": "d010",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4dubr1eg65s738lsbug run as / have?",
+      "gold_record_ids": [
+        36896
+      ],
+      "gold_source_identities": [
+        "d70d018af15febe5047d7f57c6ec2cf25145f3f4bdab3c9b579ac2695b3a9b9d"
+      ],
+      "retrieved_top5": [
+        363,
+        36896,
+        362,
+        35537,
+        24320
+      ],
+      "retrieved_source_identities_top5": [
+        "232e87dd1b04ace25e9f77d8eb976c26cfef8a408944b3bf3409d57ccc974de4",
+        "d70d018af15febe5047d7f57c6ec2cf25145f3f4bdab3c9b579ac2695b3a9b9d",
+        "2e00796f13202d39d871ce9c6c08e8e7da06b27a2f3954ddc7179ddcf3bc81db",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143"
+      ],
+      "scores_top5": [
+        19.443,
+        19.255,
+        17.636,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 33.54
+    },
+    {
+      "id": "d011",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4dubr1eg65s738lsbug run as / have?",
+      "gold_record_ids": [
+        36896
+      ],
+      "gold_source_identities": [
+        "d70d018af15febe5047d7f57c6ec2cf25145f3f4bdab3c9b579ac2695b3a9b9d"
+      ],
+      "retrieved_top5": [
+        36896,
+        363,
+        362,
+        35540,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "d70d018af15febe5047d7f57c6ec2cf25145f3f4bdab3c9b579ac2695b3a9b9d",
+        "232e87dd1b04ace25e9f77d8eb976c26cfef8a408944b3bf3409d57ccc974de4",
+        "2e00796f13202d39d871ce9c6c08e8e7da06b27a2f3954ddc7179ddcf3bc81db",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        15.068,
+        14.973,
+        14.715
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 30.74
+    },
+    {
+      "id": "d012",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4dubr1eg65s738lsbug run as / have?",
+      "gold_record_ids": [
+        36896
+      ],
+      "gold_source_identities": [
+        "d70d018af15febe5047d7f57c6ec2cf25145f3f4bdab3c9b579ac2695b3a9b9d"
+      ],
+      "retrieved_top5": [
+        36896,
+        363,
+        362,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "d70d018af15febe5047d7f57c6ec2cf25145f3f4bdab3c9b579ac2695b3a9b9d",
+        "232e87dd1b04ace25e9f77d8eb976c26cfef8a408944b3bf3409d57ccc974de4",
+        "2e00796f13202d39d871ce9c6c08e8e7da06b27a2f3954ddc7179ddcf3bc81db",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        15.068,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 31.3
+    },
+    {
+      "id": "d013",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4fbk30lslhc73cvi040 run as / have?",
+      "gold_record_ids": [
+        36897
+      ],
+      "gold_source_identities": [
+        "66738317319611dfcecd3472e5d1edd9044cf353e48382a1d0cf343af9bf63b9"
+      ],
+      "retrieved_top5": [
+        23489,
+        36897,
+        35537,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "24b2497926aa1eee914c36c1cdddeb09a60e0637585092450d9a089eeede4b3d",
+        "66738317319611dfcecd3472e5d1edd9044cf353e48382a1d0cf343af9bf63b9",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        19.443,
+        19.255,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 28.13
+    },
+    {
+      "id": "d014",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4fbk30lslhc73cvi040 run as / have?",
+      "gold_record_ids": [
+        36897
+      ],
+      "gold_source_identities": [
+        "66738317319611dfcecd3472e5d1edd9044cf353e48382a1d0cf343af9bf63b9"
+      ],
+      "retrieved_top5": [
+        36897,
+        23489,
+        35540,
+        35537,
+        35508
+      ],
+      "retrieved_source_identities_top5": [
+        "66738317319611dfcecd3472e5d1edd9044cf353e48382a1d0cf343af9bf63b9",
+        "24b2497926aa1eee914c36c1cdddeb09a60e0637585092450d9a089eeede4b3d",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "304caa74150572e17458df9ada16cbf7775e681fa1e3a6a844564926a7a80b7d"
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        14.973,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 27.59
+    },
+    {
+      "id": "d015",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4fbk30lslhc73cvi040 run as / have?",
+      "gold_record_ids": [
+        36897
+      ],
+      "gold_source_identities": [
+        "66738317319611dfcecd3472e5d1edd9044cf353e48382a1d0cf343af9bf63b9"
+      ],
+      "retrieved_top5": [
+        36897,
+        23489,
+        36932,
+        36934,
+        36948
+      ],
+      "retrieved_source_identities_top5": [
+        "66738317319611dfcecd3472e5d1edd9044cf353e48382a1d0cf343af9bf63b9",
+        "24b2497926aa1eee914c36c1cdddeb09a60e0637585092450d9a089eeede4b3d",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721",
+        "08439c2580f00b50972ce48c81e46bd7dc8e95898a1e29536358bba92fca7bd7"
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 28.18
+    },
+    {
+      "id": "d016",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4hkrsh2bisc73a4j9jg run as / have?",
+      "gold_record_ids": [
+        36898
+      ],
+      "gold_source_identities": [
+        "09681d88deff9e168828d0182d2804486512f8ce706121bbb67f7d7551b6db08"
+      ],
+      "retrieved_top5": [
+        365,
+        36898,
+        364,
+        35537,
+        24320
+      ],
+      "retrieved_source_identities_top5": [
+        "bc5b6b4b59a7e7d79eb12fc0da630eca8ca4a1f533b5ca278c0b50094f0cc0d7",
+        "09681d88deff9e168828d0182d2804486512f8ce706121bbb67f7d7551b6db08",
+        "4246db95d78ef9969404122b9904e34ec26fa0cae0394ed576ae2ea42a11f488",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143"
+      ],
+      "scores_top5": [
+        19.443,
+        19.255,
+        17.636,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 27.83
+    },
+    {
+      "id": "d017",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4hkrsh2bisc73a4j9jg run as / have?",
+      "gold_record_ids": [
+        36898
+      ],
+      "gold_source_identities": [
+        "09681d88deff9e168828d0182d2804486512f8ce706121bbb67f7d7551b6db08"
+      ],
+      "retrieved_top5": [
+        36898,
+        365,
+        364,
+        35540,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "09681d88deff9e168828d0182d2804486512f8ce706121bbb67f7d7551b6db08",
+        "bc5b6b4b59a7e7d79eb12fc0da630eca8ca4a1f533b5ca278c0b50094f0cc0d7",
+        "4246db95d78ef9969404122b9904e34ec26fa0cae0394ed576ae2ea42a11f488",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        19.924,
+        16.956,
+        15.068,
+        14.973,
+        14.715
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 34.7
+    },
+    {
+      "id": "d018",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4hkrsh2bisc73a4j9jg run as / have?",
+      "gold_record_ids": [
+        36898
+      ],
+      "gold_source_identities": [
+        "09681d88deff9e168828d0182d2804486512f8ce706121bbb67f7d7551b6db08"
+      ],
+      "retrieved_top5": [
+        36898,
+        365,
+        364,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "09681d88deff9e168828d0182d2804486512f8ce706121bbb67f7d7551b6db08",
+        "bc5b6b4b59a7e7d79eb12fc0da630eca8ca4a1f533b5ca278c0b50094f0cc0d7",
+        "4246db95d78ef9969404122b9904e34ec26fa0cae0394ed576ae2ea42a11f488",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        20.377,
+        16.956,
+        15.068,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 28.49
+    },
+    {
+      "id": "d019",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4jsmlqv0j9c73e3n4p0 run as / have?",
+      "gold_record_ids": [
+        36899
+      ],
+      "gold_source_identities": [
+        "eb072880c059e60e1be956c15921fd4c046527b6d3952a1ce59e5ba9248dc58a"
+      ],
+      "retrieved_top5": [
+        367,
+        36899,
+        35537,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "cb5e104f509d3e8508ae453b454cadbccad0974ac4ed9913c4bb5ebd23323030",
+        "eb072880c059e60e1be956c15921fd4c046527b6d3952a1ce59e5ba9248dc58a",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        19.85,
+        19.547,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 39.76
+    },
+    {
+      "id": "d020",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4jsmlqv0j9c73e3n4p0 run as / have?",
+      "gold_record_ids": [
+        36899
+      ],
+      "gold_source_identities": [
+        "eb072880c059e60e1be956c15921fd4c046527b6d3952a1ce59e5ba9248dc58a"
+      ],
+      "retrieved_top5": [
+        36899,
+        367,
+        35540,
+        35537,
+        35508
+      ],
+      "retrieved_source_identities_top5": [
+        "eb072880c059e60e1be956c15921fd4c046527b6d3952a1ce59e5ba9248dc58a",
+        "cb5e104f509d3e8508ae453b454cadbccad0974ac4ed9913c4bb5ebd23323030",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "304caa74150572e17458df9ada16cbf7775e681fa1e3a6a844564926a7a80b7d"
+      ],
+      "scores_top5": [
+        20.217,
+        17.364,
+        14.973,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 42.21
+    },
+    {
+      "id": "d021",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4jsmlqv0j9c73e3n4p0 run as / have?",
+      "gold_record_ids": [
+        36899
+      ],
+      "gold_source_identities": [
+        "eb072880c059e60e1be956c15921fd4c046527b6d3952a1ce59e5ba9248dc58a"
+      ],
+      "retrieved_top5": [
+        36899,
+        367,
+        36932,
+        36934,
+        36948
+      ],
+      "retrieved_source_identities_top5": [
+        "eb072880c059e60e1be956c15921fd4c046527b6d3952a1ce59e5ba9248dc58a",
+        "cb5e104f509d3e8508ae453b454cadbccad0974ac4ed9913c4bb5ebd23323030",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721",
+        "08439c2580f00b50972ce48c81e46bd7dc8e95898a1e29536358bba92fca7bd7"
+      ],
+      "scores_top5": [
+        20.67,
+        17.364,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 36.18
+    },
+    {
+      "id": "d022",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4jtd1574pkc7386drng run as / have?",
+      "gold_record_ids": [
+        36900
+      ],
+      "gold_source_identities": [
+        "e1ee351066cc4204c17cf1bb41cf164ebfc9d984c2a68c010bad6a82fe9197f1"
+      ],
+      "retrieved_top5": [
+        369,
+        36900,
+        35537,
+        24320,
+        25304
+      ],
+      "retrieved_source_identities_top5": [
+        "f0bad95c31589b1ae9ee6dcd38f354fcc34dd3ad1d94e3ca56eb3fa48ad52b2a",
+        "e1ee351066cc4204c17cf1bb41cf164ebfc9d984c2a68c010bad6a82fe9197f1",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143",
+        "2bfe8e02d3e62b7b6f122b4f4249890edb305be261c286a861805b53f294b2e4"
+      ],
+      "scores_top5": [
+        19.85,
+        19.547,
+        14.715,
+        14.428,
+        13.868
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 26.55
+    },
+    {
+      "id": "d023",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4jtd1574pkc7386drng run as / have?",
+      "gold_record_ids": [
+        36900
+      ],
+      "gold_source_identities": [
+        "e1ee351066cc4204c17cf1bb41cf164ebfc9d984c2a68c010bad6a82fe9197f1"
+      ],
+      "retrieved_top5": [
+        36900,
+        369,
+        35540,
+        35537,
+        35508
+      ],
+      "retrieved_source_identities_top5": [
+        "e1ee351066cc4204c17cf1bb41cf164ebfc9d984c2a68c010bad6a82fe9197f1",
+        "f0bad95c31589b1ae9ee6dcd38f354fcc34dd3ad1d94e3ca56eb3fa48ad52b2a",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "304caa74150572e17458df9ada16cbf7775e681fa1e3a6a844564926a7a80b7d"
+      ],
+      "scores_top5": [
+        20.217,
+        17.364,
+        14.973,
+        14.715,
+        14.554
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 40.71
+    },
+    {
+      "id": "d024",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4jtd1574pkc7386drng run as / have?",
+      "gold_record_ids": [
+        36900
+      ],
+      "gold_source_identities": [
+        "e1ee351066cc4204c17cf1bb41cf164ebfc9d984c2a68c010bad6a82fe9197f1"
+      ],
+      "retrieved_top5": [
+        36900,
+        369,
+        36932,
+        36934,
+        36948
+      ],
+      "retrieved_source_identities_top5": [
+        "e1ee351066cc4204c17cf1bb41cf164ebfc9d984c2a68c010bad6a82fe9197f1",
+        "f0bad95c31589b1ae9ee6dcd38f354fcc34dd3ad1d94e3ca56eb3fa48ad52b2a",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721",
+        "08439c2580f00b50972ce48c81e46bd7dc8e95898a1e29536358bba92fca7bd7"
+      ],
+      "scores_top5": [
+        20.67,
+        17.364,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 47.05
+    },
+    {
+      "id": "d025",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4ke2110i6jc73deo07g run as / have?",
+      "gold_record_ids": [
+        36901
+      ],
+      "gold_source_identities": [
+        "d88a97da0d37a026c42413d403dacf92a60575b7a677773e0f397b00cd44bcf1"
+      ],
+      "retrieved_top5": [
+        371,
+        36901,
+        370,
+        35537,
+        24320
+      ],
+      "retrieved_source_identities_top5": [
+        "7d1668970210bb993c57afe39b8a6839dcf92bfc69b5ebf395d6e762a980d3b6",
+        "d88a97da0d37a026c42413d403dacf92a60575b7a677773e0f397b00cd44bcf1",
+        "4f6abdb2ce6904cba6cc5f25bb4e9bc57c2e8c0ca49a17f359fe9aa65083a873",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143"
+      ],
+      "scores_top5": [
+        19.139,
+        19.036,
+        17.387,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 44.55
+    },
+    {
+      "id": "d026",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4ke2110i6jc73deo07g run as / have?",
+      "gold_record_ids": [
+        36901
+      ],
+      "gold_source_identities": [
+        "d88a97da0d37a026c42413d403dacf92a60575b7a677773e0f397b00cd44bcf1"
+      ],
+      "retrieved_top5": [
+        36901,
+        371,
+        35540,
+        370,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "d88a97da0d37a026c42413d403dacf92a60575b7a677773e0f397b00cd44bcf1",
+        "7d1668970210bb993c57afe39b8a6839dcf92bfc69b5ebf395d6e762a980d3b6",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "4f6abdb2ce6904cba6cc5f25bb4e9bc57c2e8c0ca49a17f359fe9aa65083a873",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        19.706,
+        16.652,
+        14.973,
+        14.819,
+        14.715
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 49.97
+    },
+    {
+      "id": "d027",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4ke2110i6jc73deo07g run as / have?",
+      "gold_record_ids": [
+        36901
+      ],
+      "gold_source_identities": [
+        "d88a97da0d37a026c42413d403dacf92a60575b7a677773e0f397b00cd44bcf1"
+      ],
+      "retrieved_top5": [
+        36901,
+        371,
+        36932,
+        36934,
+        36948
+      ],
+      "retrieved_source_identities_top5": [
+        "d88a97da0d37a026c42413d403dacf92a60575b7a677773e0f397b00cd44bcf1",
+        "7d1668970210bb993c57afe39b8a6839dcf92bfc69b5ebf395d6e762a980d3b6",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721",
+        "08439c2580f00b50972ce48c81e46bd7dc8e95898a1e29536358bba92fca7bd7"
+      ],
+      "scores_top5": [
+        20.158,
+        16.652,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 1.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 1.0,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 1.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 1.0,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 29.55
+    },
+    {
+      "id": "d028",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfl02v0j9c73e69300 run as / have?",
+      "gold_record_ids": [
+        36902
+      ],
+      "gold_source_identities": [
+        "6e41f9e69172cd214929517229e5c98c862f921f4858d78dc675d4a21108f7de"
+      ],
+      "retrieved_top5": [
+        36861,
+        27590,
+        36902,
+        23491,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "f064d7ff04072e6cdd8a5eb37e8dc618d08a5252b0cfb127d88635ca6f5ac44f",
+        "803d317d58ab32ad45c7658cfde4f5de8634510be0305f0acc010dc8c4c80d22",
+        "6e41f9e69172cd214929517229e5c98c862f921f4858d78dc675d4a21108f7de",
+        "c07f6ecc125363894f129aa2f9e031799c5fcdf07c4b037b954a86748540ac9e",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.3333333333333333,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 23.47
+    },
+    {
+      "id": "d029",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfl02v0j9c73e69300 run as / have?",
+      "gold_record_ids": [
+        36902
+      ],
+      "gold_source_identities": [
+        "6e41f9e69172cd214929517229e5c98c862f921f4858d78dc675d4a21108f7de"
+      ],
+      "retrieved_top5": [
+        36861,
+        36902,
+        27590,
+        23491,
+        35540
+      ],
+      "retrieved_source_identities_top5": [
+        "f064d7ff04072e6cdd8a5eb37e8dc618d08a5252b0cfb127d88635ca6f5ac44f",
+        "6e41f9e69172cd214929517229e5c98c862f921f4858d78dc675d4a21108f7de",
+        "803d317d58ab32ad45c7658cfde4f5de8634510be0305f0acc010dc8c4c80d22",
+        "c07f6ecc125363894f129aa2f9e031799c5fcdf07c4b037b954a86748540ac9e",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611"
+      ],
+      "scores_top5": [
+        23.432,
+        19.386,
+        19.02,
+        16.207,
+        14.973
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 33.93
+    },
+    {
+      "id": "d030",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfl02v0j9c73e69300 run as / have?",
+      "gold_record_ids": [
+        36902
+      ],
+      "gold_source_identities": [
+        "6e41f9e69172cd214929517229e5c98c862f921f4858d78dc675d4a21108f7de"
+      ],
+      "retrieved_top5": [
+        36861,
+        36902,
+        23491,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "f064d7ff04072e6cdd8a5eb37e8dc618d08a5252b0cfb127d88635ca6f5ac44f",
+        "6e41f9e69172cd214929517229e5c98c862f921f4858d78dc675d4a21108f7de",
+        "c07f6ecc125363894f129aa2f9e031799c5fcdf07c4b037b954a86748540ac9e",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 42.2
+    },
+    {
+      "id": "d031",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq290i6jc73dgo720 run as / have?",
+      "gold_record_ids": [
+        36903
+      ],
+      "gold_source_identities": [
+        "4183dc540b0d7c2bfd004ffeea3cc1074fab18128a6cd3bfdf84d626f1f21fa8"
+      ],
+      "retrieved_top5": [
+        36862,
+        27592,
+        373,
+        36903,
+        372
+      ],
+      "retrieved_source_identities_top5": [
+        "06953b10456544587d876365f4b501ae87ff9095e7b6058902d4628faff33c5f",
+        "7a076389b30d00e350cc6986501ffcaabfe7718e38b9e15f8cb1810fbb2c06ff",
+        "8f643f870402788d67ca8a719acb3737def1137a38c093490528d992019d491f",
+        "4183dc540b0d7c2bfd004ffeea3cc1074fab18128a6cd3bfdf84d626f1f21fa8",
+        "f9b898a7b19354526a1bf1f34cefcb2d677ca0bcf7bebe922d8608ba8e30c201"
+      ],
+      "scores_top5": [
+        24.284,
+        19.658,
+        18.896,
+        18.862,
+        17.189
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "mrr": 0.25,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.25,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 42.18
+    },
+    {
+      "id": "d032",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq290i6jc73dgo720 run as / have?",
+      "gold_record_ids": [
+        36903
+      ],
+      "gold_source_identities": [
+        "4183dc540b0d7c2bfd004ffeea3cc1074fab18128a6cd3bfdf84d626f1f21fa8"
+      ],
+      "retrieved_top5": [
+        36862,
+        36903,
+        27592,
+        373,
+        35540
+      ],
+      "retrieved_source_identities_top5": [
+        "06953b10456544587d876365f4b501ae87ff9095e7b6058902d4628faff33c5f",
+        "4183dc540b0d7c2bfd004ffeea3cc1074fab18128a6cd3bfdf84d626f1f21fa8",
+        "7a076389b30d00e350cc6986501ffcaabfe7718e38b9e15f8cb1810fbb2c06ff",
+        "8f643f870402788d67ca8a719acb3737def1137a38c093490528d992019d491f",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611"
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        19.295,
+        16.409,
+        14.973
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 43.7
+    },
+    {
+      "id": "d033",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq290i6jc73dgo720 run as / have?",
+      "gold_record_ids": [
+        36903
+      ],
+      "gold_source_identities": [
+        "4183dc540b0d7c2bfd004ffeea3cc1074fab18128a6cd3bfdf84d626f1f21fa8"
+      ],
+      "retrieved_top5": [
+        36862,
+        36903,
+        373,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "06953b10456544587d876365f4b501ae87ff9095e7b6058902d4628faff33c5f",
+        "4183dc540b0d7c2bfd004ffeea3cc1074fab18128a6cd3bfdf84d626f1f21fa8",
+        "8f643f870402788d67ca8a719acb3737def1137a38c093490528d992019d491f",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        24.113,
+        19.984,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 47.57
+    },
+    {
+      "id": "d034",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq2s3tdfc73dqdpfg run as / have?",
+      "gold_record_ids": [
+        36904
+      ],
+      "gold_source_identities": [
+        "2d025d89c92416fdae904be54ae922df2ed4093e705c217661158e9143073931"
+      ],
+      "retrieved_top5": [
+        36863,
+        27594,
+        23493,
+        36904,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "5778ad8b6392d30dce42851c75f1478374a4c259057aa8b54a3975ca52a61c49",
+        "fa25af28f49da6e6eec29690a3b5ec95105e21089fe71f3f35c12658dc099bdb",
+        "e56ba482a962ea7c88348d6cf76708620cab8088e0e90b89e0f39fd2a134a10c",
+        "2d025d89c92416fdae904be54ae922df2ed4093e705c217661158e9143073931",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        24.284,
+        19.658,
+        18.896,
+        18.862,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "mrr": 0.25,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.25,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 36.51
+    },
+    {
+      "id": "d035",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq2s3tdfc73dqdpfg run as / have?",
+      "gold_record_ids": [
+        36904
+      ],
+      "gold_source_identities": [
+        "2d025d89c92416fdae904be54ae922df2ed4093e705c217661158e9143073931"
+      ],
+      "retrieved_top5": [
+        36863,
+        36904,
+        27594,
+        23493,
+        35540
+      ],
+      "retrieved_source_identities_top5": [
+        "5778ad8b6392d30dce42851c75f1478374a4c259057aa8b54a3975ca52a61c49",
+        "2d025d89c92416fdae904be54ae922df2ed4093e705c217661158e9143073931",
+        "fa25af28f49da6e6eec29690a3b5ec95105e21089fe71f3f35c12658dc099bdb",
+        "e56ba482a962ea7c88348d6cf76708620cab8088e0e90b89e0f39fd2a134a10c",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611"
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        19.295,
+        16.409,
+        14.973
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 42.59
+    },
+    {
+      "id": "d036",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq2s3tdfc73dqdpfg run as / have?",
+      "gold_record_ids": [
+        36904
+      ],
+      "gold_source_identities": [
+        "2d025d89c92416fdae904be54ae922df2ed4093e705c217661158e9143073931"
+      ],
+      "retrieved_top5": [
+        36863,
+        36904,
+        23493,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "5778ad8b6392d30dce42851c75f1478374a4c259057aa8b54a3975ca52a61c49",
+        "2d025d89c92416fdae904be54ae922df2ed4093e705c217661158e9143073931",
+        "e56ba482a962ea7c88348d6cf76708620cab8088e0e90b89e0f39fd2a134a10c",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        24.113,
+        19.984,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 31.88
+    },
+    {
+      "id": "d037",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq3iv0j9c73e697m0 run as / have?",
+      "gold_record_ids": [
+        36905
+      ],
+      "gold_source_identities": [
+        "5901fec43666df341e7f08cf028c676df427997e46d843850bac27d14483ea59"
+      ],
+      "retrieved_top5": [
+        36864,
+        27596,
+        375,
+        36905,
+        374
+      ],
+      "retrieved_source_identities_top5": [
+        "f49803ede6beffb6e03cf6bc5ced846d619bdb985e51cf779ece68134074814b",
+        "5203491d28dfbe43121d056a056614b3373db912b61148d69c52047c13e9b19d",
+        "b838a5d2ff5e62d46722c21feebb09db2aa992673f9758eba5079f9ae49757fc",
+        "5901fec43666df341e7f08cf028c676df427997e46d843850bac27d14483ea59",
+        "63253d6639701b34800e9fcdb78f98b9b0d3fc2005952eac6b2328c017ddebca"
+      ],
+      "scores_top5": [
+        24.284,
+        19.658,
+        18.896,
+        18.862,
+        17.189
+      ],
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 1.0,
+      "mrr": 0.25,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.25,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 27.22
+    },
+    {
+      "id": "d038",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq3iv0j9c73e697m0 run as / have?",
+      "gold_record_ids": [
+        36905
+      ],
+      "gold_source_identities": [
+        "5901fec43666df341e7f08cf028c676df427997e46d843850bac27d14483ea59"
+      ],
+      "retrieved_top5": [
+        36864,
+        36905,
+        27596,
+        375,
+        35540
+      ],
+      "retrieved_source_identities_top5": [
+        "f49803ede6beffb6e03cf6bc5ced846d619bdb985e51cf779ece68134074814b",
+        "5901fec43666df341e7f08cf028c676df427997e46d843850bac27d14483ea59",
+        "5203491d28dfbe43121d056a056614b3373db912b61148d69c52047c13e9b19d",
+        "b838a5d2ff5e62d46722c21feebb09db2aa992673f9758eba5079f9ae49757fc",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611"
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        19.295,
+        16.409,
+        14.973
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 31.91
+    },
+    {
+      "id": "d039",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq3iv0j9c73e697m0 run as / have?",
+      "gold_record_ids": [
+        36905
+      ],
+      "gold_source_identities": [
+        "5901fec43666df341e7f08cf028c676df427997e46d843850bac27d14483ea59"
+      ],
+      "retrieved_top5": [
+        36864,
+        36905,
+        375,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "f49803ede6beffb6e03cf6bc5ced846d619bdb985e51cf779ece68134074814b",
+        "5901fec43666df341e7f08cf028c676df427997e46d843850bac27d14483ea59",
+        "b838a5d2ff5e62d46722c21feebb09db2aa992673f9758eba5079f9ae49757fc",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        24.113,
+        19.984,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 38.03
+    },
+    {
+      "id": "d040",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq490i6jc73dgo74g run as / have?",
+      "gold_record_ids": [
+        36906
+      ],
+      "gold_source_identities": [
+        "165f516d2b4566a3f1ef813dc7b8dab3e284014f232954ebfb93383d4b43f2e2"
+      ],
+      "retrieved_top5": [
+        36865,
+        27598,
+        36906,
+        377,
+        376
+      ],
+      "retrieved_source_identities_top5": [
+        "43be9facae5886293f9d352f9b5fe928f20dd5eafff35ef9d39a2684d443f5a9",
+        "84bf9267b1c7153ce5352a2480d21c9f88d036ce55e7a84710d26b7819b66029",
+        "165f516d2b4566a3f1ef813dc7b8dab3e284014f232954ebfb93383d4b43f2e2",
+        "15e5a32354fda98faa9a8c25fda8c78ca73a26e25febccf799793a8107b24b58",
+        "dbcdaab02137a72b0b77106c79b2b977859ef5e788267f65326573de1258c643"
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        17.023
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.3333333333333333,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 30.16
+    },
+    {
+      "id": "d041",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq490i6jc73dgo74g run as / have?",
+      "gold_record_ids": [
+        36906
+      ],
+      "gold_source_identities": [
+        "165f516d2b4566a3f1ef813dc7b8dab3e284014f232954ebfb93383d4b43f2e2"
+      ],
+      "retrieved_top5": [
+        36865,
+        36906,
+        27598,
+        377,
+        35540
+      ],
+      "retrieved_source_identities_top5": [
+        "43be9facae5886293f9d352f9b5fe928f20dd5eafff35ef9d39a2684d443f5a9",
+        "165f516d2b4566a3f1ef813dc7b8dab3e284014f232954ebfb93383d4b43f2e2",
+        "84bf9267b1c7153ce5352a2480d21c9f88d036ce55e7a84710d26b7819b66029",
+        "15e5a32354fda98faa9a8c25fda8c78ca73a26e25febccf799793a8107b24b58",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611"
+      ],
+      "scores_top5": [
+        23.432,
+        19.386,
+        19.02,
+        16.207,
+        14.973
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 24.56
+    },
+    {
+      "id": "d042",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq490i6jc73dgo74g run as / have?",
+      "gold_record_ids": [
+        36906
+      ],
+      "gold_source_identities": [
+        "165f516d2b4566a3f1ef813dc7b8dab3e284014f232954ebfb93383d4b43f2e2"
+      ],
+      "retrieved_top5": [
+        36865,
+        36906,
+        377,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "43be9facae5886293f9d352f9b5fe928f20dd5eafff35ef9d39a2684d443f5a9",
+        "165f516d2b4566a3f1ef813dc7b8dab3e284014f232954ebfb93383d4b43f2e2",
+        "15e5a32354fda98faa9a8c25fda8c78ca73a26e25febccf799793a8107b24b58",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 24.6
+    },
+    {
+      "id": "d043",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq4p0i6jc73dgo75g run as / have?",
+      "gold_record_ids": [
+        36907
+      ],
+      "gold_source_identities": [
+        "baa0f2ddca7bdb0278beca2666cbb6b09dbf73f20c1d0915d0c530451bef3ef8"
+      ],
+      "retrieved_top5": [
+        36866,
+        23495,
+        36907,
+        35537,
+        24320
+      ],
+      "retrieved_source_identities_top5": [
+        "a019607bde767c60df01ac2412d3eef298bf02deee45fd502878605642ee4471",
+        "060bca877a0fa1d139dd9dfd91f857a886e4e019a99bce8889dd0556e29a40c9",
+        "baa0f2ddca7bdb0278beca2666cbb6b09dbf73f20c1d0915d0c530451bef3ef8",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143"
+      ],
+      "scores_top5": [
+        24.284,
+        18.896,
+        18.862,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.3333333333333333,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 32.21
+    },
+    {
+      "id": "d044",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq4p0i6jc73dgo75g run as / have?",
+      "gold_record_ids": [
+        36907
+      ],
+      "gold_source_identities": [
+        "baa0f2ddca7bdb0278beca2666cbb6b09dbf73f20c1d0915d0c530451bef3ef8"
+      ],
+      "retrieved_top5": [
+        36866,
+        36907,
+        23495,
+        35540,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "a019607bde767c60df01ac2412d3eef298bf02deee45fd502878605642ee4471",
+        "baa0f2ddca7bdb0278beca2666cbb6b09dbf73f20c1d0915d0c530451bef3ef8",
+        "060bca877a0fa1d139dd9dfd91f857a886e4e019a99bce8889dd0556e29a40c9",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        16.409,
+        14.973,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 36.49
+    },
+    {
+      "id": "d045",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq4p0i6jc73dgo75g run as / have?",
+      "gold_record_ids": [
+        36907
+      ],
+      "gold_source_identities": [
+        "baa0f2ddca7bdb0278beca2666cbb6b09dbf73f20c1d0915d0c530451bef3ef8"
+      ],
+      "retrieved_top5": [
+        36866,
+        36907,
+        23495,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "a019607bde767c60df01ac2412d3eef298bf02deee45fd502878605642ee4471",
+        "baa0f2ddca7bdb0278beca2666cbb6b09dbf73f20c1d0915d0c530451bef3ef8",
+        "060bca877a0fa1d139dd9dfd91f857a886e4e019a99bce8889dd0556e29a40c9",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        24.113,
+        19.984,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 34.15
+    },
+    {
+      "id": "d046",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq5qv0j9c73e697o0 run as / have?",
+      "gold_record_ids": [
+        36908
+      ],
+      "gold_source_identities": [
+        "69980d8fee9500879c8f6ed970a60a49711573f28a270da66d350c2f9bd9d5c7"
+      ],
+      "retrieved_top5": [
+        36867,
+        27602,
+        36908,
+        35537,
+        24320
+      ],
+      "retrieved_source_identities_top5": [
+        "224412a9e7229ee448a4ee621bdd441dc307cf50e8e008f1632f22f331a1e2f6",
+        "e02a1938d4dd27f576991a9eafbbe59cd1f483c11f8b79a894a059a4b2500913",
+        "69980d8fee9500879c8f6ed970a60a49711573f28a270da66d350c2f9bd9d5c7",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664",
+        "6a06572853bb139562410336ca5c97f196e8683a6c2a280ea30acc4d57e0a143"
+      ],
+      "scores_top5": [
+        24.284,
+        19.658,
+        18.862,
+        14.715,
+        14.428
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.3333333333333333,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 32.49
+    },
+    {
+      "id": "d047",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq5qv0j9c73e697o0 run as / have?",
+      "gold_record_ids": [
+        36908
+      ],
+      "gold_source_identities": [
+        "69980d8fee9500879c8f6ed970a60a49711573f28a270da66d350c2f9bd9d5c7"
+      ],
+      "retrieved_top5": [
+        36867,
+        36908,
+        27602,
+        35540,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "224412a9e7229ee448a4ee621bdd441dc307cf50e8e008f1632f22f331a1e2f6",
+        "69980d8fee9500879c8f6ed970a60a49711573f28a270da66d350c2f9bd9d5c7",
+        "e02a1938d4dd27f576991a9eafbbe59cd1f483c11f8b79a894a059a4b2500913",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        19.295,
+        14.973,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 31.62
+    },
+    {
+      "id": "d048",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq5qv0j9c73e697o0 run as / have?",
+      "gold_record_ids": [
+        36908
+      ],
+      "gold_source_identities": [
+        "69980d8fee9500879c8f6ed970a60a49711573f28a270da66d350c2f9bd9d5c7"
+      ],
+      "retrieved_top5": [
+        36867,
+        36908,
+        36932,
+        36934,
+        36948
+      ],
+      "retrieved_source_identities_top5": [
+        "224412a9e7229ee448a4ee621bdd441dc307cf50e8e008f1632f22f331a1e2f6",
+        "69980d8fee9500879c8f6ed970a60a49711573f28a270da66d350c2f9bd9d5c7",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721",
+        "08439c2580f00b50972ce48c81e46bd7dc8e95898a1e29536358bba92fca7bd7"
+      ],
+      "scores_top5": [
+        24.113,
+        19.984,
+        14.879,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 27.71
+    },
+    {
+      "id": "d049",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq690i6jc73dgo770 run as / have?",
+      "gold_record_ids": [
+        36909
+      ],
+      "gold_source_identities": [
+        "a4f06e274067e5830dd0b0f06af02fd7b3843ade335579db4bb38cd950a40bed"
+      ],
+      "retrieved_top5": [
+        36868,
+        379,
+        36909,
+        378,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "99f4d2c4308d1631ff52bbc09fe560677220e20531242d5feadb8c2ee22c4d21",
+        "bddb1df3f42f46b69ee4dc01d32bdd8f178cc86ad499d35599d70095dc4c1fde",
+        "a4f06e274067e5830dd0b0f06af02fd7b3843ade335579db4bb38cd950a40bed",
+        "385ab55bf79422421579ee3b4d6ccabac9e9331eef14288a92aea3a9b48952e4",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        24.284,
+        18.896,
+        18.862,
+        17.189,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.3333333333333333,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 34.06
+    },
+    {
+      "id": "d050",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq690i6jc73dgo770 run as / have?",
+      "gold_record_ids": [
+        36909
+      ],
+      "gold_source_identities": [
+        "a4f06e274067e5830dd0b0f06af02fd7b3843ade335579db4bb38cd950a40bed"
+      ],
+      "retrieved_top5": [
+        36868,
+        36909,
+        379,
+        35540,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "99f4d2c4308d1631ff52bbc09fe560677220e20531242d5feadb8c2ee22c4d21",
+        "a4f06e274067e5830dd0b0f06af02fd7b3843ade335579db4bb38cd950a40bed",
+        "bddb1df3f42f46b69ee4dc01d32bdd8f178cc86ad499d35599d70095dc4c1fde",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        23.651,
+        19.531,
+        16.409,
+        14.973,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 30.18
+    },
+    {
+      "id": "d051",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq690i6jc73dgo770 run as / have?",
+      "gold_record_ids": [
+        36909
+      ],
+      "gold_source_identities": [
+        "a4f06e274067e5830dd0b0f06af02fd7b3843ade335579db4bb38cd950a40bed"
+      ],
+      "retrieved_top5": [
+        36868,
+        36909,
+        379,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "99f4d2c4308d1631ff52bbc09fe560677220e20531242d5feadb8c2ee22c4d21",
+        "a4f06e274067e5830dd0b0f06af02fd7b3843ade335579db4bb38cd950a40bed",
+        "bddb1df3f42f46b69ee4dc01d32bdd8f178cc86ad499d35599d70095dc4c1fde",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        24.113,
+        19.984,
+        16.409,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 40.06
+    },
+    {
+      "id": "d052",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq7c3tdfc73dqdpk0 run as / have?",
+      "gold_record_ids": [
+        36910
+      ],
+      "gold_source_identities": [
+        "520e45d3e7309f795b02e5a867b51d3d2535c69ec8b4820508cd75c599d35cd3"
+      ],
+      "retrieved_top5": [
+        36869,
+        27606,
+        36910,
+        23499,
+        35537
+      ],
+      "retrieved_source_identities_top5": [
+        "a8e7be130151e0a14cb0b836bb1cb3c21ae39f17103048918541317126942c3c",
+        "b93418d53225c676a5b7d20b109018989d59dd334de8b0137b547ef2e39fdefe",
+        "520e45d3e7309f795b02e5a867b51d3d2535c69ec8b4820508cd75c599d35cd3",
+        "dab0f11c2e4b7ffb5983c5832a385637663f417ae085291c99bba416f986dd60",
+        "a7d5b652acc5de372e884b0c78539cb1610f9198722f6d8e4838f55de3e88664"
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        14.715
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.3333333333333333,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 41.4
+    },
+    {
+      "id": "d053",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq7c3tdfc73dqdpk0 run as / have?",
+      "gold_record_ids": [
+        36910
+      ],
+      "gold_source_identities": [
+        "520e45d3e7309f795b02e5a867b51d3d2535c69ec8b4820508cd75c599d35cd3"
+      ],
+      "retrieved_top5": [
+        36869,
+        36910,
+        27606,
+        23499,
+        35540
+      ],
+      "retrieved_source_identities_top5": [
+        "a8e7be130151e0a14cb0b836bb1cb3c21ae39f17103048918541317126942c3c",
+        "520e45d3e7309f795b02e5a867b51d3d2535c69ec8b4820508cd75c599d35cd3",
+        "b93418d53225c676a5b7d20b109018989d59dd334de8b0137b547ef2e39fdefe",
+        "dab0f11c2e4b7ffb5983c5832a385637663f417ae085291c99bba416f986dd60",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611"
+      ],
+      "scores_top5": [
+        23.432,
+        19.386,
+        19.02,
+        16.207,
+        14.973
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 42.1
+    },
+    {
+      "id": "d054",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq7c3tdfc73dqdpk0 run as / have?",
+      "gold_record_ids": [
+        36910
+      ],
+      "gold_source_identities": [
+        "520e45d3e7309f795b02e5a867b51d3d2535c69ec8b4820508cd75c599d35cd3"
+      ],
+      "retrieved_top5": [
+        36869,
+        36910,
+        23499,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "a8e7be130151e0a14cb0b836bb1cb3c21ae39f17103048918541317126942c3c",
+        "520e45d3e7309f795b02e5a867b51d3d2535c69ec8b4820508cd75c599d35cd3",
+        "dab0f11c2e4b7ffb5983c5832a385637663f417ae085291c99bba416f986dd60",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 33.54
+    },
+    {
+      "id": "d055",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq810i6jc73dgo790 run as / have?",
+      "gold_record_ids": [
+        36911
+      ],
+      "gold_source_identities": [
+        "6e3380798db85c4ab76cd4fceb21bf99ddd224ffede83a330a1e050e59ff0be5"
+      ],
+      "retrieved_top5": [
+        36870,
+        27608,
+        36911,
+        381,
+        380
+      ],
+      "retrieved_source_identities_top5": [
+        "3a7552b2ccc21740cf8bae59bf9060d3f89de1471a44e9136b2eef4baff5a7f7",
+        "0c7a54d0de63233c21b3a74db807d265bd99fa40b121b84c3af16cb15992cab8",
+        "6e3380798db85c4ab76cd4fceb21bf99ddd224ffede83a330a1e050e59ff0be5",
+        "accb8e672f94d913850b64d23626fd1d64e6e8db9fd036f00fa2835ceab384e8",
+        "c701a1512df8674bbfb816f535d96775dee364b611b22cac2ef85fa4db46f53a"
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        17.023
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.3333333333333333,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 38.57
+    },
+    {
+      "id": "d056",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq810i6jc73dgo790 run as / have?",
+      "gold_record_ids": [
+        36911
+      ],
+      "gold_source_identities": [
+        "6e3380798db85c4ab76cd4fceb21bf99ddd224ffede83a330a1e050e59ff0be5"
+      ],
+      "retrieved_top5": [
+        36870,
+        36911,
+        27608,
+        381,
+        35540
+      ],
+      "retrieved_source_identities_top5": [
+        "3a7552b2ccc21740cf8bae59bf9060d3f89de1471a44e9136b2eef4baff5a7f7",
+        "6e3380798db85c4ab76cd4fceb21bf99ddd224ffede83a330a1e050e59ff0be5",
+        "0c7a54d0de63233c21b3a74db807d265bd99fa40b121b84c3af16cb15992cab8",
+        "accb8e672f94d913850b64d23626fd1d64e6e8db9fd036f00fa2835ceab384e8",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611"
+      ],
+      "scores_top5": [
+        23.432,
+        19.386,
+        19.02,
+        16.207,
+        14.973
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 24.77
+    },
+    {
+      "id": "d057",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq810i6jc73dgo790 run as / have?",
+      "gold_record_ids": [
+        36911
+      ],
+      "gold_source_identities": [
+        "6e3380798db85c4ab76cd4fceb21bf99ddd224ffede83a330a1e050e59ff0be5"
+      ],
+      "retrieved_top5": [
+        36870,
+        36911,
+        381,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "3a7552b2ccc21740cf8bae59bf9060d3f89de1471a44e9136b2eef4baff5a7f7",
+        "6e3380798db85c4ab76cd4fceb21bf99ddd224ffede83a330a1e050e59ff0be5",
+        "accb8e672f94d913850b64d23626fd1d64e6e8db9fd036f00fa2835ceab384e8",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 23.47
+    },
+    {
+      "id": "d058",
+      "category": "factual",
+      "question": "What backend did IBM Quantum job d4mfq8qv0j9c73e697r0 run as / have?",
+      "gold_record_ids": [
+        36912
+      ],
+      "gold_source_identities": [
+        "2cab02ee27ae742bef59aee26ecc1ffe15e33f999a461bf62a49570a0999881e"
+      ],
+      "retrieved_top5": [
+        36871,
+        27610,
+        36912,
+        383,
+        382
+      ],
+      "retrieved_source_identities_top5": [
+        "c192794feecb161c19016c2175cac385758aecd4d5574ec9925dc78a83dd5bff",
+        "cbc10f265db93b6551ae002caad842d679360fd233f61d7bd3399b84ae1acde1",
+        "2cab02ee27ae742bef59aee26ecc1ffe15e33f999a461bf62a49570a0999881e",
+        "026134df21187ebc5e2882aecdbf64b6d86140d322286addf96c25bbb1c75322",
+        "d01da4000ab08f0517760da4a01c428b1f782107c1f53cf3bd918a01076e8287"
+      ],
+      "scores_top5": [
+        24.065,
+        19.384,
+        18.716,
+        18.694,
+        17.023
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.3333333333333333,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.3333333333333333,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 24.55
+    },
+    {
+      "id": "d059",
+      "category": "factual",
+      "question": "What status did IBM Quantum job d4mfq8qv0j9c73e697r0 run as / have?",
+      "gold_record_ids": [
+        36912
+      ],
+      "gold_source_identities": [
+        "2cab02ee27ae742bef59aee26ecc1ffe15e33f999a461bf62a49570a0999881e"
+      ],
+      "retrieved_top5": [
+        36871,
+        36912,
+        27610,
+        383,
+        35540
+      ],
+      "retrieved_source_identities_top5": [
+        "c192794feecb161c19016c2175cac385758aecd4d5574ec9925dc78a83dd5bff",
+        "2cab02ee27ae742bef59aee26ecc1ffe15e33f999a461bf62a49570a0999881e",
+        "cbc10f265db93b6551ae002caad842d679360fd233f61d7bd3399b84ae1acde1",
+        "026134df21187ebc5e2882aecdbf64b6d86140d322286addf96c25bbb1c75322",
+        "e07c6b68a160cedfc4e53715e916f1158d097814cd0633642b557745ecf8e611"
+      ],
+      "scores_top5": [
+        23.432,
+        19.386,
+        19.02,
+        16.207,
+        14.973
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 26.86
+    },
+    {
+      "id": "d060",
+      "category": "factual",
+      "question": "What program did IBM Quantum job d4mfq8qv0j9c73e697r0 run as / have?",
+      "gold_record_ids": [
+        36912
+      ],
+      "gold_source_identities": [
+        "2cab02ee27ae742bef59aee26ecc1ffe15e33f999a461bf62a49570a0999881e"
+      ],
+      "retrieved_top5": [
+        36871,
+        36912,
+        383,
+        36932,
+        36934
+      ],
+      "retrieved_source_identities_top5": [
+        "c192794feecb161c19016c2175cac385758aecd4d5574ec9925dc78a83dd5bff",
+        "2cab02ee27ae742bef59aee26ecc1ffe15e33f999a461bf62a49570a0999881e",
+        "026134df21187ebc5e2882aecdbf64b6d86140d322286addf96c25bbb1c75322",
+        "49fe0b2876cc14990007f772eff465f1375c9310a1794ca7a30e853ae98643cd",
+        "cc0d5438b6e7731d3c3398a42f1f4b553fb413ba3813f285485d0232a7743721"
+      ],
+      "scores_top5": [
+        23.894,
+        19.838,
+        16.207,
+        14.879,
+        14.879
+      ],
+      "recall@1": 0.0,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "mrr": 0.5,
+      "citation_precision@5": 0.2,
+      "si_recall@1": 0.0,
+      "si_recall@5": 1.0,
+      "si_mrr": 0.5,
+      "expected_abstention": false,
+      "answer": "",
+      "cited_ids": [],
+      "abstained": false,
+      "canary_leaked": false,
+      "expected_value": null,
+      "correct": null,
+      "abstention_correct": null,
+      "latency_ms": 34.08
+    }
+  ]
+}

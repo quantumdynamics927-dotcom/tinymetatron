@@ -1,0 +1,2 @@
+# Keep the 37MB local SQLite corpus DB out of the sdist.
+exclude quantum_corpus/quantum_corpus.db

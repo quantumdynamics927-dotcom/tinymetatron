@@ -1,0 +1,80 @@
+{
+  "worker": "experiments.exp-005.corpus-rev1.scripts.stage_sources",
+  "version": 1,
+  "status": "success",
+  "started_at": "2026-08-14T21:07:25.558860+00:00",
+  "ended_at": "2026-08-14T21:07:26.532205+00:00",
+  "total_rows": 22258,
+  "summary": {
+    "quantum_domain_technical": {
+      "rows": 14191,
+      "source_groups": 1536,
+      "provenance": {
+        "source": "exp-004 frozen corpus (train + val + hard_dev)",
+        "license": "mixed (see exp-004 MANIFEST.json)",
+        "provenance": "D:\\TinyMetatron\\experiments\\exp-004\\corpus",
+        "exp004_split_counts": {
+          "train.jsonl": 11137,
+          "val.jsonl": 1893,
+          "hard_dev.jsonl": 1161
+        },
+        "rows_staged": 14191
+      },
+      "share": 0.6376
+    },
+    "quantum_code": {
+      "rows": 3282,
+      "source_groups": 113,
+      "provenance": {
+        "source": "qiskit/qiskit-tutorials",
+        "license": "Apache-2.0",
+        "provenance": "https://github.com/Qiskit/qiskit-tutorials",
+        "notebooks": 26,
+        "notebook_rows": 481,
+        "py_files": 1,
+        "py_rows": 22,
+        "own_rows": 2779,
+        "rows_staged": 3282
+      },
+      "share": 0.1475
+    },
+    "tool_traces": {
+      "rows": 3600,
+      "source_groups": 8,
+      "provenance": {
+        "source": "synthetic",
+        "license": "N/A",
+        "provenance": "synthetic quantum tool signatures derived from Qiskit/IBM Runtime + TinyMetatron CLI",
+        "rows_staged": 3600,
+        "by_tool": {
+          "qiskit.circuit.QuantumCircuit": 450,
+          "qiskit.circuit.library.GroverOperator": 450,
+          "qiskit.transpiler.preset_passmanagers.generate_preset_pass_manager": 450,
+          "qiskit_ibm_runtime.SamplerV2.run": 450,
+          "qiskit_ibm_runtime.EstimatorV2.run": 450,
+          "tmt.compute_ce": 450,
+          "tmt.quantum_corpus_freeze": 450,
+          "tmt.quantum_corpus_validate": 450
+        }
+      },
+      "share": 0.1617
+    },
+    "general_english": {
+      "rows": 1185,
+      "source_groups": 1,
+      "provenance": {
+        "source": "Project Gutenberg #1342: Pride and Prejudice",
+        "license": "public-domain-US",
+        "provenance": "https://www.gutenberg.org/files/1342/1342-0.txt",
+        "rows_staged": 1185
+      },
+      "share": 0.0532
+    }
+  },
+  "raw_files": {
+    "quantum_domain_technical.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev1\\raw\\quantum_domain_technical.jsonl",
+    "quantum_code.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev1\\raw\\quantum_code.jsonl",
+    "tool_traces.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev1\\raw\\tool_traces.jsonl",
+    "general_english.jsonl": "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev1\\raw\\general_english.jsonl"
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "corpus_hash": "2d18de1f33b28105",
+  "splits": {
+    "hard_dev.jsonl": {
+      "rows": 1161,
+      "sha256": "6474b5b418efaf3bd2211da499173bdf67af6f93f82b1e3f888ca4f12633232b"
+    },
+    "train.jsonl": {
+      "rows": 11137,
+      "sha256": "fc402d611de7ae24bdf1f1c7f6b5e3cbd26ffb2413905c6d107db887f6082e77"
+    },
+    "val.jsonl": {
+      "rows": 1893,
+      "sha256": "bf4ab13d663c325a09c0c85a856403d132a03826081e4de2728defc87957516e"
+    }
+  },
+  "total_rows": 14191,
+  "unique_normalized": 14191,
+  "subdomains": {
+    "circuits": 6803,
+    "txt": 13,
+    "data": 3736,
+    "ts": 25,
+    "py": 2157,
+    "md": 311,
+    "experiment-design": 4,
+    "yml": 6,
+    "tsx": 65,
+    "jobs-summary": 6,
+    "notebooks": 588,
+    "js": 191,
+    "sh": 1,
+    "toml": 8,
+    "html": 223,
+    "yaml": 3,
+    "ps1": 1,
+    "ini": 1,
+    "csv": 49
+  },
+  "split_policy": "source_disjoint_capped_v1",
+  "split_seed": 42,
+  "max_rows_per_source": 400,
+  "pre_cap_rows": 35762,
+  "post_cap_rows": 14191,
+  "capped_sources": [
+    {
+      "source_id": "GRE:imports/qsg/ibm-ibm_marrakesh-d7l6ib0k.json",
+      "original_rows": 2635,
+      "retained_rows": 400,
+      "excluded_rows": 2235
+    },
+    {
+      "source_id": "TMT_Quantum_Vault:dna_circuits_library/dna_circuits_library.json",
+      "original_rows": 2007,
+      "retained_rows": 400,
+      "excluded_rows": 1607
+    },
+    {
+      "source_id": "GRE:imports/qsg/ibm-ibm_kingston-d7l6ij0k.json",
+      "original_rows": 4158,
+      "retained_rows": 400,
+      "excluded_rows": 3758
+    },
+    {
+      "source_id": "GRE:imports/qsg/ibm-ibm_fez-d7l6i8oe.json",
+      "original_rows": 4176,
+      "retained_rows": 400,
+      "excluded_rows": 3776
+    },
+    {
+      "source_id": "GRE:imports/qsg/ibm-ibm_kingston-d7l6i60e.json",
+      "original_rows": 4515,
+      "retained_rows": 400,
+      "excluded_rows": 4115
+    },
+    {
+      "source_id": "GRE:imports/qsg/ibm-ibm_fez-d7l6il8e.json",
+      "original_rows": 3728,
+      "retained_rows": 400,
+      "excluded_rows": 3328
+    },
+    {
+      "source_id": "GRE:imports/qsg/ibm-ibm_marrakesh-d7l6inoe.json",
+      "original_rows": 3152,
+      "retained_rows": 400,
+      "excluded_rows": 2752
+    }
+  ],
+  "max_source_row_share": {
+    "train": 0.0359,
+    "val": 0.2113,
+    "hard_dev": 0.1697
+  },
+  "excluded_by_cap": {
+    "path": "D:\\TinyMetatron\\experiments\\exp-004\\corpus\\excluded_by_cap.jsonl",
+    "rows": 21571,
+    "sha256": "2f031606539bd753daca6307bad452b1f7629de0b7ffcf2ea0e879bdd55972cd"
+  },
+  "source_counts": {
+    "train": 1229,
+    "val": 154,
+    "hard_dev": 153
+  },
+  "source_overlap": {
+    "train_val": 0,
+    "train_hard_dev": 0,
+    "val_hard_dev": 0
+  },
+  "text_overlap": {
+    "train_val": 0,
+    "train_hard_dev": 0,
+    "val_hard_dev": 0
+  },
+  "worker": "workers.corpus.version",
+  "version": 1,
+  "corpus_dir": "D:\\TinyMetatron\\experiments\\exp-004\\corpus",
+  "created_at": "2026-08-13T18:03:40.411094+00:00",
+  "ended_at": "2026-08-13T18:03:40.814895+00:00",
+  "scope": "quantum technical domain \u2014 real source repos (GRE, QPyth, QAP, TMT_Quantum_Vault) plus IBM Quantum job data; matches QSG/QRL work; not a general-English model experiment",
+  "corpus_revision": 2,
+  "max_source_share_gate_threshold": 0.25
+}

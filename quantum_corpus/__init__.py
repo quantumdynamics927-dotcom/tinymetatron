@@ -33,4 +33,4 @@ before anything is wired toward the Space.
 
 from __future__ import annotations
 
-__all__ = ["schema", "redact", "extract", "split", "tokenize_count", "rag", "build"]
+__all__ = ["schema", "redact", "extract", "split", "tokenize_count", "rag", "build", "freeze"]

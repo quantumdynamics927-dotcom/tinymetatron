@@ -1,0 +1,17 @@
+{
+  "name": "train_val_ce_below_2.0",
+  "version": 2,
+  "description": "Training run must achieve val CE below 2.0 at best checkpoint",
+  "worker": "workers.evaluate.compute_ce",
+  "argv": [
+    "python", "-m", "workers.evaluate.compute_ce",
+    "--run-id", "{run_id}",
+    "--eval-set", "val"
+  ],
+  "timeout_seconds": 300,
+  "pass_condition": {
+    "metric": "ce",
+    "operator": "<",
+    "value": 2.0
+  }
+}

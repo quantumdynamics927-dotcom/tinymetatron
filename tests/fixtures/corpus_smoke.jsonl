@@ -1,0 +1,30 @@
+{"text": "A firewall filters packets by inspecting headers and applying rule sets to block unauthorized network traffic based on port, protocol, and IP address.", "source": "netsec_book", "domain": "cybersecurity"}
+{"text": "Deep neural networks learn hierarchical representations through backpropagation and gradient descent optimization of loss functions.", "source": "ml_paper", "domain": "machine_learning"}
+{"text": "Cryptographic hash functions map arbitrary-length input to fixed-length output and must satisfy collision resistance and preimage resistance properties.", "source": "crypto_book", "domain": "cryptography"}
+{"text": "The OSI model has seven layers: physical, data link, network, transport, session, presentation, and application.", "source": "netsec_book", "domain": "cybersecurity"}
+{"text": "Transfer learning enables models pretrained on large datasets to be fine-tuned on smaller target domain datasets with limited labeled examples.", "source": "ml_paper", "domain": "machine_learning"}
+{"text": "Symmetric encryption uses the same key for encryption and decryption, while asymmetric encryption uses a public/private key pair for secure key exchange.", "source": "crypto_book", "domain": "cryptography"}
+{"text": "A firewall filters packets by inspecting headers and applying rule sets to block unauthorized network traffic based on port, protocol, and IP address.", "source": "netsec_book", "domain": "cybersecurity"}
+{"text": "A firewall filters packets by inspecting headers and applying rule sets to block unauthorized network traffic based on port, protocol, and IP address.", "source": "netsec_book", "domain": "cybersecurity"}
+{"text": "Recurrent neural networks process sequential data by maintaining hidden state and can model temporal dependencies in text and time series.", "source": "ml_paper", "domain": "machine_learning"}
+{"text": "AES operates on 128-bit blocks with key sizes of 128, 192, or 256 bits using substitution-permutation network rounds.", "source": "crypto_book", "domain": "cryptography"}
+{"text": "Network intrusion detection systems monitor traffic for anomalies and signatures to identify potential attacks and security policy violations.", "source": "netsec_book", "domain": "cybersecurity"}
+{"text": "Transformers use self-attention mechanisms to compute context-dependent representations without recurrence, enabling parallelization of training.", "source": "ml_paper", "domain": "machine_learning"}
+{"text": "Digital signatures use asymmetric cryptography to provide authentication, non-repudiation, and integrity verification of electronic documents.", "source": "crypto_book", "domain": "cryptography"}
+{"text": "Virtual private networks create encrypted tunnels over public networks to extend private network capabilities securely across geographic locations.", "source": "netsec_book", "domain": "cybersecurity"}
+{"text": "Gradient boosting builds ensembles of weak decision trees sequentially to minimize a convex loss function through gradient descent.", "source": "ml_paper", "domain": "machine_learning"}
+{"text": "RSA is based on the computational hardness of factoring large composite numbers into their prime factors.", "source": "crypto_book", "domain": "cryptography"}
+{"text": "Transport Layer Security provides secure communication over networks by encrypting data in transit using hybrid encryption schemes.", "source": "netsec_book", "domain": "cybersecurity"}
+{"text": "Convolutional neural networks apply learned filters across spatial dimensions to automatically learn translation-invariant features from images.", "source": "ml_paper", "domain": "machine_learning"}
+{"text": "Elliptic curve cryptography achieves equivalent security to RSA with significantly smaller key sizes, reducing computational and storage overhead.", "source": "crypto_book", "domain": "cryptography"}
+{"text": "SQL injection attacks exploit vulnerable database queries by inserting malicious SQL code through user input fields to unauthorized data access.", "source": "netsec_book", "domain": "cybersecurity"}
+{"text": "Dropout is a regularization technique that randomly zeros a subset of activations during training to prevent co-adaptation and reduce overfitting.", "source": "ml_paper", "domain": "machine_learning"}
+{"text": "Authenticated encryption modes like AES-GCM provide both confidentiality and integrity protection by combining encryption with a message authentication code.", "source": "crypto_book", "domain": "cryptography"}
+{"text": "A firewall filters packets by inspecting headers and applying rule sets to block unauthorized network traffic based on port, protocol, and IP address.", "source": "netsec_book", "domain": "cybersecurity"}
+{"text": "Batch normalization stabilizes deep network training by normalizing layer inputs to have zero mean and unit variance, allowing higher learning rates.", "source": "ml_paper", "domain": "machine_learning"}
+{"text": "Hardware security modules provide tamper-resistant storage and cryptographic processing for protecting keys and sensitive operations in secure enclaves.", "source": "crypto_book", "domain": "cryptography"}
+{"text": "A very short", "source": "test", "domain": "test"}
+{"text": "", "source": "test", "domain": "test"}
+{"text": "Kubernetes orchestrates containerized applications across clusters by scheduling pods, managing services, and handling horizontal scaling automatically.", "source": "infra_doc", "domain": "infrastructure"}
+{"text": "Serverless functions execute event-driven code without infrastructure management, scaling automatically in response to request volume and workload.", "source": "infra_doc", "domain": "infrastructure"}
+{"text": "Service mesh architectures use sidecar proxies to manage inter-service communication, providing observability, traffic management, and security policies.", "source": "infra_doc", "domain": "infrastructure"}

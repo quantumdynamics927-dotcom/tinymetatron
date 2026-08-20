@@ -1,11 +1,11 @@
 {
-  "date_run": "2026-08-03T15:49:13.448089+00:00",
+  "date_run": "2026-08-03T22:17:02.474717+00:00",
   "result_value": 4.0,
   "violated_bound": "classical",
   "passes_minimum_bar": true,
   "passes_target": true,
-  "circuit_hash": "15a10db68cac048b1ce1ad6d5129fc7b4876baf5e040c3eb66601b31090fc27a",
-  "code_commit": "1298c4e",
+  "circuit_hash": "69051e620494d6b4ebaf02c40a36b540e3135cd7974ee98b149bc702090b03ac",
+  "code_commit": "dad8e05",
   "shots": 1024,
   "E_vals": {
     "E(0,0,0)": 1.0,

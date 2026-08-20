@@ -1,0 +1,23 @@
+{
+  "date_run": "2026-08-03T22:18:36.460693+00:00",
+  "noiseless_statevector": {
+    "with_corrections": 0.9999999999999998,
+    "without_corrections": 0.26171874999999994
+  },
+  "noiseless_dm": {
+    "shots": 100000,
+    "with_corrections_fidelity": 0.9999999999999998,
+    "without_corrections_fidelity": 0.24023437499999997,
+    "with_corrections_E": -0.0015199999999999658,
+    "without_corrections_E": -0.0022199999999999998
+  },
+  "noisy_dm": {
+    "shots": 100000,
+    "with_corrections_fidelity": 0.9443359374999999,
+    "without_corrections_fidelity": 0.26367187499999994,
+    "with_corrections_E": 0.0034600000000000464,
+    "without_corrections_E": 0.0010200000000000209
+  },
+  "circuit_hash": "089d7b3bc6f675feb0b27e943af6c40dc47c15339ae66c612bd2fb4523b781ee",
+  "code_commit": "dad8e05"
+}

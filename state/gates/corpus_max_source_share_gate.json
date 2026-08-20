@@ -1,0 +1,17 @@
+{
+  "name": "corpus_max_source_share",
+  "version": 1,
+  "scope": "corpus",
+  "description": "No single source may dominate a primary partition: the largest source's share of any of train/val/hard_dev rows must be <= 0.25. Rejects a split where validation CE would mostly measure one document's style (e.g. the 68% single-source val share that motivated this gate). Threshold is configurable per run via --max-source-share; production corpora (exp-004) enforce 0.25 explicitly.",
+  "worker": "workers.corpus.corpus_gate",
+  "argv": [
+    "python", "-m", "workers.corpus.corpus_gate",
+    "--manifest", "{manifest_path}"
+  ],
+  "timeout_seconds": 60,
+  "pass_condition": {
+    "metric": "max_source_row_share",
+    "operator": "<=",
+    "value": 0.25
+  }
+}

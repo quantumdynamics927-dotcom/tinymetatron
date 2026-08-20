@@ -1,0 +1,22 @@
+{
+  "worker": "workers.corpus.validate",
+  "version": 1,
+  "status": "success",
+  "input_hash": "sha256:6d0a563c8f3d5cf8",
+  "output_hash": "sha256:fe6b257553dcc5e5",
+  "artifact_paths": [
+    "D:\\TinyMetatron\\experiments\\exp-005\\corpus-rev3\\validate\\validated.jsonl"
+  ],
+  "metrics": {
+    "total_files": 4,
+    "total_rows": 68141,
+    "valid_rows": 68141,
+    "rejected_empty": 0,
+    "rejected_too_short": 0,
+    "rejected_too_long": 0,
+    "rejected_no_text": 0,
+    "rejected_invalid_json": 0
+  },
+  "started_at": "2026-08-15T00:04:41.387897+00:00",
+  "ended_at": "2026-08-15T00:04:42.993991+00:00"
+}

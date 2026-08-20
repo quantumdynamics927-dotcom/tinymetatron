@@ -1,0 +1,22 @@
+{
+  "date_run": "2026-08-03T22:17:06.653992+00:00",
+  "noiseless_CHSH_S": 2.81578,
+  "noisy_CHSH_S": 2.56844,
+  "noiseless_Mermin_M": 0.99998,
+  "noisy_Mermin_M": 1.00562,
+  "chsh_degradation": 0.24734,
+  "mermin_degradation": -0.00564,
+  "chsh_above_bound": true,
+  "mermin_above_bound": false,
+  "outcome": "CHSH_ONLY \u2014 CHSH is robust, Mermin degraded below bound (informative)",
+  "noise_params": {
+    "p1q": 0.002,
+    "p2q": 0.015,
+    "readout_error": 0.02
+  },
+  "circuit_hash_CHSH": "0cfa72d733a2172be8087aec37b954f3b1e9ba81a37b9cd7c14ba8195a0c5784",
+  "circuit_hash_Mermin": "0cfa72d733a2172be8087aec37b954f3b1e9ba81a37b9cd7c14ba8195a0c5784",
+  "code_commit": "dad8e05",
+  "shots": 100000,
+  "classical_bound": 2.0
+}

@@ -120,19 +120,22 @@ def run_training(steps: int,
 
     # ── Load active checkpoint (from the real db_path) or init fresh ────────
     start_step = 0
+    optim_has_state = False
     active = db.get_active_checkpoint(db_path)
     model = TinyMetatron.from_config()
     model.to(dev)
     if active is not None and active.get("file_path") \
             and os.path.isfile(str(active["file_path"])):
         try:
-            model.load_checkpoint(str(active["file_path"]))
-            # Reject checkpoints whose parameters contain NaN/Inf — a
-            # poisoned state_dict would propagate corruption into the run.
+            ckpt = torch.load(str(active["file_path"]),
+                              map_location=dev, weights_only=False)
+            model.load_state_dict(ckpt["state_dict"], strict=True)
             if not all(torch.isfinite(p).all().item()
                        for p in model.parameters()):
                 raise ValueError("checkpoint contains non-finite parameters")
             start_step = int(active.get("step") or 0)
+            optim_has_state = ("optimizer_state_dict" in ckpt
+                              and ckpt["optimizer_state_dict"] is not None)
         except Exception:
             # Corrupt / NaN checkpoint → fall back to fresh model; do not
             # crash the API thread.  The new run starts from scratch.
@@ -142,15 +145,15 @@ def run_training(steps: int,
 
     tokenizer = default_tokenizer()
 
-    # ── Fetch a slice of unused training rows ───────────────────────────────
-    # Pull a reasonable slice: at least enough to form a few batches, capped
-    # so we don't load the whole corpus into memory.  We fetch more than the
-    # bare minimum so successive batches across steps see variety.
+    # ── Fetch training + validation row pools ────────────────────────────────
     fetch_limit = max(batch_size * max(steps, 1) * 2, batch_size * 4)
-    rows = db.fetch_training_rows(db_path, domain, min_quality,
-                                  limit=fetch_limit, used=False)
+    train_rows = db.fetch_training_rows(db_path, domain, min_quality,
+                                     limit=fetch_limit, used=False, split="train")
+    val_rows = db.fetch_training_rows(db_path, domain, min_quality,
+                                    limit=min(fetch_limit // 4, 64),
+                                    used=False, split="val")
 
-    if not rows:
+    if not train_rows:
         # Nothing to train on — still record an empty session so callers can
         # see the run happened.  final_loss = NaN sentinel.
         session_id = db.start_session(db_path, domain_filter=domain,
@@ -166,26 +169,35 @@ def run_training(steps: int,
             "domain": domain,
         }
 
-    # Mark the fetched rows used immediately (contract section 3).
-    row_ids = [int(r["id"]) for r in rows]
-    db.mark_used(db_path, row_ids)
+    # Mark the fetched training rows used immediately (contract section 3).
+    train_row_ids = [int(r["id"]) for r in train_rows]
+    db.mark_used(db_path, train_row_ids)
 
-    # Tokenise the rows into a padded tensor pool.
-    pool, _ = _tokenize_rows(rows, tokenizer, max_seq_len)
-    pool = pool.to(dev)
-    R = pool.shape[0]
+    # Tokenise both pools into padded tensors.
+    train_pool, _ = _tokenize_rows(train_rows, tokenizer, max_seq_len)
+    train_pool = train_pool.to(dev)
+    R = train_pool.shape[0]
+
+    val_pool = None
+    if val_rows:
+        val_pool, _ = _tokenize_rows(val_rows, tokenizer, max_seq_len)
+        val_pool = val_pool.to(dev)
 
     # ── Training session row ────────────────────────────────────────────────
     session_id = db.start_session(db_path, domain_filter=domain,
                                    min_quality=min_quality)
 
     optim = torch.optim.Adam(model.parameters(), lr=float(learning_rate))
+    if optim_has_state:
+        optim.load_state_dict(ckpt["optimizer_state_dict"])
     model.train()
 
     log_every = int(CONFIG.get("log_every", 10))
     total_steps = int(steps)
     last_loss = float("nan")
     logged_losses: List[float] = []
+    logged_val_losses: List[float] = []
+    val_every = log_every * 4  # evaluate val less frequently
 
     for step in range(1, total_steps + 1):
         # Sample a random batch (with replacement when the pool is small so
@@ -194,12 +206,9 @@ def run_training(steps: int,
             idx = torch.randint(0, R, (batch_size,), device=dev)
         else:
             idx = torch.randint(0, R, (batch_size,), device=dev)
-        batch = pool[idx]                                   # (B, L)
+        batch = train_pool[idx]                             # (B, L)
 
         logits, aux = model(batch)                          # (B, L, V), scalar
-        # CE over logits shifted by one: predict token t+1 from position t.
-        # Drop the last position (no next token) and the first input token
-        # (BOS is the predictor target at position 0 -> nothing to learn).
         shift_logits = logits[:, :-1, :].contiguous()
         shift_labels = batch[:, 1:].contiguous()
         V = CONFIG["vocab_size"]
@@ -221,7 +230,6 @@ def run_training(steps: int,
             try:
                 print(msg)
             except UnicodeEncodeError:
-                # Defensive: never crash on a misconfigured stdout.
                 sys.stdout.reconfigure(encoding="utf-8")
                 print(msg)
             logged_losses.append(last_loss)
@@ -229,11 +237,28 @@ def run_training(steps: int,
                 try:
                     on_step(global_step, start_step + total_steps, last_loss)
                 except Exception:
-                    # Status callback must never abort training.
                     pass
+
+        # ── Periodic validation loss ──────────────────────────────────────────
+        if val_pool is not None and (step % val_every == 0 or step == total_steps):
+            model.eval()
+            with torch.no_grad():
+                v_idx = torch.randint(0, val_pool.shape[0],
+                                     (min(batch_size, val_pool.shape[0]),), device=dev)
+                v_batch = val_pool[v_idx]
+                v_logits, v_aux = model(v_batch)
+                v_shift_logits = v_logits[:, :-1, :].contiguous()
+                v_shift_labels = v_batch[:, 1:].contiguous()
+                v_ce = F.cross_entropy(
+                    v_shift_logits.view(-1, V), v_shift_labels.view(-1))
+                v_loss = v_ce + float(aux_loss_weight) * float(v_aux)
+            model.train()
+            logged_val_losses.append(float(v_loss))
 
     final_loss = (sum(logged_losses) / len(logged_losses)
                  if logged_losses else last_loss)
+    final_val_loss = (sum(logged_val_losses) / len(logged_val_losses)
+                     if logged_val_losses else None)
 
     # ── Save checkpoint (.pt) + DB row (is_active=1, clears prior) ──────────
     # Guard against NaN/Inf poisoning the persisted active checkpoint: a run
@@ -245,15 +270,23 @@ def run_training(steps: int,
     loss_finite = math.isfinite(final_loss)
     ckpt_name = f"tinymetatron_step{start_step + total_steps}.pt"
     ckpt_path = os.path.abspath(os.path.join(checkpoint_dir, ckpt_name))
-    model.save_checkpoint(ckpt_path)
+    torch.save({
+        "state_dict": model.state_dict(),
+        "optimizer_state_dict": optim.state_dict(),
+        "config": model.config,
+        "step": start_step + total_steps,
+        "final_loss": final_loss,
+    }, ckpt_path)
     if params_finite and loss_finite:
         db.save_checkpoint(db_path, step=start_step + total_steps,
-                            loss=final_loss, file_path=ckpt_path, is_active=True)
+                            loss=final_loss, file_path=ckpt_path, is_active=True,
+                            val_loss=final_val_loss)
     else:
         # Non-finite run: record the checkpoint as inactive (kept for
         # forensics) and leave the prior active row untouched.
         db.save_checkpoint(db_path, step=start_step + total_steps,
-                           loss=final_loss, file_path=ckpt_path, is_active=False)
+                           loss=final_loss, file_path=ckpt_path, is_active=False,
+                           val_loss=final_val_loss)
         warn = (f"Varovanie: nefinitná tréningová strata ({final_loss}) "
                 f"alebo váhy — kontrolný bod uložený ako neaktívny, "
                 f"predchádzajúci aktívny model zostáva zachovaný.")
@@ -277,9 +310,10 @@ def run_training(steps: int,
     return {
         "steps": total_steps,
         "final_loss": final_loss,
+        "val_loss": final_val_loss,
         "session_id": session_id,
         "checkpoint_path": ckpt_path,
-        "rows_used": len(row_ids),
+        "rows_used": len(train_row_ids),
         "domain": domain,
     }
 

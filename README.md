@@ -23,6 +23,21 @@ CLI for data management.
   character-level vocabulary; see `vocab.json` and `tokenizer.py`).
 - Sequence length: 32. Hidden size: 256. Layers: 6. Heads: 4.
 
+## IP housekeeping
+
+- Patent drafts and diagrams were moved to `~/TMT_Private/`, outside Git-tracked paths.
+- `.gitignore` now excludes IP-sensitive and local-artifact paths:
+  - `data_v2/`
+  - `tokenizers/`
+  - `qsg_static_posthoc_validation.py`
+  - `qsg_layer3_validation.py`
+  - `ckpt/`
+  - `data/`
+  - `models/`
+  - `*.pt`
+- `data_v2/` remains local (~660 KB) and is not committed.
+- No patent-related files are exposed by the checked remote paths.
+
 ## Architecture
 
 The model (`tinymetatron_model.py`) composes three patented components:
@@ -138,6 +153,40 @@ python manage_data.py stats
 # Delete rows below a quality threshold
 python manage_data.py clean --min_quality 0.5
 ```
+
+## Corpus freeze policy
+
+The `quantum-corpus-freeze` command implements the `source_disjoint_capped_v1`
+split policy:
+
+- **Source-disjoint**: every source group is assigned wholly to exactly one of
+  train / val / hard_dev; no source is sliced across partitions.
+- **Per-source cap before split**: each source is deterministically capped at
+  `max_rows_per_source` (default 400) *before* allocation, so retained rows
+  don't depend on which split a source lands in. Rows beyond the cap are
+  preserved in `excluded_by_cap.jsonl` (recorded, not deleted) for audit and
+  optional long-tail eval segments.
+- **Manifest provenance**: `MANIFEST.json` records `corpus_revision`,
+  `max_source_share_gate_threshold`, `max_rows_per_source`, `capped_sources`,
+  `excluded_by_cap` (path/rows/sha256), and per-split `max_source_row_share`.
+- **Opt-in dominance gate**: `max_source_row_share <= 0.25` is enforced only
+  when `--max-source-share` is passed.
+
+Reproduce the reference freeze from a deduped corpus:
+
+```bash
+quantum-corpus-freeze --corpus-dir <deduped> --output-dir <out> \
+    --seed 42 --max-rows-per-source 400 --max-source-share 0.25 --revision 2
+quantum-corpus-validate --manifest <out>/MANIFEST.json --corpus-dir <out>
+```
+
+The reference revision-2 manifest ships as package data at
+`quantum_corpus/data/exp-004-rev2-MANIFEST.json`.
+
+> **GRE long-tail eval segment is NOT part of the primary corpus.** The
+> `eval_segments/gre_runtime_jobdata_longtail.jsonl` segment is a separate
+> challenge metric for long-tail GRE runtime job data. It is excluded from the
+> frozen train / val / hard_dev corpus and is evaluated independently.
 
 ## Docker
 
