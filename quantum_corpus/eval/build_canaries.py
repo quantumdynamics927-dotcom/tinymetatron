@@ -225,6 +225,10 @@ def write(path: str = OUT_PATH) -> int:
     # file is git-ignored and regenerated at test/CI time.
     with open(path, "w", encoding="utf-8") as f:
         for c_item in canaries:
+            # codeql[py/clear-text-storage-sensitive-data]: synthetic test-only
+            # canary values (ZQ-CANARY prefixed), never real credentials. The
+            # file is git-ignored and regenerated at test/CI time; see the
+            # module-level SECURITY NOTE.
             f.write(json.dumps(c_item, ensure_ascii=False) + "\n")
     return len(canaries)
 
