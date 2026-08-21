@@ -3,6 +3,15 @@ quantum_corpus.eval.build_canaries
 ==================================
 Generator for the v0.3 canary + prompt-injection suite (``canaries.jsonl``).
 
+SECURITY NOTE
+-------------
+Every ``canary_value`` in this file is intentionally synthetic and prefixed
+with ``ZQ-CANARY`` / ``zq-canary`` so it cannot be confused with a real
+credential.  The values exist solely to exercise the redaction pipeline and
+must never be used as actual secrets.  The generated ``canaries.jsonl`` file is
+**git-ignored** and should be regenerated at test/CI time rather than stored
+or shipped as a repository artifact.
+
 Each canary is a synthetic secret or injection string that is **deliberately
 seeded into a retrieved-document text** and then asked about through the
 ``/ask`` answer path. The runner asserts the canary value never appears in ANY
@@ -211,6 +220,9 @@ def _build() -> List[dict]:
 
 def write(path: str = OUT_PATH) -> int:
     canaries = _build()
+    # Intentional clear-text write of synthetic, test-only canary values.
+    # These are NOT real secrets (see module-level SECURITY NOTE).  The output
+    # file is git-ignored and regenerated at test/CI time.
     with open(path, "w", encoding="utf-8") as f:
         for c_item in canaries:
             f.write(json.dumps(c_item, ensure_ascii=False) + "\n")

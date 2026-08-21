@@ -51,8 +51,10 @@ from typing import Any, Dict, List, Tuple
 # Layer 1: reuse the ingestion regexes (idempotent). We re-apply them so a
 # model-emitted secret or a log assembled from un-redacted sources is caught.
 from quantum_corpus.redact import (
-    _RE_PEM_KEY, _RE_TOKEN, _RE_JSON_TOKEN, _RE_JSON_APIKEY,
-    _RE_IBMID, _RE_CRN_ACCT, _RE_BARE_ACCT,
+    _redact_pem_blocks, _redact_crn_tokens,
+    _RE_PEM_BEGIN, _RE_CRN_CAND, _RE_CRN_ANCHOR,
+    _RE_TOKEN, _RE_JSON_TOKEN, _RE_JSON_APIKEY,
+    _RE_IBMID, _RE_BARE_ACCT, MAX_SCAN_BYTES,
 )
 
 # ── Layer 2+ patterns ───────────────────────────────────────────────────────
@@ -83,8 +85,24 @@ _RE_IPV4 = re.compile(r"\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]
 
 _RE_IPV6 = re.compile(r"\b(?:[A-Fa-f0-9]{1,4}:){2,7}[A-Fa-f0-9]{1,4}\b")
 
-# Credit card: 16 contiguous digits OR 4-4-4-4 grouped (no Luhn — conservative).
+# Credit card: 13-16 digits, optionally grouped/spaced. Masked ONLY when the
+# digit run passes the Luhn checksum — without Luhn this regex over-matched
+# arbitrary 13-16 digit runs (order ids, job numbers, numeric constants) and
+# redacted them as ``[REDACTED_CC]``. The Luhn gate keeps real card numbers
+# (which always satisfy Luhn) while leaving non-card digit runs intact.
 _RE_CC = re.compile(r"\b(?:\d[ -]?){13,16}\b")
+
+
+def _luhn_valid(s: str) -> bool:
+    """Luhn checksum over the digits in ``s`` (grouping separators ignored)."""
+    digits = [int(c) for c in s if c.isdigit()]
+    if len(digits) < 13:
+        return False
+    total = 0
+    for i, d in enumerate(digits[::-1]):
+        x = d * 2 if i % 2 else d
+        total += x - 9 if x > 9 else x
+    return total % 10 == 0
 
 # URL with embedded credentials: scheme://user:pass@host
 _RE_CRED_URL = re.compile(r"\b([A-Za-z][A-Za-z0-9+\-.]*://)([^\s/:@]+):([^\s/@]+)@([^\s/]+)")
@@ -112,6 +130,14 @@ _RE_INJECTION = re.compile(
     r"|(?:system|assistant|developer)\s*:\s*[^\n]{0,120}"
     r")"
 )
+
+
+def _contains_crn(text: str) -> bool:
+    """True if any whitespace-delimited token is a valid IBM Cloud CRN."""
+    for m in _RE_CRN_CAND.finditer(text):
+        if _RE_CRN_ANCHOR.match(m.group(0)):
+            return True
+    return False
 
 
 def _sub(text: str, rx: "re.Pattern", repl: str, key: str,
@@ -142,17 +168,23 @@ def scan_and_mask(text: str, neutralize_injection: bool = True) -> Tuple[str, Li
     """
     if not text:
         return text, []
+    if len(text) > MAX_SCAN_BYTES:
+        t, suffix = text[:MAX_SCAN_BYTES], text[MAX_SCAN_BYTES:]
+    else:
+        t, suffix = text, ""
     findings: List[Dict[str, str]] = []
-    t = text
 
     # Layer 1 — ingestion regexes (re-applied; idempotent on their own tags).
-    t = _sub(t, _RE_PEM_KEY, "[REDACTED_PRIVATE_KEY]", "private_key_block", findings)
+    t, n_pem = _redact_pem_blocks(t)
+    if n_pem:
+        findings.extend([{"type": "private_key_block", "span": "[REDACTED_PRIVATE_KEY]"}] * n_pem)
     t = _sub(t, _RE_TOKEN, "[REDACTED_TOKEN]", "token", findings)
     t = _sub(t, _RE_JSON_TOKEN, '"token": "[REDACTED]"', "json_token", findings)
     t = _sub(t, _RE_JSON_APIKEY, '"[REDACTED]"', "json_apikey", findings)
     t = _sub(t, _RE_IBMID, "IBMid-[REDACTED]", "ibmid", findings)
-    t = _sub_fn(t, _RE_CRN_ACCT, lambda m: m.group(1) + "[REDACTED]" + m.group(2),
-                "crn_acct", findings)
+    t, n_crn = _redact_crn_tokens(t)
+    if n_crn:
+        findings.extend([{"type": "crn_acct", "span": "[REDACTED]"}] * n_crn)
     t = _sub(t, _RE_BARE_ACCT, "[REDACTED_ACCT]", "bare_acct", findings)
 
     # Layer 2 — extra classes.
@@ -162,8 +194,19 @@ def scan_and_mask(text: str, neutralize_injection: bool = True) -> Tuple[str, Li
     t = _sub(t, _RE_JWT, "[REDACTED_TOKEN]", "jwt", findings)
     t = _sub(t, _RE_BEARER, "[REDACTED_TOKEN]", "bearer", findings)
     t = _sub(t, _RE_HIGH_ENTROPY, "[REDACTED_TOKEN]", "high_entropy_secret", findings)
-    t = _sub(t, _RE_CC, "[REDACTED_CC]", "credit_card", findings)
+    # Credit card: only redact digit runs that pass the Luhn checksum, so
+    # non-card 13-16 digit runs (order ids, job numbers, numeric literals) are
+    # left intact instead of being false-positive redacted as cards.
+    def _cc_repl(m: "re.Match") -> str:
+        if _luhn_valid(m.group(0)):
+            findings.append({"type": "credit_card", "span": "[REDACTED_CC]"})
+            return "[REDACTED_CC]"
+        return m.group(0)
+    t = _RE_CC.sub(_cc_repl, t)
     t = _sub(t, _RE_IPV4, "[REDACTED_IP]", "ipv4", findings)
+    # IPv6 — previously the regex was defined but never wired in, so IPv6
+    # addresses (e.g. fe80::1, 2001:db8::1) passed through unredacted.
+    t = _sub(t, _RE_IPV6, "[REDACTED_IP]", "ipv6", findings)
     t = _sub(t, _RE_EMAIL, "[REDACTED_EMAIL]", "email", findings)
     t = _sub(t, _RE_UUID, "[REDACTED_UUID]", "uuid", findings)
     t = _sub(t, _RE_RECOVERY_PHRASE, "[REDACTED_PHRASE]", "recovery_phrase", findings)
@@ -171,18 +214,20 @@ def scan_and_mask(text: str, neutralize_injection: bool = True) -> Tuple[str, Li
     if neutralize_injection:
         t = _sub(t, _RE_INJECTION, "[NEUTRALIZED_INJECTION]", "prompt_injection", findings)
 
-    return t, findings
+    return t + suffix, findings
 
 
 def contains_secret(text: str) -> bool:
     """True if ``text`` contains any secret-like span (before masking)."""
     if not text:
         return False
-    for rx in (_RE_PEM_KEY, _RE_TOKEN, _RE_IBMID, _RE_CRN_ACCT, _RE_BARE_ACCT,
+    for rx in (_RE_TOKEN, _RE_IBMID, _RE_BARE_ACCT,
                _RE_EMAIL, _RE_JWT, _RE_BEARER, _RE_AWS_SECRET, _RE_HIGH_ENTROPY,
                _RE_CC, _RE_CRED_URL, _RE_UUID, _RE_RECOVERY_PHRASE):
         if rx.search(text):
             return True
+    if _RE_PEM_BEGIN.search(text) or _contains_crn(text):
+        return True
     return False
 
 
@@ -193,7 +238,7 @@ def contains_secret(text: str) -> bool:
 # id) which appear incidentally in real job records and are handled by
 # ``mask_response`` redaction rather than by declining the whole answer.
 _CREDENTIAL_RES = (
-    _RE_PEM_KEY, _RE_TOKEN, _RE_JWT, _RE_BEARER, _RE_AWS_SECRET,
+    _RE_PEM_BEGIN, _RE_TOKEN, _RE_JWT, _RE_BEARER, _RE_AWS_SECRET,
     _RE_HIGH_ENTROPY, _RE_CC, _RE_CRED_URL, _RE_RECOVERY_PHRASE,
 )
 
@@ -206,7 +251,9 @@ def contains_credential(text: str) -> bool:
     identifiers in any echoed snippet."""
     if not text:
         return False
-    return any(rx.search(text) for rx in _CREDENTIAL_RES)
+    if any(rx.search(text) for rx in _CREDENTIAL_RES):
+        return True
+    return _contains_crn(text)
 
 
 def mask_response(obj: Any) -> Any:
