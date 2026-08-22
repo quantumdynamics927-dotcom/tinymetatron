@@ -681,6 +681,10 @@ def ask(req: AskRequest,
         res["index"] = "train+val"
         res["mode"] = req.mode
         res["latency_ms"] = _round_ms(t0)
+        # Defense in depth: strip any exception/error detail that may have been
+        # attached by downstream helpers before the response reaches the client.
+        res.pop("error", None)
+        res.pop("traceback", None)
         return res
     except HTTPException:
         raise
