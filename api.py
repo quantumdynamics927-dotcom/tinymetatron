@@ -36,10 +36,13 @@ from typing import List, Optional
 
 import torch
 
-from fastapi import FastAPI, HTTPException, Header, Depends
+from fastapi import FastAPI, HTTPException, Header, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, StreamingResponse
 from pydantic import BaseModel, Field
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 import asyncio
 import json
 import time
@@ -428,6 +431,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ── Rate limiter ─────────────────────────────────────────────────────────────
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter  # type: ignore[union-attr]
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)  # type: ignore[union-attr]
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -898,14 +906,15 @@ def get_agent(agent_id: int) -> dict:
 
 
 class CopilotInvokeRequest(BaseModel):
-    objective: str
-    task_type: str | None = None
+    objective: str = Field(..., max_length=500)
+    task_type: str | None = Field(default=None, max_length=50)
     context: dict | None = None
-    execution_mode: str | None = None  # "live" | "simulation" | "hybrid"
+    execution_mode: str | None = Field(default=None, max_length=20)
 
 
 @app.post("/copilot/agents/{agent_id}/invoke")
-def invoke_agent(agent_id: int, req: CopilotInvokeRequest) -> dict:
+@limiter.limit("10/minute")
+def invoke_agent(request: Request, agent_id: int, req: CopilotInvokeRequest) -> dict:
     """Invoke a single agent by ID with a task contract."""
     orch = _get_orchestrator()
     profile = None
@@ -1003,7 +1012,8 @@ def get_benchmark_results() -> dict:
 
 
 @app.get("/copilot/telemetry")
-def telemetry_stream():
+@limiter.limit("30/minute")
+def telemetry_stream(request: Request):
     """SSE stream of real-time coordination telemetry at 1s intervals."""
     async def event_generator():
         orch = _get_orchestrator()
