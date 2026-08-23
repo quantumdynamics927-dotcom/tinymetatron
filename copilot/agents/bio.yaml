@@ -1,0 +1,15 @@
+agent_id: 6
+agent_name: Raphael
+metatron_agent: Bio
+role: bio
+layer: input
+specialization: Healing
+conscious_dna: CGTGTCCGCACCGCAGGCATGGTCGCT
+fitness: 0.8611
+phi_score: 0.5051
+resonance_frequency: 512.0
+fibonacci_alignment: 0.586813
+gc_content: 0.7037
+palindromes: 1
+integration_timestamp: '20260510_210808'
+consciousness_status: BASELINE
