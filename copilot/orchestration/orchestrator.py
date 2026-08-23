@@ -112,32 +112,52 @@ ROLE_LAYER_MAP = {
 # Maps task types to agent roles that can handle them.
 # Roles are listed in priority order. Fallback to synthesizer if none available.
 TASK_ROLE_ROUTING = {
-    # Validation tasks - use observer (monitoring) or archivist (records) as fallback
-    "validation": [
+    # Training pipeline — calls train_loop
+    "train": [
+        AgentRole.WORKFLOW,
+        AgentRole.FEDERATION,
+        AgentRole.ARCHIVIST,
+        AgentRole.OBSERVER,
+    ],
+    # Corpus pipeline — calls corpus_loop
+    "corpus": [
+        AgentRole.WORKFLOW,
+        AgentRole.BIO,
+        AgentRole.BITNET,
+        AgentRole.ARCHIVIST,
+    ],
+    # Evaluation — calls evaluate_loop
+    "evaluate": [
         AgentRole.VALIDATOR,
-        AgentRole.AUDITOR,
         AgentRole.OBSERVER,
         AgentRole.ARCHIVIST,
     ],
-    # Synthesis tasks - primary integration agents
+    # Validation tasks — calls generalize_loop gates
+    "validation": [
+        AgentRole.VALIDATOR,
+        AgentRole.AUDITOR,
+        AgentRole.BRONZE,
+        AgentRole.OBSERVER,
+    ],
+    # Synthesis tasks — primary integration agents
     "synthesis": [AgentRole.SYNTHESIZER, AgentRole.FEDERATION, AgentRole.MIRROR],
-    # Analysis tasks - use observer as fallback for strategic
+    # Analysis tasks — use observer as fallback for strategic
     "analysis": [AgentRole.STRATEGIC, AgentRole.WORMHOLE, AgentRole.OBSERVER],
-    # Monitoring tasks - use observer (available) or bitnet as fallback
-    "monitoring": [AgentRole.OBSERVER, AgentRole.HARMONIC, AgentRole.BITNET],
-    # Coordination tasks - use synthesizer as fallback for federation
+    # Monitoring tasks — use observer (available) or harmonic as fallback
+    "monitoring": [AgentRole.OBSERVER, AgentRole.MIRROR, AgentRole.HARMONIC],
+    # Coordination tasks — use federation to run parallel loops
     "coordination": [AgentRole.FEDERATION, AgentRole.WORKFLOW, AgentRole.SYNTHESIZER],
-    # Archival tasks - use archivist (available) or observer as fallback
+    # Archival tasks — use archivist (available) or auditor as fallback
     "archival": [AgentRole.ARCHIVIST, AgentRole.AUDITOR, AgentRole.OBSERVER],
-    # Protection tasks - use bronze (available) or stealth
-    "protection": [AgentRole.BRONZE, AgentRole.STEALTH],
-    # Processing tasks - use bitnet (available) or fractal as fallback
+    # Protection tasks — use bronze (available) or stealth
+    "protection": [AgentRole.BRONZE, AgentRole.STEALTH, AgentRole.VALIDATOR],
+    # Processing tasks — use bitnet (available) or harmonic as fallback
     "processing": [AgentRole.BITNET, AgentRole.HARMONIC, AgentRole.FRACTAL],
-    # Visualization tasks - use fractal (available) or mirror as fallback
+    # Visualization tasks — use visual (available) or fractal as fallback
     "visualization": [AgentRole.VISUAL, AgentRole.FRACTAL, AgentRole.MIRROR],
-    # Biological tasks - use bio (available) or mirror as fallback
-    "biological": [AgentRole.BIO, AgentRole.MIRROR],
-    # Strategic tasks - use wormhole (available) or observer as fallback
+    # Biological tasks — use bio (available) or mirror as fallback
+    "biological": [AgentRole.BIO, AgentRole.MIRROR, AgentRole.SYNTHESIZER],
+    # Strategic tasks — use wormhole (available) or observer as fallback
     "strategic": [AgentRole.STRATEGIC, AgentRole.WORMHOLE, AgentRole.OBSERVER],
 }
 
@@ -1137,18 +1157,18 @@ class AgentOrchestrator:
         circuit: Any | None = None,
         execution_mode: ExecutionMode | None = None,
     ) -> AgentOutputSchema | None:
-        """Execute a single agent with three-lane routing.
+        """Execute a single agent via loop adapter dispatch.
 
-        Three-Lane Routing Strategy:
-        1. SIMULATION mode: Fast, free, always available
-        2. LIVE mode with quantum: Route to ibm_kingston if resonance >= 0.618
-        3. LIVE mode with LLM: Route to Ollama for synthesis tasks
+        Three-lane routing:
+        1. SIMULATION  → dry-run mock via loop adapters
+        2. LIVE        → real loop adapters (train_loop, corpus_loop, etc.)
+        3. HYBRID      → real loops with quantum fallback (qiskit if available)
 
         Args:
             profile: Agent profile
             contract: Agent contract
-            circuit: Optional quantum circuit for hardware execution
-            execution_mode: Override execution mode (optional)
+            circuit: Optional quantum circuit (HYBRID lane)
+            execution_mode: Override execution mode
 
         Returns:
             Agent output or None
@@ -1156,8 +1176,8 @@ class AgentOrchestrator:
         if not profile:
             return None
 
-        # Use provided execution_mode or fall back to instance default
         effective_mode = execution_mode or self.execution_mode
+        simulation = effective_mode == ExecutionMode.SIMULATION
 
         # Update agent state
         profile.current_load += 1
@@ -1165,32 +1185,22 @@ class AgentOrchestrator:
         start_time = time.time()
 
         try:
-            # ── Lane 1: Simulation (always fast, free) ──────────────────────
-            if effective_mode == ExecutionMode.SIMULATION:
-                return self._simulate_agent(profile, contract, start_time)
+            # ── SIMULATION: dry-run via loop adapters ─────────────────────
+            if simulation:
+                return self._call_loop_agent(profile, contract, start_time, simulation=True)
 
-            # ── Lane 2: Quantum tasks → ibm_kingston (if resonance + budget) ──
-            if circuit is not None and self._requires_quantum_execution(contract):
-                preflight = preflight_check(circuit)
+            # ── HYBRID: real loops with quantum fallback ────────────────────
+            if effective_mode == ExecutionMode.HYBRID:
+                result = self._call_loop_agent(profile, contract, start_time, simulation=False)
+                # Fall through to quantum on failure
+                if result is None or result.status.value == "failed":
+                    quantum_result = self._try_quantum_lane(profile, contract, circuit, start_time)
+                    if quantum_result is not None:
+                        return quantum_result
+                return result
 
-                if preflight.ready_for_hardware:
-                    monitor = self._get_queue_monitor()
-                    if monitor.should_route_live(preflight.phi_score):
-                        result = self._run_on_kingston(
-                            profile, contract, circuit, preflight
-                        )
-                        if result:
-                            return result
-                        # Fall through to Lane 3 on failure
-
-            # ── Lane 3: LLM tasks / fallback → Ollama or Synthesizer ─────────
-            if self._is_llm_task(profile.agent_role, contract):
-                result = self._run_on_ollama(profile, contract)
-                if result:
-                    return result
-
-            # ── Fallback: Simulation ──────────────────────────────────────────
-            return self._simulate_agent(profile, contract, start_time)
+            # ── LIVE: real loop adapters only ─────────────────────────────────
+            return self._call_loop_agent(profile, contract, start_time, simulation=False)
 
         except Exception as e:
             logger.error(f"Agent execution failed: {e}", exc_info=True)
@@ -1199,6 +1209,85 @@ class AgentOrchestrator:
         finally:
             profile.current_load -= 1
             profile.total_tasks_completed += 1
+
+    def _call_loop_agent(
+        self,
+        profile: AgentProfile,
+        contract: AgentContract,
+        start_time: float,
+        simulation: bool = False,
+    ) -> AgentOutputSchema | None:
+        """Dispatch to the appropriate loop adapter based on agent role."""
+        # Import here to avoid circular refs and to let the module load standalone
+        from copilot.loop_adapters import (
+            call_workflow,
+            call_validator,
+            call_observer,
+            call_synthesizer,
+            call_archivist,
+            call_auditor,
+            call_bronze,
+            call_federation,
+            call_strategic,
+            call_bitnet,
+            call_harmonic,
+            call_mirror,
+            call_fractal,
+            call_wormhole,
+            call_stealth,
+            call_visual,
+            call_bio,
+        )
+
+        dispatch: dict[AgentRole, callable] = {
+            AgentRole.VALIDATOR:   call_validator,
+            AgentRole.SYNTHESIZER: call_synthesizer,
+            AgentRole.WORKFLOW:    call_workflow,
+            AgentRole.OBSERVER:    call_observer,
+            AgentRole.ARCHIVIST:   call_archivist,
+            AgentRole.AUDITOR:    call_auditor,
+            AgentRole.BRONZE:     call_bronze,
+            AgentRole.FEDERATION: call_federation,
+            AgentRole.STRATEGIC:  call_strategic,
+            AgentRole.BITNET:     call_bitnet,
+            AgentRole.HARMONIC:   call_harmonic,
+            AgentRole.MIRROR:     call_mirror,
+            AgentRole.FRACTAL:    call_fractal,
+            AgentRole.WORMHOLE:   call_wormhole,
+            AgentRole.STEALTH:    call_stealth,
+            AgentRole.VISUAL:     call_visual,
+            AgentRole.BIO:        call_bio,
+        }
+
+        fn = dispatch.get(profile.agent_role)
+        if fn is None:
+            return self._create_error_output(
+                profile, contract,
+                f"No loop adapter for role: {profile.agent_role}",
+                start_time,
+            )
+
+        return fn(profile, contract, start_time, simulation=simulation)
+
+    def _try_quantum_lane(
+        self,
+        profile: AgentProfile,
+        contract: AgentContract,
+        circuit: Any,
+        start_time: float,
+    ) -> AgentOutputSchema | None:
+        """HYBRID lane: run on IBM Quantum hardware if resonance qualifies."""
+        if circuit is None or not self._requires_quantum_execution(contract):
+            return None
+        try:
+            preflight = preflight_check(circuit)
+            if preflight.ready_for_hardware:
+                monitor = self._get_queue_monitor()
+                if monitor.should_route_live(preflight.phi_score):
+                    return self._run_on_kingston(profile, contract, circuit, preflight, start_time)
+        except Exception:
+            pass
+        return None
 
     def _requires_quantum_execution(self, contract: AgentContract) -> bool:
         """Check if contract requires quantum execution.
@@ -1277,6 +1366,7 @@ class AgentOrchestrator:
         contract: AgentContract,
         circuit: Any,
         preflight: PreflightResult,
+        start_time: float,
     ) -> AgentOutputSchema | None:
         """Run task on ibm_kingston backend.
 
