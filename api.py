@@ -37,8 +37,12 @@ from typing import List, Optional
 import torch
 
 from fastapi import FastAPI, HTTPException, Header, Depends
-from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse, StreamingResponse
 from pydantic import BaseModel, Field
+import asyncio
+import json
+import time
 
 from config import CONFIG, get_config
 import db
@@ -46,6 +50,20 @@ import quality  # noqa: F401  (db.add_texts imports it lazily; kept for clarity)
 from tokenizer import default_tokenizer, Tokenizer
 from tinymetatron_model import TinyMetatron
 import train_db
+
+# Copilot orchestration layer
+from pathlib import Path
+from copilot import AgentOrchestrator
+from copilot.orchestration import AgentRole
+
+_orchestrator: AgentOrchestrator | None = None
+
+
+def _get_orchestrator() -> AgentOrchestrator:
+    global _orchestrator
+    if _orchestrator is None:
+        _orchestrator = AgentOrchestrator(vault_path=Path("copilot/agents"))
+    return _orchestrator
 
 
 # ── DB path resolution ───────────────────────────────────────────────────────
@@ -401,6 +419,14 @@ app = FastAPI(
     title="TinyMetatron SLM API",
     description="REST surface for the TinyMetatron sparse-attention + MoE SLM.",
     version="0.1.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -837,6 +863,232 @@ def model_info() -> dict:
         "config": get_config(),
         "active_checkpoint": db.get_active_checkpoint(path),
     }
+
+
+# ── Copilot orchestration endpoints ───────────────────────────────────────────
+
+@app.get("/copilot/agents")
+def list_agents() -> dict:
+    """List all 17 agent profiles with their roles, layers, and φ-scores."""
+    orch = _get_orchestrator()
+    profiles = orch.get_agent_profiles()
+    agents = []
+    for p in profiles:
+        agents.append({
+            "agent_id": p["agent_id"],
+            "agent_name": p["agent_name"],
+            "role": p["agent_role"],
+            "layer": p["layer"],
+            "specialization": p["specialization"],
+            "phi_score": p["phi_score"],
+            "resonance_frequency": p["resonance_frequency"],
+            "fitness": p["fitness"],
+        })
+    return {"agents": agents, "total": len(agents)}
+
+
+@app.get("/copilot/agents/{agent_id}")
+def get_agent(agent_id: int) -> dict:
+    """Return detailed profile for a single agent."""
+    orch = _get_orchestrator()
+    for p in orch.get_agent_profiles():
+        if p["agent_id"] == agent_id:
+            return p
+    raise HTTPException(status_code=404, detail=f"Agent {agent_id} not found")
+
+
+class CopilotInvokeRequest(BaseModel):
+    objective: str
+    task_type: str | None = None
+    context: dict | None = None
+    execution_mode: str | None = None  # "live" | "simulation" | "hybrid"
+
+
+@app.post("/copilot/agents/{agent_id}/invoke")
+def invoke_agent(agent_id: int, req: CopilotInvokeRequest) -> dict:
+    """Invoke a single agent by ID with a task contract."""
+    orch = _get_orchestrator()
+    profile = None
+    for p in orch.get_agent_profiles():
+        if p["agent_id"] == agent_id:
+            profile = p
+            break
+    if profile is None:
+        raise HTTPException(status_code=404, detail=f"Agent {agent_id} not found")
+
+    from copilot.orchestration import AgentContract, AgentInputSchema, ExecutionMode
+
+    role = AgentRole(profile["agent_role"])
+    mode = ExecutionMode.SIMULATION
+    if req.execution_mode == "live":
+        mode = ExecutionMode.LIVE
+    elif req.execution_mode == "hybrid":
+        mode = ExecutionMode.HYBRID
+
+    contract = AgentContract(
+        input=AgentInputSchema(
+            objective=req.objective,
+            task_type=req.task_type or "validation",
+            context=req.context or {},
+        )
+    )
+
+    result = orch.execute(
+        task_type=req.task_type or "validation",
+        objective=req.objective,
+        context=req.context or {},
+        execution_mode=mode,
+        preferred_agents=[role],
+    )
+
+    return {
+        "agent_id": agent_id,
+        "agent_role": profile["agent_role"],
+        "status": result.final_status,
+        "confidence": result.final_confidence,
+        "trace_id": result.trace_id,
+        "session_id": result.session_id,
+        "total_duration_ms": result.total_duration_ms,
+        "contracts": len(result.contracts),
+        "decisions": len(result.decisions),
+    }
+
+
+@app.get("/copilot/topology")
+def get_topology() -> dict:
+    """Return the Sierpinski fractal network topology."""
+    from copilot.orchestration.sierpinski_topology import (
+        METATRON_NODES, METATRON_RINGS, SIERPINSKI_QUBIT_MAP,
+    )
+    return {
+        "nodes": METATRON_NODES,
+        "rings": METATRON_RINGS,
+        "scaling_factor": METATRON_NODES,  # scale-invariant: node count == scaling factor
+        "qubit_map": SIERPINSKI_QUBIT_MAP,
+    }
+
+
+@app.get("/copilot/protocols")
+def get_protocols() -> dict:
+    """List available execution protocols."""
+    from copilot.orchestration import ExecutionMode
+    return {
+        "protocols": [
+            {"name": "simulation", "value": "simulation", "description": "Dry-run mock execution"},
+            {"name": "live", "value": "live", "description": "Real loop execution"},
+            {"name": "hybrid", "value": "hybrid", "description": "Real execution with Qiskit IBM Quantum hardware fallback"},
+        ],
+        "modes": [m.value for m in ExecutionMode],
+    }
+
+
+@app.get("/copilot/benchmark/results")
+def get_benchmark_results() -> dict:
+    """Return the latest benchmark run results."""
+    from copilot.orchestration import BenchmarkIntegration
+    integration = BenchmarkIntegration(vault_path=Path("copilot/agents"))
+    results = integration.run_full_benchmark()
+    summary = results.get("summary", {})
+    return {
+        "benchmark_id": results.get("benchmark_id"),
+        "duration_seconds": results.get("duration_seconds"),
+        "total_tasks": summary.get("total_tasks"),
+        "successful_tasks": summary.get("successful_tasks"),
+        "failed_tasks": summary.get("failed_tasks"),
+        "success_rate": summary.get("success_rate"),
+        "agreement_rate": summary.get("agreement_rate"),
+        "coordination_quality_score": summary.get("coordination_quality_score"),
+        "task_results": results.get("task_results"),
+    }
+
+
+@app.get("/copilot/telemetry")
+def telemetry_stream():
+    """SSE stream of real-time coordination telemetry at 1s intervals."""
+    async def event_generator():
+        orch = _get_orchestrator()
+        while True:
+            metrics = orch.get_metrics()
+            m_dict = metrics.model_dump()
+            # Convert UUID and other non-serializable types to strings
+            if "session_id" in m_dict:
+                m_dict["session_id"] = str(m_dict["session_id"])
+            payload = json.dumps({
+                "timestamp": time.time(),
+                "session_id": m_dict.get("session_id"),
+                "tasks_completed": m_dict.get("tasks_completed", 0),
+                "tasks_failed": m_dict.get("tasks_failed", 0),
+                "agreement_rate": m_dict.get("agreement_rate", 0.0),
+                "phi_alignment_rate": m_dict.get("phi_alignment_rate", 0.0),
+                "agent_utilization": m_dict.get("agent_utilization", {}),
+            })
+            yield f"data: {payload}\n\n"
+            await asyncio.sleep(1.0)
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
+@app.websocket("/copilot/ws")
+async def websocket_dispatch(ws):
+    """WebSocket bidirectional dispatch for real-time agent orchestration."""
+    from fastapi.websockets import WebSocket
+    await ws.accept()
+    try:
+        while True:
+            raw = await ws.receive_text()
+            try:
+                msg = json.loads(raw)
+            except json.JSONDecodeError:
+                await ws.send_json({"error": "invalid JSON"})
+                continue
+
+            msg_type = msg.get("type")
+            if msg_type == "invoke":
+                from copilot.orchestration import AgentContract, AgentInputSchema, ExecutionMode
+                orch = _get_orchestrator()
+                agent_role_str = msg.get("agent_role")
+                try:
+                    role = AgentRole(agent_role_str)
+                except ValueError:
+                    await ws.send_json({"error": f"unknown agent role: {agent_role_str}"})
+                    continue
+
+                contract = AgentContract(
+                    input=AgentInputSchema(
+                        objective=msg.get("objective", ""),
+                        task_type=msg.get("task_type", "validation"),
+                        context=msg.get("context", {}),
+                    )
+                )
+                mode = ExecutionMode.SIMULATION
+                if msg.get("execution_mode") == "live":
+                    mode = ExecutionMode.LIVE
+                elif msg.get("execution_mode") == "hybrid":
+                    mode = ExecutionMode.HYBRID
+
+                result = orch.execute(
+                    task_type=msg.get("task_type", "validation"),
+                    objective=msg.get("objective", ""),
+                    context=msg.get("context", {}),
+                    execution_mode=mode,
+                    preferred_agents=[role],
+                )
+                await ws.send_json({
+                    "type": "result",
+                    "agent_role": agent_role_str,
+                    "status": result.final_status,
+                    "confidence": result.final_confidence,
+                })
+            elif msg_type == "ping":
+                await ws.send_json({"type": "pong", "timestamp": time.time()})
+            else:
+                await ws.send_json({"error": f"unknown message type: {msg_type}"})
+    except Exception as exc:
+        await ws.close(code=1011, reason=str(exc))
 
 
 # ── Self-test ─────────────────────────────────────────────────────────────────
