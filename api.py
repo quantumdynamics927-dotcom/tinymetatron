@@ -58,7 +58,11 @@ import train_db
 from pathlib import Path
 from copilot import AgentOrchestrator
 from copilot.orchestration import AgentRole
-from copilot.security import PromptGuard, OutputGuard, check_capability
+from copilot.security import (
+    PromptGuard, OutputGuard, check_capability,
+    issue_ws_token, verify_ws_token, record_provenance,
+    register_corpus_file, verify_corpus_integrity,
+)
 
 _prompt_guard = PromptGuard()
 _output_guard = OutputGuard()
@@ -1062,11 +1066,96 @@ def telemetry_stream(request: Request):
     )
 
 
+# ── P2: WS auth token endpoint ─────────────────────────────────────────────────
+class WsTokenRequest(BaseModel):
+    agent_id: int = Field(..., description="Agent ID requesting a WS token")
+    expires_in: float = Field(300.0, ge=60, le=3600, description="Token TTL in seconds")
+
+
+@app.post("/copilot/auth/token")
+def ws_token(req: WsTokenRequest) -> dict:
+    """
+    Issue a short-lived WebSocket auth token (P2).
+
+    The client presents the returned token when first connecting to /copilot/ws.
+    Tokens expire after the requested TTL (default 5 min, max 1 hour).
+    Auto-approves in demo mode.
+    """
+    token, expires_at = issue_ws_token(req.agent_id, ttl_seconds=req.expires_in)
+    return {
+        "token": token,
+        "agent_id": req.agent_id,
+        "expires_at": expires_at,
+        "issued_at": time.time(),
+    }
+
+
+# ── P2: human-in-the-loop approval ────────────────────────────────────────────
+class ApprovalRequest(BaseModel):
+    approval_id: str = Field(..., description="Approval ID to resolve")
+    approved: bool = Field(..., description="True = approve, False = deny")
+    reason: str | None = Field(default=None, max_length=200)
+
+
+@app.post("/copilot/agents/{agent_id}/approve")
+def resolve_approval(agent_id: int, req: ApprovalRequest) -> dict:
+    """
+    Approve or deny a pending high-risk action (P2 human-in-the-loop).
+
+    Returns the resolved ApprovalRecord. Raises 404 if the approval_id is not found.
+    Raises 400 if the approval has already been resolved or expired.
+    """
+    from copilot.orchestration.approval import ApprovalManager, ApprovalStatus
+
+    mgr = ApprovalManager.get_instance()
+
+    try:
+        if req.approved:
+            record = mgr.approve(req.approval_id)
+        else:
+            record = mgr.deny(req.approval_id, reason=req.reason or "")
+    except (KeyError, ValueError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+
+    return {
+        "approval_id": record.approval_id,
+        "agent_id": record.agent_id,
+        "action": record.action,
+        "status": record.status.value,
+        "resolved_at": record.resolved_at,
+    }
+
+
 @app.websocket("/copilot/ws")
 async def websocket_dispatch(ws):
-    """WebSocket bidirectional dispatch for real-time agent orchestration."""
+    """WebSocket bidirectional dispatch for real-time agent orchestration.
+
+    P2: requires first message to be {type:"auth", token:"...", agent_id:int}.
+    Skipped in demo mode (TMT_DEPLOY_MODE=demo).
+    """
     from fastapi.websockets import WebSocket
     await ws.accept()
+
+    # ── P2: two-step auth handshake ───────────────────────────────────────────
+    first_raw = await ws.receive_text()
+    try:
+        first = json.loads(first_raw)
+    except json.JSONDecodeError:
+        await ws.close(code=4001, reason="invalid JSON")
+        return
+
+    if _deploy_mode() != "demo":
+        if first.get("type") != "auth":
+            await ws.close(code=4001, reason="first message must be {type:'auth'}")
+            return
+        token = first.get("token")
+        agent_id = first.get("agent_id")
+        expires_at = first.get("expires_at", 0.0)
+        if not token or not verify_ws_token(str(token), int(agent_id or 0), float(expires_at)):
+            await ws.close(code=4001, reason="invalid or expired WS token")
+            return
+    # ── end auth handshake ────────────────────────────────────────────────────
+
     try:
         while True:
             raw = await ws.receive_text()

@@ -264,6 +264,10 @@ class AgentMessage(BaseModel):
     timestamp: datetime = Field(default_factory=utcnow)
     ttl_seconds: float = Field(default=300.0, ge=1.0)
 
+    # P2: message signing (optional — verified at receive time)
+    signature: str | None = None  # hex HMAC-SHA256
+    signed_at: float | None = None  # unix timestamp
+
 
 class AgentChannelStats(BaseModel):
     """Statistics for an agent communication channel."""

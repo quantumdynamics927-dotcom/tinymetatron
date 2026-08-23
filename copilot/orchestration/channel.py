@@ -27,6 +27,8 @@ from .models import (
     MessagePriority,
 )
 
+from copilot.security.agent_identity import sign_agent_message, verify_agent_message
+
 logger = logging.getLogger(__name__)
 
 
@@ -221,6 +223,11 @@ class AgentChannel:
             correlation_id=correlation_id,
         )
 
+        # P2: sign every outgoing message
+        sig, ts = sign_agent_message(self.agent_id, dict(message))
+        message.signature = sig
+        message.signed_at = ts
+
         with self._lock:
             self._outbox.append(message)
             self._stats.messages_sent += 1
@@ -307,11 +314,41 @@ class AgentChannel:
             message: Message to deliver
 
         Returns:
-            True if delivered, False if rejected
+            True if delivered, False if rejected or signature invalid
         """
         # Check if message is for this agent
         if message.recipient_agent and message.recipient_agent != self.agent_role:
             return False
+
+        # P2: verify HMAC signature + TTL (drop forged or stale messages)
+        if message.signature is not None and message.signed_at is not None:
+            try:
+                # Build the payload dict the same way signing did (model_dump)
+                msg_dict = {
+                    "sender_agent": message.sender_agent,
+                    "sender_id": message.sender_id,
+                    "recipient_agent": message.recipient_agent,
+                    "recipient_id": message.recipient_id,
+                    "message_type": message.message_type,
+                    "payload": message.payload,
+                    "priority": message.priority.value if hasattr(message.priority, "value") else message.priority,
+                    "requires_response": message.requires_response,
+                    "trace_id": str(message.trace_id),
+                    "correlation_id": str(message.correlation_id) if message.correlation_id else None,
+                }
+                verify_agent_message(
+                    message.sender_id,
+                    msg_dict,
+                    message.signed_at,
+                    message.signature,
+                )
+            except Exception as exc:
+                logger.warning(
+                    f"Dropping message from {message.sender_agent} (agent_id={message.sender_id}): "
+                    f"signature verification failed — {exc}"
+                )
+                self._stats.error_rate = self._stats.error_rate + 0.01
+                return False
 
         result = self._inbox.enqueue(message)
         if result:

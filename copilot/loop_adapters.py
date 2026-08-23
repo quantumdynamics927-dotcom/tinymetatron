@@ -18,6 +18,42 @@ from uuid import uuid4
 if TYPE_CHECKING:
     from copilot.orchestration.models import AgentContract, AgentOutputSchema, AgentProfile
 
+# P2: corpus integrity + provenance tracking
+from copilot.security.corpus_guard import register_corpus_file, verify_corpus_integrity
+from copilot.security.provenance import record_provenance
+
+
+def _try_provenance(
+    event: str,
+    *,
+    profile: "AgentProfile",
+    contract: "AgentContract",
+    data: Any,
+    source: str,
+    destination: str,
+) -> None:
+    """Record provenance, silently skipping on failure (provenance never crashes a loop)."""
+    try:
+        record_provenance(
+            event=event,
+            agent_id=profile.agent_id,
+            agent_role=profile.agent_role,
+            trace_id=str(contract.input.task_id),
+            data=data,
+            source=source,
+            destination=destination,
+        )
+    except Exception:
+        pass
+
+
+def _try_verify_corpus(path: str | Path) -> bool:
+    """Verify corpus integrity, silently skipping on failure. Returns True if OK."""
+    try:
+        return verify_corpus_integrity(path)
+    except Exception:
+        return False
+
 # ── RAG content isolation ───────────────────────────────────────────────────────
 #
 # All corpus/retrieval data passed to agents MUST be wrapped in <untrusted_content>
@@ -169,6 +205,12 @@ def _run_train_loop(
         "weight_decay": ctx.get("weight_decay", 1e-4),
     }
 
+    # P2: verify corpus integrity before training
+    _try_verify_corpus(config["corpus_dir"])
+    _try_provenance("loop_call", profile=profile, contract=contract,
+                   data=config, source=f"loop:train_loop.run_training",
+                   destination=f"agent:{profile.agent_role}")
+
     result = run_training(config)
 
     return _build_output(profile, contract, start_time, {
@@ -203,6 +245,12 @@ def _run_corpus_loop(
         "train_pct": ctx.get("train_pct", 0.80),
         "val_pct": ctx.get("val_pct", 0.10),
     }
+
+    # P2: verify corpus integrity before pipeline
+    _try_verify_corpus(corpus_dir)
+    _try_provenance("loop_call", profile=profile, contract=contract,
+                   data=config, source=f"loop:corpus_loop.run_corpus_pipeline",
+                   destination=f"agent:{profile.agent_role}")
 
     result = run_corpus_pipeline(config)
 
@@ -969,6 +1017,13 @@ def call_bio(
     corpus_dir = ctx.get("corpus_dir", "")
 
     ctx = _isolate_context(ctx)
+
+    # P2: verify corpus integrity + provenance for bio diversity check
+    _try_verify_corpus(corpus_dir)
+    _try_provenance("input", profile=profile, contract=contract,
+                   data={"corpus_dir": corpus_dir},
+                   source=f"corpus:{corpus_dir}",
+                   destination=f"agent:{profile.agent_role}")
 
     return _build_output(profile, contract, start_time, {
         "status": "bio_diversity_scored",
