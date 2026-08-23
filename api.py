@@ -58,6 +58,10 @@ import train_db
 from pathlib import Path
 from copilot import AgentOrchestrator
 from copilot.orchestration import AgentRole
+from copilot.security import PromptGuard, OutputGuard, check_capability
+
+_prompt_guard = PromptGuard()
+_output_guard = OutputGuard()
 
 _orchestrator: AgentOrchestrator | None = None
 
@@ -928,11 +932,22 @@ def invoke_agent(request: Request, agent_id: int, req: CopilotInvokeRequest) -> 
     from copilot.orchestration import AgentContract, AgentInputSchema, ExecutionMode
 
     role = AgentRole(profile["agent_role"])
+
+    # P1: capability check — role is restricted to its allowed action set
+    task_action = f"{req.task_type or 'validation'}_loop"
+    try:
+        check_capability(profile["agent_role"], task_action)
+    except Exception as exc:
+        raise HTTPException(status_code=403, detail=str(exc))
+
     mode = ExecutionMode.SIMULATION
     if req.execution_mode == "live":
         mode = ExecutionMode.LIVE
     elif req.execution_mode == "hybrid":
         mode = ExecutionMode.HYBRID
+
+    # P1: block prompt injection before it reaches any agent
+    _prompt_guard.block(req.objective)
 
     contract = AgentContract(
         input=AgentInputSchema(
@@ -950,10 +965,15 @@ def invoke_agent(request: Request, agent_id: int, req: CopilotInvokeRequest) -> 
         preferred_agents=[role],
     )
 
+    # P1: sanitize agent outputs before returning
+    _output_guard.block(result.final_status)
+    if result.trace_id:
+        _output_guard.block(str(result.trace_id))
+
     return {
         "agent_id": agent_id,
         "agent_role": profile["agent_role"],
-        "status": result.final_status,
+        "status": _output_guard.sanitize(result.final_status),
         "confidence": result.final_confidence,
         "trace_id": result.trace_id,
         "session_id": result.session_id,
@@ -1067,6 +1087,10 @@ async def websocket_dispatch(ws):
                     await ws.send_json({"error": f"unknown agent role: {agent_role_str}"})
                     continue
 
+                objective = msg.get("objective", "")
+                # P1: block prompt injection on WS input
+                _prompt_guard.block(objective)
+
                 contract = AgentContract(
                     input=AgentInputSchema(
                         objective=msg.get("objective", ""),
@@ -1082,15 +1106,16 @@ async def websocket_dispatch(ws):
 
                 result = orch.execute(
                     task_type=msg.get("task_type", "validation"),
-                    objective=msg.get("objective", ""),
+                    objective=objective,
                     context=msg.get("context", {}),
                     execution_mode=mode,
                     preferred_agents=[role],
                 )
+                # P1: sanitize output before WS delivery
                 await ws.send_json({
                     "type": "result",
                     "agent_role": agent_role_str,
-                    "status": result.final_status,
+                    "status": _output_guard.sanitize(result.final_status),
                     "confidence": result.final_confidence,
                 })
             elif msg_type == "ping":
