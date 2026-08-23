@@ -190,7 +190,7 @@ The reference revision-2 manifest ships as package data at
 
 ## Docker
 
-A `Dockerfile` (Python 3.11-slim, CPU torch) and a `docker-compose.yml` are
+A `Dockerfile` (Python 3.13-slim, CPU torch) and a `docker-compose.yml` are
 provided. The compose file mounts `./data`, `./ckpt`, and `./metatron.db` so
 state persists across container restarts.
 
@@ -207,12 +207,87 @@ image tag `metatron-slm-slm:latest`. Environment inside the container sets
 > `docker` is not available on your machine, the project still runs natively
 > via `pip install -r requirements.txt` and `uvicorn api:app --port 8010`.
 
+## Copilot v2 — 17-Agent Orchestration
+
+The `copilot/` directory implements a 17-agent ensemble that coordinates
+real TinyMetatron loop execution. Each agent has a YAML profile defining its
+role, φ-score (golden-ratio alignment), resonance frequency, and fitness.
+
+### Architecture
+
+Agents are organized in 4 layers, each executing through real loops or
+dry-run simulation:
+
+| Layer | Agents | Primary loop |
+|---|---|---|
+| **INPUT** | bio, bitnet, observer, wormhole | `corpus_loop.run_corpus_pipeline()` |
+| **PROCESSING** | bronze, federation, harmonic, strategic, workflow | `train_loop.run_training()` |
+| **INTEGRATION** | fractal, mirror, synthesizer, visual | aggregation + routing |
+| **OUTPUT** | archivist, auditor, stealth, validator | `generalize_loop.run_gate()` |
+
+### Execution Modes
+
+| Mode | Behaviour |
+|---|---|
+| `simulation` (default) | Dry-run — agents return mock outputs, no loops executed |
+| `live` | Real loop execution with actual training/corpus/evaluation |
+| `hybrid` | Simulation with Qiskit IBM Quantum hardware fallback |
+
+### Copilot API Endpoints
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/copilot/agents` | List all 17 agent profiles with φ-scores |
+| `GET` | `/copilot/agents/{id}` | Single agent profile |
+| `POST` | `/copilot/agents/{id}/invoke` | Invoke agent with task contract |
+| `GET` | `/copilot/topology` | Sierpinski fractal network topology |
+| `GET` | `/copilot/protocols` | Execution modes |
+| `GET` | `/copilot/benchmark/results` | Latest benchmark run |
+| `GET` | `/copilot/telemetry` | SSE telemetry stream (1s intervals) |
+| `WS` | `/copilot/ws` | Bidirectional WebSocket dispatch |
+| `POST` | `/copilot/auth/token` | Issue WS auth token (P2) |
+| `POST` | `/copilot/agents/{id}/approve` | Resolve hi-tl approval (P2) |
+| `GET` | `/copilot/benchmark/run` | Run benchmark suite (Phase 4) |
+| `GET` | `/copilot/benchmark/ablation` | Systematic ablation study (Phase 4) |
+| `GET` | `/copilot/benchmark/baseline` | Baseline comparison (Phase 4) |
+
+### Security (P0–P3)
+
+| Priority | Feature | Implementation |
+|---|---|---|
+| P0 | CORS + rate limiting | `slowapi` — 10/min invoke, 30/min SSE |
+| P0 | Input validation | Pydantic `Field(max_length)` on all request models |
+| P1 | Prompt injection guard | `copilot/security/prompt_guard.py` — 25+ regex patterns |
+| P1 | Output redaction | `copilot/security/output_guard.py` — API key/token redaction |
+| P1 | Least-privilege capabilities | `copilot/security/capabilities.py` — 17 role × bounded action sets |
+| P1 | RAG content isolation | `<untrusted_content>` tags on all corpus data |
+| P1 | CSP headers | `Content-Security-Policy` in `index.html` |
+| P2 | Message signing | HMAC-SHA256 — verify on deliver, drop forged/stale (30s TTL) |
+| P2 | Human-in-the-loop approval | `HIGH_RISK_ACTIONS` gate + `/approve` endpoint |
+| P2 | WS token auth | Two-step JWT — issue token via `/auth/token`, present on WS connect |
+| P2 | Corpus integrity | SHA-256 verification + `state/corpus_hashes.jsonl` |
+| P2 | Provenance tracking | Append-only `state/provenance.jsonl` per data event |
+| P3 | Non-root Docker | `USER metatron` (uid 1000) in both Dockerfiles |
+| P3 | Security audit CI | `pip-audit` + `npm audit` + CodeQL on every push/PR |
+| P3 | In-memory token storage | `ApprovalManager` singleton — process-local, no disk |
+
+### Benchmark Suite (Phase 4)
+
+Three benchmark adapters + ablation study:
+
+- **τ-bench** (`tau_bench.py`): multi-turn dialogue routing evaluation;
+  maps customer_support→synthesizer, technical_support→validator, etc.
+- **SWE-bench** (`swebench.py`): software engineering task planning via
+  analysis routing; returns `success_likelihood` per instance
+- **Ablation study** (`ablation.py`): removes each agent/layer/feature
+  individually and measures the Δ in coordination quality score
+
 ## Hugging Face Docker Space
 
-This repo is shaped to deploy as a **Hugging Face Docker Space** (the YAML
-front-matter at the top of this file sets `sdk: docker`, `app_port: 7860`).
-The Dockerfile trains a small checkpoint at image build time, so the Space
-comes up serving a real (if lightly-trained) model with no extra config.
+This repo deploys as a **Hugging Face Docker Space** (`sdk: docker`,
+`app_port: 7860`). Use `Dockerfile-hf-space` (not the root `Dockerfile`)
+for Space deployment — it includes all Phase 1–4 components, non-root user,
+and HF metadata labels.
 
 **Read-only demo by default.** The API runs in `TMT_DEPLOY_MODE=demo` mode:
 
@@ -239,6 +314,29 @@ Set these in the Space **Settings → Variables and secrets**:
 > Demo output quality: the build-time checkpoint is trained for ~300 steps on
 > ~400 synthesized rows — enough to showcase the architecture serving a real
 > checkpoint, not fluent generation.
+
+### Push to Hugging Face Space
+
+```bash
+# Install HF CLI and login
+pip install huggingface_hub
+huggingface-cli login
+
+# Push this repo as a Space (creates tinymetatron-copilot Space)
+huggingface-cli repo create tinymetatron-copilot --repo-type space --sdk docker
+
+# Set the Space SDK to docker in the repo
+git clone https://huggingface.co/spaces/<username>/tinymetatron-copilot
+cd tinymetatron-copilot
+# Replace the README.md content with the README from this repo
+# Push — HF automatically builds the Docker image from Dockerfile-hf-space
+git add .
+git commit -m "init copilot v2"
+git push
+```
+
+The Space `README.md` only needs the YAML front-matter; all implementation
+lives in `Dockerfile-hf-space` which HF reads automatically.
 
 ## Testing
 

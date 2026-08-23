@@ -1,6 +1,18 @@
 # Dockerfile for TinyMetatron SLM + Copilot v2 — Hugging Face Docker Space.
 # Python 3.13-slim, CPU-only torch. Extended for copilot orchestration.
+# Ships Phase 1-4: 17-agent copilot, τ-bench/SWE-bench, P0-P3 security hardening.
 FROM python:3.13-slim
+
+# ── HF Space metadata ──────────────────────────────────────────────────────────
+# These labels are read by hf Hub to populate the Space page.
+LABEL com.huggingface.space.metadata.title="TinyMetatron Copilot"
+LABEL com.huggingface.space.metadata.description="17-agent multi-agent orchestration for sparse-attention MoE training — real loops, RAG, φ-routing"
+LABEL com.huggingface.space.metadata.color="purple"
+LABEL com.huggingface.space.metadata.emoji="🧠"
+LABEL com.huggingface.space.metadata.sdk="docker"
+LABEL com.huggingface.space.metadata.license="mit"
+LABEL org.opencontainers.image.source="https://github.com/quantumdynamics927-dotcom/tinymetatron"
+LABEL org.opencontainers.image.version="2.0.0"
 
 WORKDIR /app
 
@@ -16,24 +28,31 @@ ENV PYTHONPATH=/app \
     TMT_DEPLOY_MODE=demo \
     COPILOT_MODE=simulation
 
-# CPU-only PyTorch wheel (no CUDA runtime -> smaller image).
-# fastapi/uvicorn for the REST layer.
-# websockets for /copilot/ws WebSocket endpoint.
-# qiskit (optional) for HYBRID quantum lane; degrades gracefully if absent.
+# ── Python dependencies ─────────────────────────────────────────────────────────
+# fastapi/uvicorn: REST layer
+# websockets: /copilot/ws WebSocket endpoint
+# slowapi: rate limiting (P0)
+# pydantic[email]: request validation
+# pyyaml: config files
+# numpy: tensor ops
+# qiskit: HYBRID quantum lane (optional; degrades gracefully if absent)
+# quantum-corpus: RAG backbone + benchmark data (Phase 1)
 RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
     && pip install --no-cache-dir \
         "fastapi>=0.115.0" \
         "uvicorn[standard]>=0.34.0" \
-        "pydantic>=2.10.0" \
+        "pydantic[email]>=2.10.0" \
+        "slowapi>=0.1.9" \
         "pyyaml>=6.0" \
         "numpy>=1.26" \
         "websockets>=14.0" \
         "qiskit>=1.3.0" \
         "qiskit-ibm-provider>=0.11.0"
 
-# Install quantum-corpus from PyPI in editable mode.
+# Install quantum-corpus from PyPI (includes RAG + benchmark tasks for Phase 1).
 RUN pip install --no-cache-dir "quantum-corpus>=0.4.0"
 
+# ── App ───────────────────────────────────────────────────────────────────────
 # Copy the flat repo (no package) into /app.
 COPY . /app
 
@@ -49,7 +68,8 @@ RUN python manage_data.py generate --domain cybersecurity --count 400 \
     && python train_db.py --steps 300 --domain cybersecurity \
         --min_quality 0.4 --db_path /app/metatron.db --checkpoint_dir /app/ckpt
 
-# P3: run as non-root user (security principle of least privilege)
+# ── Security (P3) ─────────────────────────────────────────────────────────────
+# Run as non-root user (principle of least privilege).
 RUN useradd --create-home --shell /bin/bash --uid 1000 metatron \
     && chown -R metatron:metatron /app
 USER metatron
