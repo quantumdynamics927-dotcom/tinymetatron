@@ -83,22 +83,74 @@ def is_text_file(relpath: str) -> bool:
 
 # ── Text-level redaction patterns ───────────────────────────────────────────
 
+# Hard bounds on how much of an input is regex-scanned.  Secrets live in short
+# spans; anything beyond these limits is preserved unchanged to avoid denial of
+# service from adversarial inputs.
+MAX_SCAN_BYTES = 1_000_000          # 1 MiB of text scanned per call
+MAX_PEM_BLOCK_BYTES = 32_000        # refuse to redact PEM blocks larger than this
+MAX_CRN_TOKEN_BYTES = 2_000         # CRN tokens are much shorter than this
+
 _RE_IBMID = re.compile(r"IBMid-[A-Z0-9]+")
-_RE_CRN_ACCT = re.compile(
-    # crn:v1:bluemix:public:quantum-computing:us-east:a/<acct>:<inst>::
-    # group1 = prefix incl. 'a/', group2 = ':<instance-guid>'; trailing '::' optional
-    r"(crn:v1:[^ ]*?a/)[0-9a-f]{32}(:[0-9a-f-]+)(?:::)?",
-    re.I,
-)
 _RE_BARE_ACCT = re.compile(r"\b[0-9a-f]{32}\b")  # 32-hex account ids (after CRN handled)
 _RE_TOKEN = re.compile(
     r"\b(?:gh[opsur]_[A-Za-z0-9]{20,}|hf_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,}"
     r"|xox[baprs]-[A-Za-z0-9-]{10,}|AKIA[0-9A-Z]{12,})\b"
 )
-_RE_PEM_KEY = re.compile(
-    r"-----BEGIN [A-Z ]*PRIVATE KEY-----.*?-----END [A-Z ]*PRIVATE KEY-----",
-    re.S,
+
+# CRN detection: IBM Cloud CRNs are single whitespace-delimited tokens.  We
+# find candidate tokens with a bounded-length regex, then validate each one with
+# an anchored pattern.  This removes the polynomial backtracking path that
+# existed when the full regex was run over unbounded text.
+_RE_CRN_CAND = re.compile(r"\bcrn:v1:\S{10," + str(MAX_CRN_TOKEN_BYTES) + r"}(?=\s|$)", re.I)
+_RE_CRN_ANCHOR = re.compile(
+    r"^(crn:v1:(?:[^:\s]*:){0,12}a/)[0-9a-f]{32}(:[0-9a-f-]+)(?:::)?$",
+    re.I,
 )
+
+
+def _redact_crn_tokens(text: str) -> Tuple[str, int]:
+    """Return (text_with_crn_accounts_redacted, count).  Linear in input size."""
+    count = 0
+
+    def _repl(m: "re.Match") -> str:
+        nonlocal count
+        token = m.group(0)
+        m2 = _RE_CRN_ANCHOR.match(token)
+        if m2:
+            count += 1
+            return m2.group(1) + "[REDACTED]" + m2.group(2)
+        return token
+
+    return _RE_CRN_CAND.sub(_repl, text), count
+# PEM detection: line-based literal scans only.  The old single-regex pattern
+# with a dotall wildcard was flagged by CodeQL as polynomial-time (ReDoS) on
+# attacker-controlled text.  We now locate begin/end line markers with bounded,
+# linear searches and redact only the block between them.
+_RE_PEM_BEGIN = re.compile(r"-----BEGIN(?: [A-Z][A-Z ]*)? PRIVATE KEY-----")
+_RE_PEM_END = re.compile(r"-----END(?: [A-Z][A-Z ]*)? PRIVATE KEY-----")
+
+
+def _redact_pem_blocks(text: str) -> Tuple[str, int]:
+    """Return (text_with_pem_blocks_redacted, count).  Linear-time scan."""
+    parts: list[str] = []
+    pos = 0
+    count = 0
+    for m in _RE_PEM_BEGIN.finditer(text):
+        start = m.start()
+        if start < pos:
+            continue
+        parts.append(text[pos:start])
+        window_end = min(start + MAX_PEM_BLOCK_BYTES, len(text))
+        window = text[start:window_end]
+        em = _RE_PEM_END.search(window)
+        stop = start + (em.end() if em else len(window))
+        parts.append("[REDACTED_PRIVATE_KEY]")
+        pos = stop
+        count += 1
+    parts.append(text[pos:])
+    return "".join(parts), count
+
+
 # Qiskit token-style "token" fields in JSON-ish text: "token": "...."
 _RE_JSON_TOKEN = re.compile(
     r'("token"\s*:\s*")[^"]{12,}(")', re.I
@@ -110,27 +162,37 @@ _RE_JSON_APIKEY = re.compile(
 
 
 def redact_text(text: str) -> Tuple[str, Dict[str, int]]:
-    """Return (redacted_text, counts). Idempotent-ish: tags are not re-matched."""
+    """Return (redacted_text, counts). Idempotent-ish: tags are not re-matched.
+    Scanning is bounded to MAX_SCAN_BYTES to avoid ReDoS on huge inputs."""
     counts: Dict[str, int] = {}
+    if len(text) > MAX_SCAN_BYTES:
+        prefix = text[:MAX_SCAN_BYTES]
+        suffix = text[MAX_SCAN_BYTES:]
+    else:
+        prefix = text
+        suffix = ""
 
     def _sub(rx, repl, key):
-        nonlocal text
-        new, n = rx.subn(repl, text)
+        nonlocal prefix
+        new, n = rx.subn(repl, prefix)
         if n:
             counts[key] = counts.get(key, 0) + n
-            text = new
+            prefix = new
         return n
 
-    if _RE_PEM_KEY.search(text):
-        _sub(_RE_PEM_KEY, "[REDACTED_PRIVATE_KEY]", "private_key_block")
+    prefix, n_pem = _redact_pem_blocks(prefix)
+    if n_pem:
+        counts["private_key_block"] = counts.get("private_key_block", 0) + n_pem
     _sub(_RE_TOKEN, "[REDACTED_TOKEN]", "token")
     _sub(_RE_JSON_TOKEN, r'\1[REDACTED]\2', "json_token")
     _sub(_RE_JSON_APIKEY, r'\1[REDACTED]\2', "json_apikey")
     _sub(_RE_IBMID, "IBMid-[REDACTED]", "ibmid")
-    _sub(_RE_CRN_ACCT, r"\1[REDACTED]\2", "crn_acct")
+    prefix, n_crn = _redact_crn_tokens(prefix)
+    if n_crn:
+        counts["crn_acct"] = counts.get("crn_acct", 0) + n_crn
     # Bare 32-hex after CRN/IBMid handled; only redact standalone 32-hex (account ids).
     _sub(_RE_BARE_ACCT, "[REDACTED_ACCT]", "bare_acct")
-    return text, counts
+    return prefix + suffix, counts
 
 
 def merge_counts(a: Dict[str, int], b: Dict[str, int]) -> Dict[str, int]:
@@ -170,9 +232,9 @@ if __name__ == "__main__":
     _ok("ibm_fez" not in t or True, "no false positive on backend")
 
     # tokens
-    t, c = redact_text("token gho_abcDEF1234567890ghijKLM leaked, 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 too")
+    t, c = redact_text("token gho_abcDEF1234567890ghijKLM leaked, hf_ZQCANARYabcdef0123456789 too")
     _ok("gho_abcDEF1234567890ghijKLM" not in t, "gho token redacted")
-    _ok("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" not in t, "hf token redacted")
+    _ok("hf_ZQCANARYabcdef0123456789" not in t, "hf token redacted")
     _ok("[REDACTED_TOKEN]" in t, "token replaced with tag")
     _ok(c.get("token") == 2, c)
 

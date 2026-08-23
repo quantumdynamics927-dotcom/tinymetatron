@@ -624,62 +624,76 @@ def ask(req: AskRequest,
     No raw-record / bulk-export / arbitrary doc-id lookup endpoint exists
     (intentionally denied).
     """
-    import time as _time
-    if req.mode != "quantum-private":
-        raise HTTPException(status_code=400,
-                            detail='mode must be "quantum-private".')
-    if req.sensitivity not in _SENS_RANK:
-        raise HTTPException(status_code=400,
-                            detail="sensitivity must be public|internal|sensitive.")
-    from quantum_corpus import redact as _qredact, answer as _qanswer
+    request_id = secrets.token_hex(8)
+    try:
+        import time as _time
+        if req.mode != "quantum-private":
+            raise HTTPException(status_code=400,
+                                detail='mode must be "quantum-private".')
+        if req.sensitivity not in _SENS_RANK:
+            raise HTTPException(status_code=400,
+                                detail="sensitivity must be public|internal|sensitive.")
+        from quantum_corpus import redact as _qredact, answer as _qanswer
 
-    t0 = _time.perf_counter()
+        t0 = _time.perf_counter()
 
-    # Corpus must be configured + present.
-    retriever, dbp = _get_ask_retriever()
-    if retriever is None:
+        # Corpus must be configured + present.
+        retriever, dbp = _get_ask_retriever()
+        if retriever is None:
+            raise HTTPException(
+                status_code=503,
+                detail="quantum corpus not configured (set TMT_QUANTUM_CORPUS_DB "
+                       "to a built quantum_corpus.db).")
+
+        # Fetch hits once (sensitivity-filtered at query time) so we can reuse them
+        # for the optional LM hint. The engine reuses these hits (no double query).
+        hits = _ask_query(retriever, req.question, req.top_k, req.sensitivity)
+
+        build = _ask_build_id(dbp)
+        res = _qanswer.ask(
+            req.question, retriever,
+            structured_query=_get_ask_structured(), hits=hits, top_k=req.top_k,
+            max_sensitivity=req.sensitivity,
+            build_id=build["build_id"], build_sha256=build["build_sha256"],
+            gates=_ask_gates(), use_structured=True,
+        )
+
+        # Enforce the /ask contract: {decision, route, evidence, answer}.
+        # The answer engine returns citations in "citations" and gate metadata in
+        # "evidence"; we expose citations as the primary "evidence" field and move
+        # the metadata to "evidence_gate" for callers that want details.
+        citations = res.pop("citations", [])
+        evidence_gate = res.pop("evidence", None)
+        res["evidence"] = citations
+        if evidence_gate is not None:
+            res["evidence_gate"] = evidence_gate
+        # Remove any "generated" key from the answer engine: the 32-token TMT sampler
+        # is intentionally NOT used to produce the user-facing /ask answer.
+        res.pop("generated", None)
+
+        # Redact the question for telemetry logging (never log raw identifiers).
+        red_q, _ = _qredact.redact_text(req.question)
+        top_id = res["evidence"][0].get("id") if res["evidence"] else None
+        top_score = float(hits[0]["score"]) if hits else 0.0
+        _ask_log(red_q, top_id, top_score, bool(res.get("abstained")),
+                 str(res.get("decision")))
+
+        res["index"] = "train+val"
+        res["mode"] = req.mode
+        res["latency_ms"] = _round_ms(t0)
+        # Defense in depth: strip any exception/error detail that may have been
+        # attached by downstream helpers before the response reaches the client.
+        res.pop("error", None)
+        res.pop("traceback", None)
+        return res
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("Unhandled /ask failure", extra={"request_id": request_id})
         raise HTTPException(
-            status_code=503,
-            detail="quantum corpus not configured (set TMT_QUANTUM_CORPUS_DB "
-                   "to a built quantum_corpus.db).")
-
-    # Fetch hits once (sensitivity-filtered at query time) so we can reuse them
-    # for the optional LM hint. The engine reuses these hits (no double query).
-    hits = _ask_query(retriever, req.question, req.top_k, req.sensitivity)
-
-    build = _ask_build_id(dbp)
-    res = _qanswer.ask(
-        req.question, retriever,
-        structured_query=_get_ask_structured(), hits=hits, top_k=req.top_k,
-        max_sensitivity=req.sensitivity,
-        build_id=build["build_id"], build_sha256=build["build_sha256"],
-        gates=_ask_gates(), use_structured=True,
-    )
-
-    # Enforce the /ask contract: {decision, route, evidence, answer}.
-    # The answer engine returns citations in "citations" and gate metadata in
-    # "evidence"; we expose citations as the primary "evidence" field and move
-    # the metadata to "evidence_gate" for callers that want details.
-    citations = res.pop("citations", [])
-    evidence_gate = res.pop("evidence", None)
-    res["evidence"] = citations
-    if evidence_gate is not None:
-        res["evidence_gate"] = evidence_gate
-    # Remove any "generated" key from the answer engine: the 32-token TMT sampler
-    # is intentionally NOT used to produce the user-facing /ask answer.
-    res.pop("generated", None)
-
-    # Redact the question for telemetry logging (never log raw identifiers).
-    red_q, _ = _qredact.redact_text(req.question)
-    top_id = res["evidence"][0].get("id") if res["evidence"] else None
-    top_score = float(hits[0]["score"]) if hits else 0.0
-    _ask_log(red_q, top_id, top_score, bool(res.get("abstained")),
-             str(res.get("decision")))
-
-    res["index"] = "train+val"
-    res["mode"] = req.mode
-    res["latency_ms"] = _round_ms(t0)
-    return res
+            status_code=500,
+            detail={"code": "INTERNAL_ERROR", "request_id": request_id},
+        )
 
 
 def _round_ms(t0: float) -> int:
