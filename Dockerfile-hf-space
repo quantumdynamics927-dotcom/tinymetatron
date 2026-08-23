@@ -49,6 +49,11 @@ RUN python manage_data.py generate --domain cybersecurity --count 400 \
     && python train_db.py --steps 300 --domain cybersecurity \
         --min_quality 0.4 --db_path /app/metatron.db --checkpoint_dir /app/ckpt
 
+# P3: run as non-root user (security principle of least privilege)
+RUN useradd --create-home --shell /bin/bash --uid 1000 metatron \
+    && chown -R metatron:metatron /app
+USER metatron
+
 # Health check on the /health endpoint (no auth required).
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:7860/health')"
