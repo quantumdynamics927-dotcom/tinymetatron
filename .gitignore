@@ -100,3 +100,4 @@ hf_token*
 tools/entropy-validator/
 .claude/
 experiments/exp-005/corpus-rev4/repos/
+copilot/agents/benchmark_results/
