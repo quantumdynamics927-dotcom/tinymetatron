@@ -199,7 +199,7 @@ def test_corpus_gate_detects_overlap(tmp_path) -> None:
     man.write_text(json.dumps(payload), encoding="utf-8")
 
     result = corpus_loop._run_worker(
-        ["python", "-m", "workers.corpus.corpus_gate", "--manifest", str(man)],
+        [sys.executable, "-m", "workers.corpus.corpus_gate", "--manifest", str(man)],
         tmp_path / "gate_art", 60,
     )
     assert result["metrics"]["source_overlap_total"] == 1
@@ -220,7 +220,7 @@ def test_corpus_gate_passes_clean(tmp_path) -> None:
     man.write_text(json.dumps(payload), encoding="utf-8")
 
     result = corpus_loop._run_worker(
-        ["python", "-m", "workers.corpus.corpus_gate", "--manifest", str(man)],
+        [sys.executable, "-m", "workers.corpus.corpus_gate", "--manifest", str(man)],
         tmp_path / "gate_art", 60,
     )
     assert result["metrics"]["source_overlap_total"] == 0

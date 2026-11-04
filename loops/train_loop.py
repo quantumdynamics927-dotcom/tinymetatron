@@ -214,7 +214,7 @@ def run_training(config: dict) -> dict:
     print(f"[{run_id}] Starting training: {steps} steps, seed={seed}")
     result = _run_worker(
         argv=[
-            "python", "-m", "workers.train.train",
+            sys.executable, "-m", "workers.train.train",
             "--config", str(train_config_path),
         ],
         artifact_dir=train_artifact_dir,
@@ -269,7 +269,7 @@ def run_evaluation(run_id: str, artifact_dir: Path, corpus_dir: Path,
 
     result = _run_worker(
         argv=[
-            "python", "-m", "workers.evaluate.compute_ce",
+            sys.executable, "-m", "workers.evaluate.compute_ce",
             "--run-id", run_id,
             "--step", str(step),
             "--eval-set", "val",

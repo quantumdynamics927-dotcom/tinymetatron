@@ -106,7 +106,7 @@ def run_evaluation_for_checkpoints(
             try:
                 result = _run_worker(
                     argv=[
-                        "python", "-m", "workers.evaluate.compute_ce",
+                        sys.executable, "-m", "workers.evaluate.compute_ce",
                         "--run-id", run_id,
                         "--step", str(step),
                         "--eval-set", eval_set,
@@ -155,7 +155,7 @@ def run_per_row_loss(
 
     result = _run_worker(
         argv=[
-            "python", "-m", "workers.evaluate.per_row_loss",
+            sys.executable, "-m", "workers.evaluate.per_row_loss",
             "--run-id", run_id,
             "--step", str(step),
             "--eval-set", eval_set,

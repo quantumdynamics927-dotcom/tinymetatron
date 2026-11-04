@@ -4,7 +4,7 @@
   "description": "Best checkpoint must achieve GRE long-tail CE below 2.5",
   "worker": "workers.evaluate.compute_ce",
   "argv": [
-    "python", "-m", "workers.evaluate.compute_ce",
+    "{python}", "-m", "workers.evaluate.compute_ce",
     "--run-id", "{run_id}",
     "--eval-set", "gre_longtail",
     "--eval-path", "experiments/exp-004/eval_segments/gre_runtime_jobdata_longtail.jsonl"

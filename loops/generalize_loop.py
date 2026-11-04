@@ -80,7 +80,10 @@ def _run_worker(argv: list[str], artifact_dir: Path, timeout_seconds: int = 120)
 
 
 def _interpolate_argv(argv: list, run_id: str) -> list:
-    return [arg.replace("{run_id}", run_id) for arg in argv]
+    return [
+        arg.replace("{run_id}", run_id).replace("{python}", sys.executable)
+        for arg in argv
+    ]
 
 
 def _eval_condition(metric_value: float, operator: str, threshold: float) -> bool:
