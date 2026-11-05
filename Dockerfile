@@ -18,7 +18,7 @@ ENV PYTHONPATH=/app \
     TMT_DEPLOY_MODE=demo
 
 # CPU-only PyTorch wheel (no CUDA runtime -> smaller image).
-RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
+RUN pip install --no-cache-dir torch==2.13.0 --index-url https://download.pytorch.org/whl/cpu \
     && pip install --no-cache-dir fastapi==0.115.6 uvicorn[standard]==0.34.0 pydantic==2.10.4
 
 # Copy the flat repo (no package) into /app.
