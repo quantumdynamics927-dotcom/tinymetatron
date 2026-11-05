@@ -4,7 +4,7 @@
   "description": "Training run must achieve val CE below 2.0 at best checkpoint",
   "worker": "workers.evaluate.compute_ce",
   "argv": [
-    "python", "-m", "workers.evaluate.compute_ce",
+    "{python}", "-m", "workers.evaluate.compute_ce",
     "--run-id", "{run_id}",
     "--eval-set", "val"
   ],

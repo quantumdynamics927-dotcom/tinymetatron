@@ -82,7 +82,10 @@ def _load_gate(gate_name: str) -> dict:
 
 
 def _interpolate_argv(argv: list, manifest_path: str) -> list:
-    return [arg.replace("{manifest_path}", manifest_path) for arg in argv]
+    return [
+        arg.replace("{manifest_path}", manifest_path).replace("{python}", sys.executable)
+        for arg in argv
+    ]
 
 
 def _eval_condition(metric_value, operator: str, threshold) -> bool:
@@ -217,7 +220,7 @@ def run_corpus_pipeline(config: dict) -> dict:
     val_artifact_dir = output_dir / "validate"
     val_result = _run_worker(
         argv=[
-            "python", "-m", "workers.corpus.validate",
+            sys.executable, "-m", "workers.corpus.validate",
             "--corpus-dir", str(corpus_dir),
         ],
         artifact_dir=val_artifact_dir,
@@ -230,7 +233,7 @@ def run_corpus_pipeline(config: dict) -> dict:
     dedupe_artifact_dir = output_dir / "dedupe"
     dedupe_result = _run_worker(
         argv=[
-            "python", "-m", "workers.corpus.dedupe",
+            sys.executable, "-m", "workers.corpus.dedupe",
             "--corpus-dir", str(val_artifact_dir),
         ],
         artifact_dir=dedupe_artifact_dir,
@@ -242,7 +245,7 @@ def run_corpus_pipeline(config: dict) -> dict:
     print(f"[{exp_id}] Stage 3: Splitting corpus")
     split_artifact_dir = output_dir / "split"
     split_argv = [
-        "python", "-m", "workers.corpus.split",
+        sys.executable, "-m", "workers.corpus.split",
         "--corpus-dir", str(dedupe_artifact_dir),
         "--output-dir", str(output_dir / "corpus"),
         "--seed", str(config.get("seed", 42)),
@@ -262,7 +265,7 @@ def run_corpus_pipeline(config: dict) -> dict:
     print(f"[{exp_id}] Stage 4: Versioning and freezing manifest")
     version_artifact_dir = output_dir / "version"
     version_argv = [
-        "python", "-m", "workers.corpus.version",
+        sys.executable, "-m", "workers.corpus.version",
         "--corpus-dir", str(output_dir / "corpus"),
         "--output-dir", str(output_dir),
     ]

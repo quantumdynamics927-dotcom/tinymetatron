@@ -159,7 +159,7 @@ def cmd_run(run_id: str, artifact_dir: Path, corpus_dir: Path,
     eval_artifact_dir = artifact_dir / "final_test"
     result = _run_worker(
         argv=[
-            "python", "-m", "workers.evaluate.compute_ce",
+            sys.executable, "-m", "workers.evaluate.compute_ce",
             "--run-id", run_id,
             "--step", str(step),
             "--eval-set", "test_final",

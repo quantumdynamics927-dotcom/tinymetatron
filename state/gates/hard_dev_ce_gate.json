@@ -4,7 +4,7 @@
   "description": "Best checkpoint must achieve hard_dev CE below 2.0",
   "worker": "workers.evaluate.compute_ce",
   "argv": [
-    "python", "-m", "workers.evaluate.compute_ce",
+    "{python}", "-m", "workers.evaluate.compute_ce",
     "--run-id", "{run_id}",
     "--eval-set", "hard_dev"
   ],

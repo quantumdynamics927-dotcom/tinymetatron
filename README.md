@@ -246,6 +246,32 @@ Set these in the Space **Settings → Variables and secrets**:
 python -m pytest -q
 ```
 
+`pyproject.toml` sets `testpaths = ["tests"]`, so a bare `pytest` run collects
+only the project's own suite — without it, pytest walks the whole tree and
+tries to collect vendored third-party checkouts under
+`experiments/exp-005/corpus-rev4/repos/`.
+
+The seven tests under `quantum_corpus/eval/` are deliberately outside
+`testpaths`: they hardcode Windows-only corpus paths
+(`E:\Temp\qcorpus\quantum_corpus.db`), so
+`test_runner_parity.py::test_runner_and_ask_parity` cannot pass on Linux. Run
+them on a machine where that corpus database is present.
+
+With coverage (requires `pip install -e ".[dev]"`):
+
+```bash
+python -m pytest --cov --cov-report=term-missing
+coverage report --fail-under=40
+```
+
+The `dev` extra also pulls in `httpx`, which `fastapi.testclient` (and therefore
+`tests/test_api.py`) needs at import time.
+
+The coverage floor is enforced in CI by `.github/workflows/tests.yml`, which
+runs the suite on Python 3.11, 3.12 and 3.13. Modules with no test coverage yet
+are excluded from the `source` list in `[tool.coverage.run]` so they cannot mask
+regressions in covered code; add them there as tests land.
+
 Tests cover sparse attention (octa/dodeca face counts, CSR sorted, forward
 shape), MoE (load sum, aux loss, reset, device), global memory (persistence,
 set_state device, local attention), the sharding planner (in isolation),
