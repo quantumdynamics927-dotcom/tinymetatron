@@ -488,40 +488,85 @@ def root() -> HTMLResponse:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TinyMetatron SLM</title>
+<title>TinyMetatron SLM — CPU demo</title>
 <style>
   :root { color-scheme: light dark; }
-  body { font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-         max-width: 760px; margin: 0 auto; padding: 2rem; }
-  h1 { margin: 0 0 .25rem; }
+  body { font: 15px/1.55 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+         max-width: 780px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+  h1 { margin: 0 0 .25rem; font-size: 1.9rem; letter-spacing: -.01em;
+       background: linear-gradient(90deg, #7c3aed 0%, #2563eb 100%);
+       -webkit-background-clip: text; background-clip: text;
+       -webkit-text-fill-color: transparent; color: #7c3aed; }
   .sub { color: #888; margin: 0 0 1.25rem; }
   code, .mono { font-family: ui-monospace, Consolas, monospace; }
-  textarea { width: 100%; box-sizing: border-box; font: inherit; padding: .5rem; }
-  row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: end; }
-  label { font-size: .85rem; }
+  .warn { border: 1px solid #d97706; background: rgba(217,119,6,.12);
+          border-left-width: 4px; border-radius: 8px;
+          padding: .8rem 1rem; margin: 0 0 1.5rem; }
+  .warn strong { color: #b45309; }
+  .cards { display: flex; gap: .75rem; flex-wrap: wrap; margin: 0 0 1.5rem; }
+  .card { flex: 1 1 200px; border: 1px solid rgba(125,125,125,.28);
+          border-radius: 8px; padding: .7rem .85rem; }
+  .card b { display: block; font-size: .95rem; }
+  .card span { color: #888; font-size: .85rem; }
+  textarea { width: 100%; box-sizing: border-box; font: inherit; padding: .5rem;
+             border-radius: 6px; border: 1px solid rgba(125,125,125,.3); }
+  .row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: end; }
+  label { font-size: .85rem; display: inline-flex; gap: .35rem; align-items: center; }
+  input[type=number] { width: 6rem; font: inherit; padding: .35rem .4rem;
+                       border-radius: 6px; border: 1px solid rgba(125,125,125,.3); }
   button { font: inherit; padding: .55rem 1.1rem; cursor: pointer; border: 0;
            border-radius: 6px; background: #6d28d9; color: #fff; }
   button:disabled { opacity: .5; cursor: wait; }
+  button.chip { background: #6d28d9; padding: .4rem .8rem; font-size: .85rem; }
+  .chips { display: flex; gap: .5rem; flex-wrap: wrap; margin: .6rem 0; }
   .out { white-space: pre-wrap; background: rgba(125,125,125,.12);
          padding: .75rem 1rem; border-radius: 8px; min-height: 1.5rem;
          border: 1px solid rgba(125,125,125,.2); }
   .meta { color: #888; font-size: .82rem; margin-top: .4rem; }
+  .status { display: flex; gap: 1.25rem; flex-wrap: wrap;
+            font-size: .85rem; color: #888; margin: .5rem 0 1.5rem; }
+  .status b { color: #6d28d9; }
   nav a { margin-right: 1rem; }
   hr { border: 0; border-top: 1px solid rgba(125,125,125,.25); margin: 1.5rem 0; }
 </style>
 </head>
 <body>
-<h1>🧠 TinyMetatron SLM</h1>
-<p class="sub">Sparse polyhedral attention · 13-expert MoE · shared global memory · ~6.35M params · CPU demo</p>
+<h1>&#129504; TinyMetatron SLM</h1>
+<p class="sub">Sparse polyhedral attention &middot; 13-expert MoE &middot; 13-node global memory &middot; ~6.3M params &middot; CPU demo</p>
+
+<div class="warn">
+  <strong>Read this before you judge the output.</strong>
+  This is a <strong>CPU demo</strong> of a <strong>~6.3M-parameter</strong> model
+  trained for <strong>300 steps</strong> on a small synthesized corpus. It is
+  <strong>not a fluent chatbot</strong>. Expect weak, short, often incoherent
+  continuations &mdash; the point of the demo is the architecture and the
+  serving path, not language quality.
+</div>
+
+<div class="cards">
+  <div class="card"><b>Sparse polyhedral attention</b><span>Attention over the faces, edges and vertices of a platonic solid, not the full token grid.</span></div>
+  <div class="card"><b>13-expert MoE</b><span>Thirteen experts per layer, top-2 routing, with an auxiliary load-balancing loss.</span></div>
+  <div class="card"><b>13-node global memory</b><span>Thirteen shared memory nodes, read and written across all layers.</span></div>
+</div>
+
+<div class="status">
+  <span>health: <b id="healthOut">&hellip;</b></span>
+  <span>checkpoint step: <b id="ckptOut">&hellip;</b></span>
+</div>
 
 <p>Generate text from the build-time trained checkpoint:</p>
 <textarea id="prompt" rows="2">the firewall</textarea>
-<div class="row" style="display:flex; gap:1rem; flex-wrap:wrap; align-items:flex-end; margin:.6rem 0;">
-  <label>max new tokens <input id="maxlen" type="number" value="32" min="1" max="256" style="width:6rem"></label>
-  <label>temperature <input id="temp" type="number" value="0.7" step="0.1" min="0.1" max="2.0" style="width:6rem"></label>
+<div class="chips">
+  <button class="chip" type="button" onclick="fillPrompt('the firewall')">the firewall</button>
+  <button class="chip" type="button" onclick="fillPrompt('quantum error correction')">quantum error correction</button>
+  <button class="chip" type="button" onclick="fillPrompt('sparse attention')">sparse attention</button>
+</div>
+<div class="row" style="margin:.6rem 0;">
+  <label>max new tokens <input id="maxlen" type="number" value="32" min="1" max="256"></label>
+  <label>temperature <input id="temp" type="number" value="0.7" step="0.1" min="0.1" max="2.0"></label>
   <button id="go" onclick="runGen()">Generate</button>
 </div>
-<div class="out" id="out">—</div>
+<div class="out" id="out">&mdash;</div>
 <div class="meta" id="meta"></div>
 
 <hr>
@@ -532,25 +577,75 @@ def root() -> HTMLResponse:
   <a href="/data/stats">/data/stats</a>
   <a href="/train/status">/train/status</a>
 </nav>
-<p class="sub" style="margin-top:1.5rem">Read-only demo · <code>/train/start</code> and <code>/data/add</code> are disabled (403). Output is from a lightly-trained smoke checkpoint, not a polished LM.</p>
+<p class="sub" style="margin-top:1.5rem">
+  <strong>Demo mode is read-only:</strong> training and data writes are locked.
+  <code>/train/start</code> and <code>/data/add</code> return 403 in this public
+  demo &mdash; no new checkpoints can be trained and no rows can be inserted.
+  Output comes from the lightly-trained smoke checkpoint, not a polished LM.
+</p>
 
 <script>
+function fillPrompt(text){
+  document.getElementById('prompt').value = text;
+  document.getElementById('prompt').focus();
+}
+
+async function loadStatus(){
+  const h=document.getElementById('healthOut'), c=document.getElementById('ckptOut');
+  try{
+    const hr=await fetch('/health');
+    const hd=await hr.json();
+    h.textContent = (hd && hd.status) ? hd.status : JSON.stringify(hd);
+  }catch(e){ h.textContent = 'unavailable ('+e+')'; }
+  try{
+    const mr=await fetch('/model/info');
+    const md=await mr.json();
+    const ck = md && md.active_checkpoint;
+    if(ck && ck.step !== undefined && ck.step !== null){
+      c.textContent = ck.step;
+    } else {
+      c.textContent = 'none (no active checkpoint)';
+    }
+  }catch(e){ c.textContent = 'unavailable ('+e+')'; }
+}
+
 async function runGen(){
   const go=document.getElementById('go'), out=document.getElementById('out'), meta=document.getElementById('meta');
-  go.disabled=true; out.textContent="generating…"; meta.textContent="";
+  go.disabled=true; out.textContent="generating\\u2026"; meta.textContent="";
+  const maxNew = parseInt(document.getElementById('maxlen').value,10);
   const body={prompt:document.getElementById('prompt').value,
-              max_length:parseInt(document.getElementById('maxlen').value,10),
+              max_new_tokens:maxNew,
+              max_length:maxNew,
               temperature:parseFloat(document.getElementById('temp').value)};
   try{
     const t0=performance.now();
     const r=await fetch('/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    const d=await r.json();
-    if(!r.ok){ out.textContent='error '+r.status; meta.textContent=JSON.stringify(d); return; }
-    out.textContent=d.text||'(empty)';
-    meta.textContent=`step ${d.step} · ${d.tokens_generated} new tokens · ${Math.round(performance.now()-t0)} ms`;
+    const raw=await r.text();
+    let d=null;
+    try{ d=JSON.parse(raw); }catch(e){ d=null; }
+    if(!r.ok){
+      out.textContent='error '+r.status;
+      meta.textContent=raw;
+      return;
+    }
+    // Print the returned text when the response carries a text field; otherwise
+    // print the raw JSON rather than guessing at an unknown field name.
+    if(d && typeof d.text === 'string'){
+      out.textContent = d.text || '(empty)';
+      const bits=[];
+      if(d.tokens_generated !== undefined) bits.push(d.tokens_generated+' new tokens');
+      if(d.step !== undefined) bits.push('step '+d.step);
+      bits.push(Math.round(performance.now()-t0)+' ms');
+      meta.textContent=bits.join(' \\u00b7 ');
+    } else {
+      out.textContent = raw;
+      meta.textContent='raw response (no text field)';
+    }
   }catch(e){ out.textContent='request failed'; meta.textContent=String(e); }
   finally{ go.disabled=false; }
 }
+
+loadStatus();
 </script>
 </body>
 </html>""")
